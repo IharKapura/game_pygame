@@ -1,4 +1,5 @@
-import pygame
+import pygame, pathlib
+from pathlib import Path
 #from player import Player
 from pygame.sprite import Sprite
 
@@ -13,7 +14,7 @@ class Bullet(Sprite):
         self.screen_rect = self.screen.get_rect()
         self.player = player
         self.bullets = []
-        self.bullet_image = pygame.image.load("images\player_fight\_bear_a_ball.png").convert_alpha()
+        self.bullet_image = pygame.image.load(Path("images","player_fight","_bear_a_ball.png")).convert_alpha()
         self.bullet_rect = self.bullet_image.get_rect()
         self.change_x = 0
 

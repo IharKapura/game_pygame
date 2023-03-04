@@ -1,4 +1,5 @@
-import pygame
+import pygame, pathlib
+from pathlib import Path
 from pygame.sprite import Sprite
 
 class Cube(Sprite):
@@ -8,6 +9,6 @@ class Cube(Sprite):
 		# инициализация кубов
 		Sprite.__init__(self)
 		self.image = pygame.Surface((77,77))
-		self.image = pygame.image.load('images/level1_image\cube_forest.png')
+		self.image = pygame.image.load(Path('images','level1_image','cube_forest.png'))
 		self.rect = pygame.Rect(x, y, 77, 77)
-		self.image1 = pygame.image.load('images/level1_image\cube_w_spike.png')
+		self.image1 = pygame.image.load(Path('images','level1_image','cube_w_spike.png'))

@@ -1,4 +1,5 @@
-import pygame, random
+import pygame, random, pathlib
+from pathlib import Path
 from pygame.sprite import Sprite
 
 
@@ -10,7 +11,7 @@ class Enemies(Sprite):
         super(Enemies, self).__init__()
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
-        self.image = pygame.image.load("images\enemies\_bower_r_st.png").convert_alpha()
+        self.image = pygame.image.load(Path("images","enemies","_bower_r_st.png")).convert_alpha()
         self.rect = self.image.get_rect() 
         self.rect.centerx = random.randrange( 1920  - self.rect.width)
         self.speedy = random.randrange(1, 8)
@@ -38,5 +39,5 @@ class Enemies(Sprite):
         self.screen.blit(self.image, self.rect)
 
     def enemies_del(self, player):
-        self.image = pygame.image.load("images\enemies\_bower_l_a4.png").convert_alpha()
+        self.image = pygame.image.load(Path("images","enemies","_bower_l_a4.png")).convert_alpha()
         player.change_x = 0

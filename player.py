@@ -1,4 +1,5 @@
-import pygame
+import pygame, pathlib
+from pathlib import Path
 from level import Level
 from pygame.sprite import Sprite
 
@@ -10,7 +11,7 @@ class Player(Sprite):
         super(Player, self).__init__()
         self.screen = screen
         self.image = pygame.Surface((77, 54))
-        self.image = pygame.image.load("images\player.png").convert_alpha()
+        self.image = pygame.image.load(Path("images","player.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(0, 0, 60, 50)
         self.screen_rect = screen.get_rect()
@@ -28,58 +29,58 @@ class Player(Sprite):
 
         #Картинки для персонажа
         self.walk_left = [
-            pygame.image.load("images\player_left\_br_m_l_1.png").convert_alpha(),
-            pygame.image.load("images\player_left\_br_m_l_2.png").convert_alpha(),
-            pygame.image.load("images\player_left\_br_m_l_3.png").convert_alpha(),
-            pygame.image.load("images\player_left\_br_m_l_4.png").convert_alpha(),
-            pygame.image.load("images\player_left\_br_m_l_5.png").convert_alpha(),
-            pygame.image.load("images\player_left\_br_m_l_6.png").convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_left","_br_m_l_6.png")).convert_alpha(),
         ]
         self.walk_right = [
-            pygame.image.load("images\player_right\_br_m_r_1.png").convert_alpha(),
-            pygame.image.load("images\player_right\_br_m_r_2.png").convert_alpha(),
-            pygame.image.load("images\player_right\_br_m_r_3.png").convert_alpha(),
-            pygame.image.load("images\player_right\_br_m_r_4.png").convert_alpha(),
-            pygame.image.load("images\player_right\_br_m_r_5.png").convert_alpha(),
-            pygame.image.load("images\player_right\_br_m_r_6.png").convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_right","_br_m_r_6.png")).convert_alpha(),
         ]
         self.fight_left = [
-            pygame.image.load("images\player_fight\_fight_l_1.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_1.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_2.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_2.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_3.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_3.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_4.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_4.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_5.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_5.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_6.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_l_6.png").convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_6.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_l_6.png")).convert_alpha(),
         ]
         self.fight_right = [
-            pygame.image.load("images\player_fight\_fight_r_1.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_1.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_2.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_2.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_3.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_3.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_4.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_4.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_5.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_5.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_6.png").convert_alpha(),
-            pygame.image.load("images\player_fight\_fight_r_6.png").convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_6.png")).convert_alpha(),
+            pygame.image.load(Path("images","player_fight","_fight_r_6.png")).convert_alpha(),
         ]
         self.image_jump_rl = [ 
-            pygame.image.load("images\jump\_jump_up_r.png").convert_alpha(),
-            pygame.image.load("images\jump\_jump_dn_r.png").convert_alpha(),
-            pygame.image.load("images\jump\_jump_up_l.png").convert_alpha(),
-            pygame.image.load("images\jump\_jump_dn_l.png").convert_alpha(),
+            pygame.image.load(Path("images","jump","_jump_up_r.png")).convert_alpha(),
+            pygame.image.load(Path("images","jump","_jump_dn_r.png")).convert_alpha(),
+            pygame.image.load(Path("images","jump","_jump_up_l.png")).convert_alpha(),
+            pygame.image.load(Path("images","jump","_jump_dn_l.png")).convert_alpha(),
         ]
 
         #Пустое изображение
-        self.blank_image = pygame.image.load("images\_blank_image.png").convert_alpha()
+        self.blank_image = pygame.image.load(Path("images","_blank_image.png")).convert_alpha()
 
         self.player_animw_count = 0
         self.player_animf_count = 0

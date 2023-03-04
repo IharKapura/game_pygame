@@ -60,7 +60,7 @@ def main():
             screen.fill((87,88,89))
         pygame.display.update()
         pygame.display.flip()
-        print(player.rect)
+        #print(player.rect)
 
         
 if __name__ == "__main__":
