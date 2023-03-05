@@ -38,7 +38,7 @@ class Level(object):
 			"                   o   o    ",
 			"                    o       ",
 			"        o   o         oo    ",
-			"ooo   ooo  o oo o  ooooooo  "	
+			"ooo   ooo  o oo o  oooooooooooooooooooooooooo  "	
 	   ]
 		#Уровень 1
 

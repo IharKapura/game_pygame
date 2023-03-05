@@ -38,7 +38,7 @@ class Bg(Sprite):
     def draw(self):
         self.screen.blit(self.bg1, (self.bg_x, 0))
 
-    def change_screen(self, player):
-        if 1900 <= player.rect.centerx >= 1920:
-            print('YES')
-            self.bg_x = -1920
+    """ def change_screen(self, player):
+        if 1800 <= player.rect.centerx <= 1920:
+            print('You WIN!') """
+

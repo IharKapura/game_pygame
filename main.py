@@ -34,8 +34,7 @@ def main():
     #Размещение всех кубов
     level.rect_cube()
 
-    gameplay = True
-   
+    run_game = True
     #Добавление текста
     """ font_text = pygame.font.Font('fonts\MoonDance-Regular.ttf', 40)
     text_surface = font_text.render("Break", False, "Green") """
@@ -47,19 +46,16 @@ def main():
     
     
 
-    while True:
+    while run_game:
         
-        if gameplay:
-            controls.events(player, bullet, level)
-            #controls.collision(screen, player, enemies, bullet, level)
-            controls.update(screen, bg, player, enemies, bullet, level, cube)
-            #bullet.shot(screen, player)
-            clock.tick(FPS)
-        else:
-            screen.fill((87,88,89))
+        controls.update(screen, bg, player, enemies, bullet, level, cube)
+        controls.events(player, bullet, level, bg)
+        #controls.collision(screen, player, enemies, bullet, level)
+        #bullet.shot(screen, player)
+        clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        #print(player.rect.centery)
+        #print(player.rect.centerx)
 
         
 if __name__ == "__main__":

@@ -22,6 +22,10 @@ class Player(Sprite):
         #Переменные для изменения движения персонажа
         self.change_x = 0
         self.change_y = 0
+        
+        self.player_lives = 3
+        self.player_gameover = False
+        self.player_gamewin = False
 
         #Для прыжка
         self.is_jump = False
@@ -88,6 +92,7 @@ class Player(Sprite):
 
     #обновление позиции игрока
     def update_player(self, level):
+        self.player_win()
         self.player_dead()
         self.gravitation()
         self.chek_collision(level)
@@ -217,7 +222,16 @@ class Player(Sprite):
 
 
     def player_dead(self):
-        if 1100 <= self.rect.centery >= 1155:
+        if 1100 <= self.rect.centery:
             self.rect.centerx = self.screen_rect.centerx - 900
             self.rect.centery = self.screen_rect.centery + 450
-            print('looose')
+            self.player_lives -= 1
+            print(self.player_lives)
+            if self.player_lives == 0:
+                self.player_gameover = True
+                print('DEAD')
+
+    def player_win(self):
+        if 1800 <= self.rect.centerx <= 1920:
+            self.player_gamewin = True
+            #print('You WIN!')
