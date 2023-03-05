@@ -12,7 +12,7 @@ from pygame.sprite import Group
 
 
 WIDTH = 1920
-HEIGHT = 1020
+HEIGHT = 1080
 FPS = 60
 
 
@@ -23,7 +23,6 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("BEAR TRAVELER")
     #all_sprites = pygame.sprite.Group()
-
     player = Player(screen)
     bullet = Bullet(screen, player)
     bg = Bg(screen, player)
@@ -60,7 +59,7 @@ def main():
             screen.fill((87,88,89))
         pygame.display.update()
         pygame.display.flip()
-        #print(player.rect)
+        #print(player.rect.centery)
 
         
 if __name__ == "__main__":

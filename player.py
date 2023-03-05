@@ -88,7 +88,7 @@ class Player(Sprite):
 
     #обновление позиции игрока
     def update_player(self, level):
-
+        self.player_dead()
         self.gravitation()
         self.chek_collision(level)
 
@@ -135,9 +135,9 @@ class Player(Sprite):
             self.change_y += 0.95
 
 		# Если уже на земле, то ставим позицию Y как 0
-        if self.rect.y >= 1020 - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= 1180 - self.rect.height and self.change_y >= 0:
             self.change_y = 0
-            self.rect.y = 1020 - self.rect.height
+            self.rect.y = 1180 - self.rect.height
 
     
     #Прыжок
@@ -214,3 +214,10 @@ class Player(Sprite):
                 self.screen.blit(self.fight_right[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
         else:
             self.screen.blit(self.image, self.rect)
+
+
+    def player_dead(self):
+        if 1100 <= self.rect.centery >= 1155:
+            self.rect.centerx = self.screen_rect.centerx - 900
+            self.rect.centery = self.screen_rect.centery + 450
+            print('looose')

@@ -25,6 +25,7 @@ class Level(object):
 		self.cube_list.add(cube)
 		self.level = [
 			"                            ",
+			"                            ",
 	   		"               o            ",
 			"    o oo        o   o  o    ",
 			"o      o   o   o   o   o    ",
@@ -35,7 +36,7 @@ class Level(object):
 			"  o                    o    ",
 			"   oo   o  oo   ooo   oo    ",
 			"                   o   o    ",
-			"                    o  o    ",
+			"                    o       ",
 			"        o   o         oo    ",
 			"ooo   ooo  o oo o  ooooooo  "	
 	   ]

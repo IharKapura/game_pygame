@@ -34,7 +34,8 @@ def events(player,bullet, level):
 
 def update(screen, bg, player, enemies, bullet, level, cube):
     #обновление экрана
-    bg.update_bg()
+    bg.update_bg(player)
+    #bg.change_screen(player)
     #level.update()
     #player.collide(level)
     level.draw(screen, cube)
@@ -58,7 +59,7 @@ def update(screen, bg, player, enemies, bullet, level, cube):
 
 
 
-def collision(screen, player, enemies, bullet, level):
+""" def collision(screen, player, enemies, bullet, level):
     # столкновения
     ...
     if level.rect.colliderect(player.rect):
@@ -70,4 +71,4 @@ def collision(screen, player, enemies, bullet, level):
             player.rect.bottom = level.cube_list.rect.top
             player.change_y = 0
         if player.change_y <0:
-            player.rect.top = level.cube_list.rect.bottom
+            player.rect.top = level.cube_list.rect.bottom """
