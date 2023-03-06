@@ -31,8 +31,8 @@ def main():
     enemies = Enemies(screen)
     clock = pygame.time.Clock()
 
-    #Размещение всех кубов
-    level.rect_cube()
+    #Музыка для фона
+    level.play_music_bg()
 
     run_game = True
     #Добавление текста
@@ -41,21 +41,21 @@ def main():
 
 
     #TODO Разобраться со звуком
-    """ bg_sound = pygame.mixer.Sound('sounds/_battle.mp3')
-    bg_sound.play() """
+    #pygame.mixer.music.load('sounds/1-title.mp3')
+    #pygame.mixer.music.play()
     
     
 
     while run_game:
         
-        controls.update(screen, bg, player, enemies, bullet, level, cube)
         controls.events(player, bullet, level, bg)
+        controls.update(screen, bg, player, enemies, bullet, level, cube)
         #controls.collision(screen, player, enemies, bullet, level)
         #bullet.shot(screen, player)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        #print(player.rect.centerx)
+        print(level.level_number)
 
         
 if __name__ == "__main__":

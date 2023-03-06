@@ -19,41 +19,27 @@ class Cube(Sprite):
 class Level(object):
 	def __init__(self, player, cube):
 		# Создаем группу спрайтов (поместим платформы различные сюда)
-		self.cube_list = pygame.sprite.Group()
+		#self.cube_list = pygame.sprite.Group()
 		self.platforms = []
 		self.bad_platforms = []
-		self.cube_list.add(cube)
-		self.level = [
-			"                            ",
-			"                            ",
-	   		"               o            ",
-			"    o oo        o   o  o    ",
-			"o      o   o   o   o   o    ",
-			"   o   o          o    o    ",
-			"  oooo   oo     o      o    ",
-			"o             o        o    ",
-			" o                     o    ",
-			"  o                    o    ",
-			"   oo   o  oo   ooo   oo    ",
-			"                   o   o    ",
-			"                    o       ",
-			"        o   o         oo    ",
-			"ooo   ooo  o oo o  oooooooooooooooooooooooooo  "	
-	   ]
-		#Уровень 1
+		#self.cube_list.add(cube)
 
+		self.music_bg = True
+
+		self.level_number = 0
+		#Уровень 1
+		self.level = []
 
 		""" self.bg = bg """
 
 	# Обновление уровня
 	def update(self, screen, cube):
-		...
+		self.draw(screen, cube)
 		#self.draw(screen, cube, bg)
-		#self.rect_cube()
+
 
 	# Отрисовка уровня
 	def draw(self, screen, cube):
-
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -65,8 +51,59 @@ class Level(object):
 			y += 73
 			x = 0
 
-	# Размещение форм объекта
-	def rect_cube(self):
+
+	# Уровень 1
+	def level1(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"               o            ",
+				"    o oo        o   o  o    ",
+				"o      o   o   o   o   o    ",
+				"   o   o          o    o    ",
+				"  oooo   oo     o      o    ",
+				"o             o        o    ",
+				" o                     o    ",
+				"  o                    o    ",
+				"   oo   o  oo   ooo   oo    ",
+				"                   o   o    ",
+				"                    o  o    ",
+				"        o   o         oo    ",
+				"ooo  +ooo++o oo o  oooooooooo"	
+		]
+		x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = Cube(x,y)
+					self.bad_platforms.append(cb)
+				x += 73
+			y += 73
+			x = 0
+
+
+	#Уровень 2
+	def level2(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"                        o   ",
+				"oooooooooooooooooooooooooooo"
+			]
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -80,3 +117,58 @@ class Level(object):
 			y += 73
 			x = 0
 	
+
+	#Уровень 3
+	def level3(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"oooooooooooooooooooooooooooo"
+			]
+		x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = Cube(x,y)
+					self.bad_platforms.append(cb)
+				x += 73
+			y += 73
+			x = 0
+
+	def rect_cube(self):
+		...
+		""" x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = Cube(x,y)
+					self.bad_platforms.append(cb)
+				x += 73
+			y += 73
+			x = 0 """
+	
+
+
+
+	def play_music_bg(self):
+		if self.music_bg:
+			pygame.mixer.music.load('sounds/1-title.mp3')
+			pygame.mixer.music.play()

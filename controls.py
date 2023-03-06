@@ -33,6 +33,14 @@ def events(player,bullet, level, bg):
                 bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
+                level.level_number += 1
+                level.platforms = []
+                if level.level_number == 2:
+                    level.level2()
+                    level.rect_cube
+                if  level.level_number == 3:
+                    level.level3()
+                    level.rect_cube
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
@@ -49,11 +57,11 @@ def update(screen, bg, player, enemies, bullet, level, cube):
         #обновление экрана
         bg.update_bg(player)
         #bg.change_screen(player)
-        #level.update()
         #player.collide(level)
-        level.draw(screen, cube)
-        bullet.update(player)
         #level.update(screen, cube)
+        #level.draw(screen, cube)
+        level.update(screen, cube)
+        bullet.update(player)
         #bullet.shot(player)
         #enemies.update()
         #enemies.update_enemies()
@@ -68,12 +76,15 @@ def update(screen, bg, player, enemies, bullet, level, cube):
     if player.player_gamewin == True:
         bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
         bg.update_bg(player)
+    if level.level_number == 0:
+        level.level1()
+        level.level_number += 1
 
 
 
 
 
-    
+
 
 
 
