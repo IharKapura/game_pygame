@@ -32,7 +32,7 @@ def main():
     clock = pygame.time.Clock()
 
     #Музыка для фона
-    level.play_music_bg()
+    #level.play_music_bg()
 
     run_game = True
     #Добавление текста
@@ -55,7 +55,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(level.level_number)
+        #print(player.rect.centery)
 
         
 if __name__ == "__main__":

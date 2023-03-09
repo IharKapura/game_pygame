@@ -176,6 +176,17 @@ class Player(Sprite):
         self.change_x = 0
 
 
+    #Рывок
+    def jerk(self, level):
+        self.rect.y += 10
+        platform_hit_list = pygame.sprite.spritecollide(self, level.platforms, False)
+        self.rect.y -= 10
+
+		# Если все в порядке, прыгаем вверх
+        if len(platform_hit_list) > 0 or self.rect.bottom >= 1020:
+            self.rect.centerx += 365
+
+
     #Поворот изоброжения по вертикали
     def flip(self):
         self.image = pygame.transform.flip(self.image, True, False)
@@ -232,6 +243,6 @@ class Player(Sprite):
                 print('DEAD')
 
     def player_win(self):
-        if 1800 <= self.rect.centerx <= 1920:
+        if 1800 <= self.rect.centerx <= 1920 and self.rect.centery == 997:
             self.player_gamewin = True
             #print('You WIN!')

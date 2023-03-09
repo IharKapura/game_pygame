@@ -15,14 +15,19 @@ def events(player,bullet, level, bg):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+
         
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                sys.exit()
             if event.key == pygame.K_a:
                 player.left()
             if event.key == pygame.K_d:
                 player.right()
             if event.key == pygame.K_SPACE:
                 player.jump(level)
+            if event.key == pygame.K_LCTRL:
+                player.jerk(level)
             if event.key == pygame.K_e:
                 bullet.shot_right(player)
             if event.key == pygame.K_q:
@@ -41,6 +46,9 @@ def events(player,bullet, level, bg):
                 if  level.level_number == 3:
                     level.level3()
                     level.rect_cube
+                if  level.level_number == 4:
+                    level.level4()
+                    level.rect_cube
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
@@ -49,6 +57,8 @@ def events(player,bullet, level, bg):
             if event.key == pygame.K_a and player.change_x < 0:
                 player.stop()
             if event.key == pygame.K_d and player.change_x > 0:
+                player.stop()
+            if event.key == pygame.K_LSHIFT:
                 player.stop()
 
 

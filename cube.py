@@ -10,5 +10,6 @@ class Cube(Sprite):
 		Sprite.__init__(self)
 		self.image = pygame.Surface((77,77))
 		self.image = pygame.image.load(Path('images','level1_image','cube_forest.png'))
-		self.rect = pygame.Rect(x, y, 77, 77)
+		self.rect = pygame.Rect(x, y, 73, 73)
 		self.image1 = pygame.image.load(Path('images','level1_image','cube_w_spike.png'))
+		

@@ -1,20 +1,32 @@
 import pygame, pathlib
 from pathlib import Path
 from pygame.sprite import Sprite
+from cube import Cube
 
-class Cube(Sprite):
-	
-	
-	def __init__(self, x, y):
-		# инициализация кубов
-		Sprite.__init__(self)
-		#self.image = pygame.Surface((77,77))
-		self.image = pygame.image.load(Path('images','level1_image','cube_forest.png')).convert_alpha()
-		self.rect = self.image.get_rect()
-		self.rect = pygame.Rect((x + 2), (y + 5), 73, 70)
-		self.image1 = pygame.image.load(Path('images','level1_image','cube_w_spike.png')).convert_alpha()
-		self.rect1 = self.image1.get_rect()
-		self.rect1 = pygame.Rect((x + 2), (y + 5), 73, 70)
+
+
+
+
+
+#Заготовка для пустого уровня
+""" self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"oooooooooooooooooooooooooooo"
+			] """
+
 
 class Level(object):
 	def __init__(self, player, cube):
@@ -67,9 +79,9 @@ class Level(object):
 				"  o                    o    ",
 				"   oo   o  oo   ooo   oo    ",
 				"                   o   o    ",
-				"                    o  o    ",
+				"                    o  !    ",
 				"        o   o         oo    ",
-				"ooo  +ooo++o oo o  oooooooooo"	
+				"ooo+++ooo++o+oo+o++oooooooooo"	
 		]
 		x=y=0
 		for row in self.level:
@@ -88,21 +100,21 @@ class Level(object):
 	#Уровень 2
 	def level2(self):
 		self.level = [
-				"                            ",
-				"                            ",
 				"                        o   ",
 				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"                        o   ",
-				"oooooooooooooooooooooooooooo"
+				"      oo  o  ooo   oooo o   ",
+				"    o                 o o   ",
+				"   o                  o o   ",
+				"o       o             o o   ",
+				"  ooo       oo        o o   ",
+				"                oo    o o   ",
+				"                     oo o   ",
+				"  oooo  o   o  oooo   o o   ",
+				"o                           ",
+				"ooooo                       ",
+				"      o   ooooooooo    oo   ",
+				"     o o                !   ",
+				"ooooooooooooo   oooooooooooo"
 			]
 		x=y=0
 		for row in self.level:
@@ -120,6 +132,38 @@ class Level(object):
 
 	#Уровень 3
 	def level3(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"            oooo            ",
+				"           oooooo           ",
+				"          oooooooo          ",
+				"         oooooooooo         ",
+				"oooooooooooooooooooooooooooo"
+			]
+		x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = Cube(x,y)
+					self.bad_platforms.append(cb)
+				x += 73
+			y += 73
+			x = 0
+
+
+	def level4(self):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -170,5 +214,5 @@ class Level(object):
 
 	def play_music_bg(self):
 		if self.music_bg:
-			pygame.mixer.music.load('sounds/1-title.mp3')
-			pygame.mixer.music.play()
+			pygame.mixer.music.load('sounds/_battle.mp3')
+			pygame.mixer.music.play(-1)
