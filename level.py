@@ -214,5 +214,5 @@ class Level(object):
 
 	def play_music_bg(self):
 		if self.music_bg:
-			pygame.mixer.music.load('sounds/_battle.mp3')
+			pygame.mixer.music.load('sounds/1-title.mp3')
 			pygame.mixer.music.play(-1)

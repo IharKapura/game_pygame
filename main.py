@@ -32,7 +32,7 @@ def main():
     clock = pygame.time.Clock()
 
     #Музыка для фона
-    #level.play_music_bg()
+    level.play_music_bg()
 
     run_game = True
     #Добавление текста
