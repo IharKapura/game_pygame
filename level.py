@@ -79,7 +79,7 @@ class Level(object):
 				"  o                    o    ",
 				"   oo   o  oo   ooo   oo    ",
 				"                   o   o    ",
-				"                    o  !    ",
+				"                    o  o    ",
 				"        o   o         oo    ",
 				"ooo+++ooo++o+oo+o++oooooooooo"	
 		]
@@ -113,7 +113,7 @@ class Level(object):
 				"o                           ",
 				"ooooo                       ",
 				"      o   ooooooooo    oo   ",
-				"     o o                !   ",
+				"     o o                o   ",
 				"ooooooooooooo   oooooooooooo"
 			]
 		x=y=0
