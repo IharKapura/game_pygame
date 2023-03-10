@@ -2,6 +2,7 @@ import pygame, pathlib
 from pathlib import Path
 from pygame.sprite import Sprite
 from cube import Cube
+from bad_cube import BadCube
 
 
 
@@ -45,45 +46,46 @@ class Level(object):
 		""" self.bg = bg """
 
 	# Обновление уровня
-	def update(self, screen, cube):
-		self.draw(screen, cube)
-		#self.draw(screen, cube, bg)
+	def update(self, screen, cube, bad_cube):
+		self.draw(screen, cube, bad_cube)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube):
+	def draw(self, screen, cube, bad_cube):
 		x=y=0
 		for row in self.level:
 			for col in row:
 				if col == "o":
 					screen.blit(cube.image, (x, y))
 				if col == "+":
-					screen.blit(cube.image1, (x, y))
+					screen.blit(bad_cube.image, (x, y))
 				x += 73
 			y += 73
 			x = 0
 
 
-	# Уровень 1
+	# Уровень 1.1
 	def level1(self):
 		self.level = [
 				"                            ",
 				"                            ",
-				"               o            ",
-				"    o oo        o   o  o    ",
-				"o      o   o   o   o   o    ",
-				"   o   o          o    o    ",
-				"  oooo   oo     o      o    ",
-				"o             o        o    ",
-				" o                     o    ",
-				"  o                    o    ",
-				"   oo   o  oo   ooo   oo    ",
-				"                   o   o    ",
-				"                    o  o    ",
-				"        o   o         oo    ",
-				"ooo+++ooo++o+oo+o++oooooooooo"	
-		]
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"           o                ",
+				"ooooooooooooooooooo  ooooooo"
+			]
+		
 		x=y=0
+		# Размещение кубов
 		for row in self.level:
 			for col in row:
 				if col == "o":
@@ -97,26 +99,28 @@ class Level(object):
 			x = 0
 
 
-	#Уровень 2
-	def level2(self):
+	#Уровень 1.2
+	def level1_2(self):
 		self.level = [
-				"                        o   ",
-				"                        o   ",
-				"      oo  o  ooo   oooo o   ",
-				"    o                 o o   ",
-				"   o                  o o   ",
-				"o       o             o o   ",
-				"  ooo       oo        o o   ",
-				"                oo    o o   ",
-				"                     oo o   ",
-				"  oooo  o   o  oooo   o o   ",
-				"o                           ",
-				"ooooo                       ",
-				"      o   ooooooooo    oo   ",
-				"     o o                o   ",
-				"ooooooooooooo   oooooooooooo"
-			]
+				"                            ",
+				"                            ",
+				"               o            ",
+				"    o oo       +o   o  o    ",
+				"o      o   o   o   o   o    ",
+				"   o + o ++       o    o    ",
+				"  oooo   oo     o      o    ",
+				"o             o        o    ",
+				" o                     o    ",
+				"  o                   +o    ",
+				"   oo   o  oo   ooo   oo    ",
+				"                   o   o    ",
+				"                    o  !    ",
+				"        o   o         oo    ",
+				"ooo   ooo  o oo o  oooooooooo"	
+		]
+
 		x=y=0
+		# Размещение кубов
 		for row in self.level:
 			for col in row:
 				if col == "o":
@@ -131,7 +135,39 @@ class Level(object):
 	
 
 	#Уровень 3
-	def level3(self):
+	def level1_3(self):
+		self.level = [
+				"                        o   ",
+				"                        o   ",
+				"      oo  o  ooo   oooo o   ",
+				"    o                 o o   ",
+				"   o                  o o   ",
+				"o       o             o o   ",
+				"  ooo       oo        o o   ",
+				"                oo    o o   ",
+				"                     oo o   ",
+				"  oooo  o   o  oooo   o o   ",
+				"o                           ",
+				"ooooo                       ",
+				"      o   ooooooooo    oo  o",
+				"     o o           ++++ o  o",
+				"ooooooooooooo   oooooooooooo"
+			]
+		x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = Cube(x,y)
+					self.bad_platforms.append(cb)
+				x += 73
+			y += 73
+			x = 0
+
+
+	def level1_4(self):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -161,53 +197,6 @@ class Level(object):
 				x += 73
 			y += 73
 			x = 0
-
-
-	def level4(self):
-		self.level = [
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"oooooooooooooooooooooooooooo"
-			]
-		x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = Cube(x,y)
-					self.bad_platforms.append(cb)
-				x += 73
-			y += 73
-			x = 0
-
-	def rect_cube(self):
-		...
-		""" x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = Cube(x,y)
-					self.bad_platforms.append(cb)
-				x += 73
-			y += 73
-			x = 0 """
 	
 
 

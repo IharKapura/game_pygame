@@ -3,6 +3,18 @@ from pathlib import Path
 from level import Level
 from pygame.sprite import Sprite
 
+
+#Начальная позиция игрока
+coor_x = 900
+coor_y = 450
+#Нижняя граница экрана
+coor_screen_dawn = 1080
+#Координаты для завершения уровня
+coor_level_finish_x = [1800, 1920]
+coor_level_finish_y = 997
+
+
+
 class Player(Sprite):
 
     lookright = True
@@ -10,13 +22,13 @@ class Player(Sprite):
         #инициализация игрока
         super(Player, self).__init__()
         self.screen = screen
-        self.image = pygame.Surface((77, 54))
+        #self.image = pygame.Surface((77, 54))
         self.image = pygame.image.load(Path("images","player.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect = pygame.Rect(0, 0, 60, 50)
         self.screen_rect = screen.get_rect()
-        self.rect.centerx = self.screen_rect.centerx - 900
-        self.rect.centery = self.screen_rect.centery + 450
+        self.rect.centerx = self.screen_rect.centerx - coor_x
+        self.rect.centery = self.screen_rect.centery + coor_y
         self.cube_list = []
 
         #Переменные для изменения движения персонажа
@@ -96,18 +108,25 @@ class Player(Sprite):
         self.player_dead()
         self.gravitation()
         self.chek_collision(level)
+        self.collision_bad_cube(level)
 
         #левая граница экрана
         if self.rect.left < 0:
             self.rect.left = 0
 
 
+    #Получение урона
+    def taking_damage(self):
+        self.player_lives -= 1
+
+        
+    #Проверка игрока для бега по кубам
     def chek_collision(self, level):
 
         #Движение персонажа по оси Х
         self.rect.x += self.change_x
 
-        #Проверка столкновения с другими объектами по Х
+        #Проверка столкновения с кубами по Х
         block_hit_list = pygame.sprite.spritecollide(self, level.platforms, False)
         for block in block_hit_list:
             if self.change_x > 0:
@@ -118,7 +137,7 @@ class Player(Sprite):
         #Движение персонажа по оси У
         self.rect.y += self.change_y
 
-        #Проверка столкновения с другими объектами по У
+        #Проверка столкновения с кубами по У
         block_hit_list = pygame.sprite.spritecollide(self, level.platforms, False)
         for block in block_hit_list:
             if self.change_y > 0:
@@ -130,6 +149,18 @@ class Player(Sprite):
             self.change_y = 0
 
 
+    # столкновения c плохими кубами
+    def collision_bad_cube(self, level):
+        bad_hit_list = pygame.sprite.spritecollide(self, level.bad_platforms, False)
+        for block in bad_hit_list:
+                if self.rect.colliderect(block.rect):
+                    self.rect.centerx = self.screen_rect.centerx - coor_x
+                    self.rect.centery = self.screen_rect.centery + coor_y
+                    self.player_lives -= 0.5
+                    print(self.player_lives)
+
+                    
+
 
     
     # Гравитация
@@ -137,12 +168,8 @@ class Player(Sprite):
         if self.change_y == 0:
             self.change_y = 1
         else:
+            #Сила гравитации
             self.change_y += 0.95
-
-		# Если уже на земле, то ставим позицию Y как 0
-        if self.rect.y >= 1180 - self.rect.height and self.change_y >= 0:
-            self.change_y = 0
-            self.rect.y = 1180 - self.rect.height
 
     
     #Прыжок
@@ -153,7 +180,7 @@ class Player(Sprite):
         self.rect.y -= 10
 
 		# Если все в порядке, прыгаем вверх
-        if len(platform_hit_list) > 0 or self.rect.bottom >= 1020:
+        if len(platform_hit_list) > 0 or self.rect.bottom >= coor_screen_dawn:
             self.change_y = -15
     
 
@@ -183,7 +210,7 @@ class Player(Sprite):
         self.rect.y -= 10
 
 		# Если все в порядке, прыгаем вверх
-        if len(platform_hit_list) > 0 or self.rect.bottom >= 1020:
+        if len(platform_hit_list) > 0 or self.rect.bottom >= coor_screen_dawn:
             self.rect.centerx += 365
 
 
@@ -233,16 +260,18 @@ class Player(Sprite):
 
 
     def player_dead(self):
-        if 1100 <= self.rect.centery:
-            self.rect.centerx = self.screen_rect.centerx - 900
-            self.rect.centery = self.screen_rect.centery + 450
+        if coor_screen_dawn <= self.rect.centery:
+            self.rect.centerx = self.screen_rect.centerx - coor_x
+            self.rect.centery = self.screen_rect.centery + coor_y
             self.player_lives -= 1
             print(self.player_lives)
-            if self.player_lives == 0:
-                self.player_gameover = True
-                print('DEAD')
+        if self.player_lives <= 0:
+            self.rect.centerx = self.screen_rect.centerx - coor_x
+            self.rect.centery = self.screen_rect.centery + coor_y
+            self.player_gameover = True
+            print('DEAD')
 
     def player_win(self):
-        if 1800 <= self.rect.centerx <= 1920 and self.rect.centery == 997:
+        if coor_level_finish_x[0] <= self.rect.centerx <= coor_level_finish_x[1] and self.rect.centery == coor_level_finish_y:
             self.player_gamewin = True
             #print('You WIN!')

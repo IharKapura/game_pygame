@@ -2,6 +2,7 @@ import pygame, pathlib
 from pathlib import Path
 from player import Player
 from pygame.sprite import Sprite
+from pygame.sprite import Group
 
 
 class Bg(Sprite):
@@ -13,32 +14,37 @@ class Bg(Sprite):
         self.screen = screen
         self.player = player
         self.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
-        self.bg_clouds = [
-            pygame.image.load(Path('images','_bg','облака_1.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','облака_2.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','облака_3.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','облака_4.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','облака_5.png')).convert_alpha(),
-        ]
-        self.bg_tree = [
-            pygame.image.load(Path('images','_bg','_tree_1.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','_tree_2.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','_tree_3.png')).convert_alpha(),
-            pygame.image.load(Path('images','_bg','_tree_4.png')).convert_alpha(),
-        ]
-        self.bg_count = 0
-        self.bg_x = 0
+        self.live = pygame.image.load(Path('images','player','lives.png')).convert_alpha()
 
-    def update_bg(self, player):
-        #Отрисовка и обновление экрана 
-        #self.change_screen(player)    
-        self.draw()
+        #Текст
+        font_text = pygame.font.SysFont('arial', 40)
+        self.text_run = font_text.render('Press "A" go left or Press "D" go right', False, "Black")
+        self.text_jump = font_text.render('Press "Space" to jump', False, "Black")
+
+    def update_bg(self, player, level):
+        #обновление заднего фона, текстаб жизней
+        self.draw(player, level)
+        self.lives(player)
     
 
-    def draw(self):
-        self.screen.blit(self.bg1, (self.bg_x, 0))
+    def draw(self, player, level):
+        self.screen.blit(self.bg1, (0, 0))
+        #Отрисовка текста
+        if 0 <= player.rect.centerx <= 160 and level.level_number == 1:
+            self.screen.blit(self.text_run, (100, 0))
+        if 640 <= player.rect.centerx <= 815 and level.level_number == 1:
+            self.screen.blit(self.text_jump, (100, 0))
+    
 
-    """ def change_screen(self, player):
-        if 1800 <= player.rect.centerx <= 1920:
-            print('You WIN!') """
+    #Счетчик жизней
+    def lives(self, player):
+        if player.player_lives == 3:
+            self.screen.blit(self.live, (10,10))
+            self.screen.blit(self.live, (40,10))
+            self.screen.blit(self.live, (70,10))
+        elif player.player_lives == 2:
+            self.screen.blit(self.live, (10,10))
+            self.screen.blit(self.live, (40,10))
+        elif player.player_lives == 1:
+            self.screen.blit(self.live, (10,10))
 

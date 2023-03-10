@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg):
+def events(player,bullet, level, bg, cube):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -40,15 +40,14 @@ def events(player,bullet, level, bg):
                 player.player_gamewin = False
                 level.level_number += 1
                 level.platforms = []
+                level.bad_platforms = []
                 if level.level_number == 2:
-                    level.level2()
-                    level.rect_cube
+                    level.level1_2()
                 if  level.level_number == 3:
-                    level.level3()
-                    level.rect_cube
+                    cube.change_cube_cave()
+                    level.level1_3()
                 if  level.level_number == 4:
-                    level.level4()
-                    level.rect_cube
+                    level.level1_4()
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
@@ -62,30 +61,31 @@ def events(player,bullet, level, bg):
                 player.stop()
 
 
-def update(screen, bg, player, enemies, bullet, level, cube):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube):
     if player.player_gameover == False or player.player_gamewin == False:
         #обновление экрана
-        bg.update_bg(player)
+        bg.update_bg(player, level)
         #bg.change_screen(player)
         #player.collide(level)
         #level.update(screen, cube)
         #level.draw(screen, cube)
-        level.update(screen, cube)
+        level.update(screen, cube, bad_cube)
         bullet.update(player)
         #bullet.shot(player)
         #enemies.update()
         #enemies.update_enemies()
         #level.draw(screen, bg)
+        #collision(player, level)
         player.draw_player()
-        player.update_player(level, )
+        player.update_player(level)
         #enemies.draw_enemies()
         #pygame.display.flip()
     if player.player_gameover == True:
         bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
-        bg.update_bg(player)
+        bg.update_bg(player, level)
     if player.player_gamewin == True:
         bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
-        bg.update_bg(player)
+        bg.update_bg(player, level)
     if level.level_number == 0:
         level.level1()
         level.level_number += 1
@@ -99,16 +99,16 @@ def update(screen, bg, player, enemies, bullet, level, cube):
 
 
 
-""" def collision(screen, player, enemies, bullet, level):
+""" def collision(player, level):
     # столкновения
-    ...
-    if level.rect.colliderect(player.rect):
-        if player.change_x > 0:
-            player.rect.right = level.cube_list.rect.left
-        if player.change_x < 0:
-            player.rect.left = level.cube_list.rect.right
-        if player.change_y > 0:
-            player.rect.bottom = level.cube_list.rect.top
-            player.change_y = 0
-        if player.change_y <0:
-            player.rect.top = level.cube_list.rect.bottom """
+    bad_hit_list = pygame.sprite.spritecollide(player, level.bad_platforms, False)
+    for block in bad_hit_list:
+            if player.rect.colliderect(block.rect):
+                self.rect.centerx = self.screen_rect.centerx - coor_x
+                self.rect.centery = self.screen_rect.centery + coor_y
+                player.player_lives -= 1
+
+                print("YES")
+                print(player.player_lives)
+            elif player.rect.left == block.rect.right:
+                player.player_lives -= 1 """
