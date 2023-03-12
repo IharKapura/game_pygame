@@ -112,11 +112,13 @@ class Player(Sprite):
         self.chek_collision(level)
         self.collision_bad_cube(level)
         self.colission_power(level, cube_power)
+        self.collision_enemies(level)
 
         #левая граница экрана
         if self.rect.left < 0:
             self.rect.left = 0
-
+        if self.rect.right > 1920:
+            self.rect.right = 1920
 
     #Получение урона
     def taking_damage(self):
@@ -169,6 +171,15 @@ class Player(Sprite):
             if self.rect.colliderect(power.rect):
                 self.player_get_power = True
                 cube_power.change_cube_power()
+
+    
+    def collision_enemies(self, level):
+        enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
+        for enemies in enemies_hit_list:
+            if self.rect.colliderect(enemies.rect):
+                self.rect.centerx = self.screen_rect.centerx - coor_x
+                self.rect.centery = self.screen_rect.centery + coor_y
+                self.player_lives -= 1
                     
 
 

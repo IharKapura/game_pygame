@@ -63,13 +63,13 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
     if player.player_gameover == False or player.player_gamewin == False:
         #обновление экрана
         bg.update_bg(player, level)
-        bullet.update(player, level, enemies)
+        bullet.update(player, level)
         #bg.change_screen(player)
         #player.collide(level)
         #level.update(screen, cube)
         #level.draw(screen, cube)
+        enemies.update()
         level.update(screen, cube, bad_cube, cube_power, enemies)
-        #enemies.update()
         #bullet.shot(player)
         #enemies.update_enemies()
         #level.draw(screen, bg)
@@ -85,7 +85,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
         bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
         bg.update_bg(player, level)
     if level.level_number == 0:
-        level.level1()
+        level.level1_1()
         level.level_number += 1
 
 

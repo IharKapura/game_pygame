@@ -20,6 +20,7 @@ class Bg(Sprite):
         font_text = pygame.font.SysFont('arial', 40)
         self.text_run = font_text.render('Press "A" go left or Press "D" go right', False, "Black")
         self.text_jump = font_text.render('Press "Space" to jump', False, "Black")
+        self.text_fight = font_text.render('Press "E" to attack right and press "Q" to attack left', False, "Black")
 
     def update_bg(self, player, level):
         #обновление заднего фона, текстаб жизней
@@ -34,6 +35,8 @@ class Bg(Sprite):
             self.screen.blit(self.text_run, (100, 0))
         if 640 <= player.rect.centerx <= 815 and level.level_number == 1:
             self.screen.blit(self.text_jump, (100, 0))
+        if player.player_get_power and level.level_number == 4:
+            self.screen.blit(self.text_fight, (100, 0))
     
 
     #Счетчик жизней

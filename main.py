@@ -36,7 +36,7 @@ def main():
     clock = pygame.time.Clock()
 
     #Музыка для фона
-    level.play_music_bg()
+    #level.play_music_bg()
 
     run_game = True
     #Добавление текста
@@ -55,11 +55,10 @@ def main():
         controls.events(player, bullet, level, bg, screen)
         #controls.collision(player, level)
         controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power)
-        #bullet.shot(screen, player)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(len(level.enemies))
+        print(clock)
 
         
 if __name__ == "__main__":
