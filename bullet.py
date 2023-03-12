@@ -11,20 +11,20 @@ class Bullet(Sprite):
         #инициализация пули
         super(Bullet, self).__init__()
         self.screen = screen
-        self.screen_rect = self.screen.get_rect()
-        self.player = player
         self.bullets = []
-        self.bullet_image = pygame.image.load(Path("images","player_fight","_bear_a_ball.png")).convert_alpha()
-        self.bullet_rect = self.bullet_image.get_rect()
+        self.image = pygame.image.load(Path("images","player_fight","_bear_a_ball.png")).convert_alpha()
+        self.rect = pygame.Rect(0, 0, 30, 32)
         self.change_x = 0
+        self.x = player.rect.x
+        self.y = player.rect.y
 
-    def update(self, player):
-
-        keys = pygame.key.get_pressed()
+    def update(self, player, level, enemies):
+        self.draw_bullet(player)
+        self.kill_enemies(level, enemies)
 
         if self.bullets:
             for (i, el) in enumerate(self.bullets):
-                    self.screen.blit(self.bullet_image, (el.x, el.y))
+                    self.rect = pygame.Rect(el.x, el.y, 30, 32)
                     el.x += self.change_x
 
             if i > 1:
@@ -37,15 +37,39 @@ class Bullet(Sprite):
 
 
 
+    def draw_bullet(self, player):
+        if self.bullets:
+            for (i, el) in enumerate(self.bullets):
+                    self.screen.blit(self.image, (el.x, el.y))
+                    el.x += self.change_x
+
+            if i > 1:
+                self.bullets.pop(i)
+            elif el.x > (player.rect.centerx + 200):
+                self.bullets.pop(i)
+            elif el.x < (player.rect.centerx - 200):
+                self.bullets.pop(i)
+     
+
+
+
     def shot_right(self, player):
         #Бросок меда
         self.change_x = 25
-        self.bullets.append(self.bullet_image.get_rect(center = (player.rect.centerx , player.rect.centery - 10)))
+        self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
 
     def shot_left(self, player):
         #Бросок меда
         self.change_x = -25
-        self.bullets.append(self.bullet_image.get_rect(center = (player.rect.centerx , player.rect.centery - 10)))
+        self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
         
 
-        
+    def kill_enemies(self, level, enemies):
+        bullet_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
+        for enem in bullet_hit_list:
+            for el in level.enemies:
+                if self.rect.colliderect(enem.rect):
+                    level.enemies.remove(el)
+
+
+

@@ -1,6 +1,6 @@
 import pygame, pathlib
 from pathlib import Path
-from player import Player
+""" from player import Player """
 from pygame.sprite import Sprite
 from pygame.sprite import Group
 
@@ -48,3 +48,9 @@ class Bg(Sprite):
         elif player.player_lives == 1:
             self.screen.blit(self.live, (10,10))
 
+
+    #Размещение силы для игрока
+    def power_for_player(self, bullet):
+        """ bullet.bullet_rect.centerx = 450
+        bullet.bullet_rect.centery = 450 """
+        self.screen.blit(bullet.bullet_image, (450,450))

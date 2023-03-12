@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg, cube):
+def events(player,bullet, level, bg, screen):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -28,9 +28,9 @@ def events(player,bullet, level, bg, cube):
                 player.jump(level)
             if event.key == pygame.K_LCTRL:
                 player.jerk(level)
-            if event.key == pygame.K_e:
+            if event.key == pygame.K_e and player.player_get_power:
                 bullet.shot_right(player)
-            if event.key == pygame.K_q:
+            if event.key == pygame.K_q and player.player_get_power:
                 bullet.shot_left(player)
             if event.key == pygame.K_r and player.player_gameover == True:
                 player.player_gameover = False
@@ -44,7 +44,6 @@ def events(player,bullet, level, bg, cube):
                 if level.level_number == 2:
                     level.level1_2()
                 if  level.level_number == 3:
-                    cube.change_cube_cave()
                     level.level1_3()
                 if  level.level_number == 4:
                     level.level1_4()
@@ -57,27 +56,26 @@ def events(player,bullet, level, bg, cube):
                 player.stop()
             if event.key == pygame.K_d and player.change_x > 0:
                 player.stop()
-            if event.key == pygame.K_LSHIFT:
-                player.stop()
+            
 
 
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power):
     if player.player_gameover == False or player.player_gamewin == False:
         #обновление экрана
         bg.update_bg(player, level)
+        bullet.update(player, level, enemies)
         #bg.change_screen(player)
         #player.collide(level)
         #level.update(screen, cube)
         #level.draw(screen, cube)
-        level.update(screen, cube, bad_cube)
-        bullet.update(player)
-        #bullet.shot(player)
+        level.update(screen, cube, bad_cube, cube_power, enemies)
         #enemies.update()
+        #bullet.shot(player)
         #enemies.update_enemies()
         #level.draw(screen, bg)
         #collision(player, level)
         player.draw_player()
-        player.update_player(level)
+        player.update_player(level, cube_power)
         #enemies.draw_enemies()
         #pygame.display.flip()
     if player.player_gameover == True:

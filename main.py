@@ -7,6 +7,7 @@ from enemies import Enemies
 from level import Level
 from cube import Cube
 from bad_cube import BadCube
+from cube_power import CubePower
 from pygame.sprite import Group
 
 
@@ -29,8 +30,9 @@ def main():
     bg = Bg(screen, player)
     cube = Cube(0, 0)
     bad_cube = BadCube(0, 0)
+    cube_power = CubePower(0, 0)
     level = Level(player, cube)
-    enemies = Enemies(screen)
+    enemies = Enemies(0, 0)
     clock = pygame.time.Clock()
 
     #Музыка для фона
@@ -50,14 +52,14 @@ def main():
 
     while run_game:
         
-        controls.events(player, bullet, level, bg, cube)
+        controls.events(player, bullet, level, bg, screen)
         #controls.collision(player, level)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power)
         #bullet.shot(screen, player)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        #print(player.rect)
+        print(len(level.enemies))
 
         
 if __name__ == "__main__":

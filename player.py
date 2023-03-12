@@ -24,7 +24,7 @@ class Player(Sprite):
         self.screen = screen
         #self.image = pygame.Surface((77, 54))
         self.image = pygame.image.load(Path("images","player.png")).convert_alpha()
-        self.rect = self.image.get_rect()
+        #self.rect = self.image.get_rect()
         self.rect = pygame.Rect(0, 0, 60, 50)
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx - coor_x
@@ -38,6 +38,8 @@ class Player(Sprite):
         self.player_lives = 3
         self.player_gameover = False
         self.player_gamewin = False
+        self.player_power = False
+        self.player_get_power = False
 
         #Для прыжка
         self.is_jump = False
@@ -103,12 +105,13 @@ class Player(Sprite):
 
 
     #обновление позиции игрока
-    def update_player(self, level):
+    def update_player(self, level, cube_power):
         self.player_win()
         self.player_dead()
         self.gravitation()
         self.chek_collision(level)
         self.collision_bad_cube(level)
+        self.colission_power(level, cube_power)
 
         #левая граница экрана
         if self.rect.left < 0:
@@ -153,12 +156,19 @@ class Player(Sprite):
     def collision_bad_cube(self, level):
         bad_hit_list = pygame.sprite.spritecollide(self, level.bad_platforms, False)
         for block in bad_hit_list:
-                if self.rect.colliderect(block.rect):
-                    self.rect.centerx = self.screen_rect.centerx - coor_x
-                    self.rect.centery = self.screen_rect.centery + coor_y
-                    self.player_lives -= 0.5
-                    print(self.player_lives)
+            if self.rect.colliderect(block.rect):
+                self.rect.centerx = self.screen_rect.centerx - coor_x
+                self.rect.centery = self.screen_rect.centery + coor_y
+                self.player_lives -= 1
+                print(self.player_lives)
 
+
+    def colission_power(self, level, cube_power):
+        power_hit_list = pygame.sprite.spritecollide(self, level.player_power, False)
+        for power in power_hit_list:
+            if self.rect.colliderect(power.rect):
+                self.player_get_power = True
+                cube_power.change_cube_power()
                     
 
 
@@ -240,7 +250,7 @@ class Player(Sprite):
                 self.player_animw_count += 1
                 self.screen.blit(self.walk_right[self.player_animw_count], self.rect)
         #Анимация атаки влево
-        elif keys[pygame.K_q]:
+        elif keys[pygame.K_q] and self.player_get_power:
             if self.player_animf_count == 11 :
                 self.player_animf_count = 0
                 self.screen.blit(self.fight_left[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
@@ -248,7 +258,7 @@ class Player(Sprite):
                 self.player_animf_count += 1
                 self.screen.blit(self.fight_left[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
         #Анимация атаки вправо
-        elif keys[pygame.K_e]:
+        elif keys[pygame.K_e] and self.player_get_power:
             if self.player_animf_count == 11 :
                 self.player_animf_count = 1
                 self.screen.blit(self.fight_right[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))

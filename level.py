@@ -3,6 +3,9 @@ from pathlib import Path
 from pygame.sprite import Sprite
 from cube import Cube
 from bad_cube import BadCube
+from cube_power import CubePower
+from enemies import Enemies
+from bg import Bg
 
 
 
@@ -35,6 +38,8 @@ class Level(object):
 		#self.cube_list = pygame.sprite.Group()
 		self.platforms = []
 		self.bad_platforms = []
+		self.player_power = []
+		self.enemies = []
 		#self.cube_list.add(cube)
 
 		self.music_bg = True
@@ -46,12 +51,12 @@ class Level(object):
 		""" self.bg = bg """
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube):
-		self.draw(screen, cube, bad_cube)
+	def update(self, screen, cube, bad_cube, cube_power, enemies):
+		self.draw(screen, cube, bad_cube, cube_power, enemies)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies):
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -59,10 +64,14 @@ class Level(object):
 					screen.blit(cube.image, (x, y))
 				if col == "+":
 					screen.blit(bad_cube.image, (x, y))
+				if col == "*":
+					screen.blit(cube_power.image, (x, y + 40))
+				if col == "E":
+					for i in self.enemies:
+						screen.blit(i.image, (x, y))
 				x += 73
 			y += 73
 			x = 0
-
 
 	# Уровень 1.1
 	def level1(self):
@@ -92,15 +101,18 @@ class Level(object):
 					cb = Cube(x,y)
 					self.platforms.append(cb)
 				if col == "+":
-					cb = Cube(x,y)
+					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
+				if col == "E":
+					en = Enemies(x,y)
+					self.enemies.append(en)
 				x += 73
 			y += 73
 			x = 0
 
-
 	#Уровень 1.2
 	def level1_2(self):
+		self.enemies.clear()
 		self.level = [
 				"                            ",
 				"                            ",
@@ -127,15 +139,18 @@ class Level(object):
 					cb = Cube(x,y)
 					self.platforms.append(cb)
 				if col == "+":
-					cb = Cube(x,y)
+					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
+				if col == "E":
+					en = Enemies(x,y)
+					self.enemies.append(en)
 				x += 73
 			y += 73
 			x = 0
-	
 
 	#Уровень 3
 	def level1_3(self):
+		self.enemies.clear()
 		self.level = [
 				"                        o   ",
 				"                        o   ",
@@ -160,14 +175,18 @@ class Level(object):
 					cb = Cube(x,y)
 					self.platforms.append(cb)
 				if col == "+":
-					cb = Cube(x,y)
+					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
+				if col == "E":
+					en = Enemies(x,y)
+					self.enemies.append(en)
 				x += 73
 			y += 73
 			x = 0
 
 
 	def level1_4(self):
+		self.enemies.clear()
 		self.level = [
 				"                            ",
 				"                            ",
@@ -178,10 +197,10 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"                            ",
+				"              *             ",
 				"            oooo            ",
 				"           oooooo           ",
-				"          oooooooo          ",
+				"          oooooooo       E  ",
 				"         oooooooooo         ",
 				"oooooooooooooooooooooooooooo"
 			]
@@ -192,12 +211,17 @@ class Level(object):
 					cb = Cube(x,y)
 					self.platforms.append(cb)
 				if col == "+":
-					cb = Cube(x,y)
+					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
+				if col == "*":
+					cb = CubePower(x, y)
+					self.player_power.append(cb)
+				if col == "E":
+					en = Enemies(x,y)
+					self.enemies.append(en)
 				x += 73
 			y += 73
 			x = 0
-	
 
 
 
