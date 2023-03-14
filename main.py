@@ -55,7 +55,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(level.level_number)
+        print(clock)
 
         
 if __name__ == "__main__":

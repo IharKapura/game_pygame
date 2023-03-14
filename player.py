@@ -196,10 +196,10 @@ class Player(Sprite):
     def colission_power(self, level, cube_power):
         power_hit_list = pygame.sprite.spritecollide(self, level.player_power, False)
         for power in power_hit_list:
-            if self.rect.colliderect(power.rect):
+            if self.rect.colliderect(power.rect) and level.level_number == 4:
                 self.player_get_power = True
                 cube_power.change_cube_power()
-            if self.rect.colliderect(power.rect) and cube_power.fire:
+            elif self.rect.colliderect(power.rect) and cube_power.fire:
                 self.player_get_fire = True
                 cube_power.change_fire_power()
 

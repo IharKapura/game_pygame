@@ -233,7 +233,6 @@ class Level(object):
 				"          E    oooooo       ",
 				"ooooooo   oooooooooooooooooo"
 			] 
-		
 		self.object_rect()
 
 
@@ -285,25 +284,27 @@ class Level(object):
 
 
 	#Уровень 2_0
-	def level2_0(self, cube, bad_cube, cube_power):
+	def level2_0(self,cube_power, bg, cube, bad_cube):
 		self.level = [
 				"                            ",
 				"                            ",
 				"                            ",
 				"                            ",
 				"                            ",
-				"               E            ",
-				"               oooo         ",
-				"           o                ",
-				"            o         ^  S^ ",
-				"             o        o  oo ",
-				"              o     ^oo  ooo",
-				"    *          o    ooo  ooo",
-				"                   oooo  ooo",
-				"               oo^^oooo     ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"            *               ",
+				"                            ",
+				"                     ^^^    ",
 				"oooooooooooooooooooooooooooo"
 			]
+		
 		cube_power.change_fire_powerball()
+		bg.change_bg_cave()
 		cube.change_cube_cave()
 		bad_cube.change_bad_cube_cave()
 		self.object_rect()

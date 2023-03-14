@@ -23,6 +23,7 @@ class Bg(Sprite):
         self.text_run = font_text.render('Press "A" go left or Press "D" go right', False, "Black")
         self.text_jump = font_text.render('Press "Space" to jump', False, "Black")
         self.text_fight = font_text.render('Press "E" to attack right and press "Q" to attack left', False, "Black")
+        self.text_fire_power = font_text.render('Press "1" to activate FIRE POWER /n You can jerk Press "LCtrl"', False, "Orange")
 
     def update_bg(self, player, level):
         #обновление заднего фона, текстаб жизней
@@ -34,11 +35,13 @@ class Bg(Sprite):
         self.screen.blit(self.bg1, (0, 0))
         #Отрисовка текста
         if 0 <= player.rect.centerx <= 160 and level.level_number == 1:
-            self.screen.blit(self.text_run, (player.rect.centerx, player.rect.centery - 100))
-        if 640 <= player.rect.centerx <= 815 and level.level_number == 1:
-            self.screen.blit(self.text_jump, (player.rect.centerx, player.rect.centery - 100))
-        if player.player_get_power and level.level_number == 4:
-            self.screen.blit(self.text_fight, (player.rect.centerx, player.rect.centery - 100))
+            self.screen.blit(self.text_run, (player.rect.centerx, player.rect.centery - 300))
+        elif 640 <= player.rect.centerx <= 815 and level.level_number == 1:
+            self.screen.blit(self.text_jump, (player.rect.centerx, player.rect.centery - 300))
+        elif player.player_get_power and level.level_number == 4:
+            self.screen.blit(self.text_fight, (player.rect.centerx, player.rect.centery - 300))
+        elif player.player_get_fire and level.level_number == 8:
+            self.screen.blit(self.text_fire_power, (player.rect.centerx, player.rect.centery - 300))
     
 
     #Счетчик жизней
@@ -59,6 +62,5 @@ class Bg(Sprite):
 
 
     #Размещение силы для игрока
-    """ def power_for_player(self,player, bullet):
-        if player.player_get_power:
-            self.screen.blit(bullet.bullet_image, (450,450)) """
+    def change_bg_cave(self):
+        self.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()

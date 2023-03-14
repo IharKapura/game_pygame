@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg, cube, bad_cube, cube_power):
+def events(player,bullet, level, bg, cube_power, cube, bad_cube):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -40,11 +40,17 @@ def events(player,bullet, level, bg, cube, bad_cube, cube_power):
             if event.key == pygame.K_1 and player.player_get_fire:
                 player.player_fire_power = True
                 player.player_fire(bullet)
+                if not player.lookright:
+                    player.flip()
+                    player.lookright = True
             #Рестарт и переключение уровня
             if event.key == pygame.K_r and player.player_gameover == True:
                 player.player_gameover = False
                 player.player_lives = 3
-                bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                if level.level_number < 8:
+                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                elif level.level_number >= 8:
+                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
                 level.level_number += 1
@@ -63,11 +69,14 @@ def events(player,bullet, level, bg, cube, bad_cube, cube_power):
                 elif level.level_number == 7:
                     level.level1_7()
                 elif level.level_number == 8:
-                    level.level2_0(cube, bad_cube, cube_power)
+                    level.level2_0(cube_power, bg, cube, bad_cube)
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
-                bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                if level.level_number < 8:
+                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                elif level.level_number >= 8:
+                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
         if event.type == pygame.KEYUP:
             #Бег
             if event.key == pygame.K_a and player.change_x < 0:
