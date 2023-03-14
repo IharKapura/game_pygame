@@ -50,12 +50,12 @@ def main():
 
     while run_game:
         
-        controls.events(player, bullet, level, bg, cube_power)
+        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube)
         controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(clock)
+        print(level.level_number)
 
         
 if __name__ == "__main__":

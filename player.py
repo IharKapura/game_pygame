@@ -201,7 +201,7 @@ class Player(Sprite):
                 cube_power.change_cube_power()
             if self.rect.colliderect(power.rect) and cube_power.fire:
                 self.player_get_fire = True
-                cube_power.change_cube_power()
+                cube_power.change_fire_power()
 
     
     def collision_enemies(self, level):

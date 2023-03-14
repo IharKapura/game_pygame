@@ -71,6 +71,33 @@ class CubePower (Sprite):
 			pygame.image.load(Path('images','_bg','power_10.png')).convert_alpha(),
 		]
 
+	def change_fire_powerball(self):
+		self.fire = True
+		self.image = [
+			pygame.image.load(Path('images','_bg','power_fire_ball_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_6.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_7.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_8.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_9.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_ball_10.png')).convert_alpha(),
+		]
+
+
 	def change_fire_power(self):
 		self.fire = True
-		self.image = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
+		self.image = [
+			pygame.image.load(Path('images','_bg','power_fire_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_6.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_7.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_8.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_9.png')).convert_alpha(),
+			pygame.image.load(Path('images','_bg','power_fire_10.png')).convert_alpha(),
+		]

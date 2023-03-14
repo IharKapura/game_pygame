@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg, cuber_power):
+def events(player,bullet, level, bg, cube, bad_cube, cube_power):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -52,16 +52,18 @@ def events(player,bullet, level, bg, cuber_power):
                 level.bad_platforms = []
                 if level.level_number == 2:
                     level.level1_2()
-                if  level.level_number == 3:
+                elif  level.level_number == 3:
                     level.level1_3()
-                if  level.level_number == 4:
+                elif  level.level_number == 4:
                     level.level1_4()
-                if level.level_number == 5:
+                elif level.level_number == 5:
                     level.level1_5()
-                if level.level_number == 6:
+                elif level.level_number == 6:
                     level.level1_6()
-                if level.level_number == 7:
-                    level.level1_7(cuber_power)
+                elif level.level_number == 7:
+                    level.level1_7()
+                elif level.level_number == 8:
+                    level.level2_0(cube, bad_cube, cube_power)
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
@@ -84,6 +86,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
         enemies.update()
         enemies_scorp.update()
         cube_power.update()
+        bad_cube.update()
         level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp)
         player.draw_player()
         player.update_player(level, cube_power)

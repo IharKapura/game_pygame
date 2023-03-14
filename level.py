@@ -64,6 +64,8 @@ class Level(object):
 					screen.blit(cube.image, (x, y))
 				if col == "+":
 					screen.blit(bad_cube.image, (x, y))
+				if col == "^":
+					screen.blit(bad_cube.image[bad_cube.anim_count], (x, y))
 				if col == "*":
 					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 40))
 				if col == "E":
@@ -95,6 +97,9 @@ class Level(object):
 					cb = Cube(x,y)
 					self.platforms.append(cb)
 				if col == "+":
+					cb = BadCube(x,y)
+					self.bad_platforms.append(cb)
+				if col == "^":
 					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
 				if col == "*":
@@ -257,7 +262,7 @@ class Level(object):
 
 
 	#Уровень 1_7
-	def level1_7(self, cube_power):
+	def level1_7(self):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -269,13 +274,38 @@ class Level(object):
 				"           o                ",
 				"            o         +  S+ ",
 				"             o        o  oo ",
-				"       *      o     +oo  ooo",
+				"              o     +oo  ooo",
 				"               o    ooo  ooo",
 				"                   oooo  ooo",
 				"               oo++oooo     ",
 				"oooooooooooooooooooooooooooo"
 			]
-		cube_power.change_fire_power()
+
+		self.object_rect()
+
+
+	#Уровень 2_0
+	def level2_0(self, cube, bad_cube, cube_power):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"               E            ",
+				"               oooo         ",
+				"           o                ",
+				"            o         ^  S^ ",
+				"             o        o  oo ",
+				"              o     ^oo  ooo",
+				"    *          o    ooo  ooo",
+				"                   oooo  ooo",
+				"               oo^^oooo     ",
+				"oooooooooooooooooooooooooooo"
+			]
+		cube_power.change_fire_powerball()
+		cube.change_cube_cave()
+		bad_cube.change_bad_cube_cave()
 		self.object_rect()
 
 	#Музыка для заднего фона
