@@ -5,6 +5,7 @@ from cube import Cube
 from bad_cube import BadCube
 from cube_power import CubePower
 from enemies import Enemies
+from enemies_scorp import EnemiesScorp
 from bg import Bg
 
 
@@ -40,6 +41,7 @@ class Level(object):
 		self.bad_platforms = []
 		self.player_power = []
 		self.enemies = []
+		self.enemies_scorp = []
 		self.level = []
 
 		self.music_bg = True
@@ -50,12 +52,12 @@ class Level(object):
 
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies):
-		self.draw(screen, cube, bad_cube, cube_power, enemies)
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp):
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -67,7 +69,44 @@ class Level(object):
 					screen.blit(cube_power.image, (x, y + 40))
 				if col == "E":
 					for i in self.enemies:
-						screen.blit(i.image[enemies.anim_count], (x, y + 15))
+						screen.blit(i.image[enemies.anim_count], (x , y + 15))
+				if col == "S":
+					for i in self.enemies_scorp:
+						screen.blit(i.image[enemies_scorp.anim_count], (x , y + 27))
+				x += 73
+			y += 73
+			x = 0
+
+
+	#Размещение объектов по уровню
+	# o - обычный куб
+	# + - шип
+	# Е - враг растение
+	# S - враг скорпион
+	# * - сила
+	def object_rect(self):
+
+		self.enemies.clear()
+		self.enemies_scorp.clear()
+
+		x=y=0
+		for row in self.level:
+			for col in row:
+				if col == "o":
+					cb = Cube(x,y)
+					self.platforms.append(cb)
+				if col == "+":
+					cb = BadCube(x,y)
+					self.bad_platforms.append(cb)
+				if col == "*":
+					cb = CubePower(x, y)
+					self.player_power.append(cb)
+				if col == "E":
+					en = Enemies(x,y)
+					self.enemies.append(en)
+				if col == "S":
+					cb = EnemiesScorp(x, y)
+					self.enemies_scorp.append(cb)
 				x += 73
 			y += 73
 			x = 0
@@ -89,34 +128,16 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           o                ",
+				"           o    E           ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		
-		x=y=0
-		# Размещение кубов
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
-				if col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
-				if col == "*":
-					cb = CubePower(x, y)
-					self.player_power.append(cb)
-				x += 73
-			y += 73
-			x = 0
+		self.object_rect()
 
 
 	#Уровень 1_2
 	def level1_2(self):
-		self.enemies.clear()
+
 		self.level = [
 				"                            ",
 				"                            ",
@@ -127,7 +148,7 @@ class Level(object):
 				"  oooo   oo     o      o    ",
 				"o             o        o    ",
 				" o                     o    ",
-				"  o                   Eo    ",
+				"  o                   So    ",
 				"   oo   o  oo   ooo   oo    ",
 				"                   o   o    ",
 				"                    o  o    ",
@@ -135,29 +156,17 @@ class Level(object):
 				"ooo   ooo  o oo o  oooooooooo"	
 		]
 
-		x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
-				if col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
-				x += 73
-			y += 73
-			x = 0
+
+		self.object_rect()
+
 
 
 	#Уровень 1_3
 	def level1_3(self):
-		self.enemies.clear()
+
 		self.level = [
 				"                        o   ",
-				"                        o   ",
+				"                    S   o   ",
 				"      oo  o  ooo   oooo o   ",
 				"    o                 o o   ",
 				"   o                  o o   ",
@@ -169,30 +178,16 @@ class Level(object):
 				"o                           ",
 				"ooooo            E          ",
 				"      o   ooooooooo    oo  o",
-				"     o o  E        ++++ o  o",
+				"     o o  S        ++++ o  o",
 				"ooooooooooooo   oooooooooooo"
 			]
 		
-		x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
-				if col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
-				x += 73
-			y += 73
-			x = 0
+		self.object_rect()
 
 
 	#Уровень 1_4
 	def level1_4(self):
-		self.enemies.clear()
+
 		self.level = [
 				"                            ",
 				"                            ",
@@ -210,29 +205,36 @@ class Level(object):
 				"         oooooooooo      E  ",
 				"oooooooooooooooooooooooooooo"
 			]
-		x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
-				if col == "*":
-					cb = CubePower(x, y)
-					self.player_power.append(cb)
-				if col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
-				x += 73
-			y += 73
-			x = 0
+
+		self.object_rect()
 
 
 	#Уровень 1_5
 	def level1_5(self):
-		self.enemies.clear()
+
+		self.level = [
+				"       +++                  ",
+				" ooo   ooo  ooo ooo         ",
+				"                        o   ",
+				"                      o     ",
+				"      +    +  +     o       ",
+				"    oooo  ooo o ooo         ",
+				"o                           ",
+				"   o                        ",
+				"  oo                        ",
+				"o             S         o   ",
+				" oooo   oo   oooooo     o   ",
+				"                     ooo    ",
+				"                ooooo       ",
+				"          E    oooooo       ",
+				"ooooooo   oooooooooooooooooo"
+			] 
+		
+		self.object_rect()
+
+
+	def level1_6(self):
+
 		self.level = [
 				"                            ",
 				"                            ",
@@ -249,25 +251,9 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"oooooooooooooooooooooooooooo"
-			] 
-		x=y=0
-		for row in self.level:
-			for col in row:
-				if col == "o":
-					cb = Cube(x,y)
-					self.platforms.append(cb)
-				if col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
-				if col == "*":
-					cb = CubePower(x, y)
-					self.player_power.append(cb)
-				if col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
-				x += 73
-			y += 73
-			x = 0
+			]
+
+		self.object_rect()
 
 
 	#Музыка для заднего фона

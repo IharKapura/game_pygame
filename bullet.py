@@ -65,11 +65,16 @@ class Bullet(Sprite):
         
     #Смерть врагов
     def kill_enemies(self, level):
-        bullet_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
-        for enem in bullet_hit_list:
+        enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
+        for enem in enemies_hit_list:
             for el in level.enemies:
                 if self.rect.colliderect(enem.rect):
                     level.enemies.remove(el)
 
+        enemies_scorp_hit_list = pygame.sprite.spritecollide(self, level.enemies_scorp, False)
+        for enem in enemies_scorp_hit_list:
+            for el in level.enemies_scorp:
+                if self.rect.colliderect(enem.rect):
+                    level.enemies_scorp.remove(el)
 
 

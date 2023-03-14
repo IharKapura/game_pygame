@@ -9,7 +9,7 @@ class BadCube (Sprite):
 	def __init__(self, x, y):
 		Sprite.__init__(self)
 		self.image = pygame.image.load(Path('images','level1_image','cube_w_spike.png'))
-		self.rect = pygame.Rect(x, y, 73, 73)
+		self.rect = pygame.Rect(x + 10 , y + 20, 63, 63)
 
 	#Изменение картинки плохих кубов для уровня пещера
 	def change_cube_cave(self):

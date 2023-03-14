@@ -4,6 +4,7 @@ from player import *
 from bullet import Bullet
 from bg import Bg
 from enemies import Enemies
+from enemies_scorp import EnemiesScorp
 from level import Level
 from cube import Cube
 from bad_cube import BadCube
@@ -33,6 +34,7 @@ def main():
     cube_power = CubePower(0, 0)
     level = Level(player, cube)
     enemies = Enemies(0, 0)
+    enemies_scorp = EnemiesScorp(0, 0)
     clock = pygame.time.Clock()
 
     #Музыка для фона
@@ -54,11 +56,11 @@ def main():
         
         controls.events(player, bullet, level, bg, screen)
         #controls.collision(player, level)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(clock)
+        #print(player.jerk_count)
 
         
 if __name__ == "__main__":

@@ -34,18 +34,25 @@ class Player(Sprite):
         #Переменные для изменения движения персонажа
         self.change_x = 0
         self.change_y = 0
+        self.jerk_change_x = 0
+        self.jerk_can = False
+        #self.jerk_count = 0
         
         self.player_lives = 3
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = False
+        self.player_get_power = True
+        self.player_get_fire = True
+        self.player_fire_power = False
 
         #Для прыжка
         self.is_jump = False
         self.jump_count = 7
 
         #Картинки для персонажа
+        self.jerk_right = pygame.image.load(Path("images", "player", "Fire_bear", "fire_jerk_r.png")).convert_alpha()
+        self.jerk_left = pygame.image.load(Path("images", "player", "Fire_bear", "fire_jerk_l.png")).convert_alpha()
         self.walk_left = [
             pygame.image.load(Path("images","player_left","_br_m_l_1.png")).convert_alpha(),
             pygame.image.load(Path("images","player_left","_br_m_l_2.png")).convert_alpha(),
@@ -64,30 +71,18 @@ class Player(Sprite):
         ]
         self.fight_left = [
             pygame.image.load(Path("images","player_fight","_fight_l_1.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_1.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_2.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_l_2.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_l_3.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_3.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_4.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_l_4.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_l_5.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_5.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_l_6.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_l_6.png")).convert_alpha(),
         ]
         self.fight_right = [
             pygame.image.load(Path("images","player_fight","_fight_r_1.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_1.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_2.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_r_2.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_r_3.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_3.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_4.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_r_4.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_r_5.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_5.png")).convert_alpha(),
-            pygame.image.load(Path("images","player_fight","_fight_r_6.png")).convert_alpha(),
             pygame.image.load(Path("images","player_fight","_fight_r_6.png")).convert_alpha(),
         ]
         self.image_jump_rl = [ 
@@ -96,9 +91,6 @@ class Player(Sprite):
             pygame.image.load(Path("images","jump","_jump_up_l.png")).convert_alpha(),
             pygame.image.load(Path("images","jump","_jump_dn_l.png")).convert_alpha(),
         ]
-
-        #Пустое изображение
-        self.blank_image = pygame.image.load(Path("images","_blank_image.png")).convert_alpha()
 
         self.player_animw_count = 0
         self.player_animf_count = 0
@@ -113,13 +105,49 @@ class Player(Sprite):
         self.collision_bad_cube(level)
         self.colission_power(level, cube_power)
         self.collision_enemies(level)
-
-        #левая граница экрана
+        self.jerk()
+        #левая и правая граница экрана
         if self.rect.left < 0:
             self.rect.left = 0
         if self.rect.right > 1920:
             self.rect.right = 1920
 
+    #Картинки для силы огня
+    def player_fire(self, bullet):
+        self.image = pygame.image.load(Path("images","player", "Fire_bear", "fire_player.png")).convert_alpha()
+        bullet.image = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
+        self.walk_left = [
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_l_6.png")).convert_alpha(),
+        ]
+        self.walk_right = [
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_br_m_r_6.png")).convert_alpha(),
+        ]
+        self.fight_left = [
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_l_6.png")).convert_alpha(),
+        ]
+        self.fight_right = [
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_6.png")).convert_alpha(),
+        ]
     #Получение урона
     def taking_damage(self):
         self.player_lives -= 1
@@ -129,7 +157,7 @@ class Player(Sprite):
     def chek_collision(self, level):
 
         #Движение персонажа по оси Х
-        self.rect.x += self.change_x
+        self.rect.x += (self.change_x + self.jerk_change_x)
 
         #Проверка столкновения с кубами по Х
         block_hit_list = pygame.sprite.spritecollide(self, level.platforms, False)
@@ -149,9 +177,9 @@ class Player(Sprite):
                 self.rect.bottom = block.rect.top
             elif self.change_y < 0:
                 self.rect.top = block.rect.bottom
-
 			# Остановка движения по У
             self.change_y = 0
+            self.on_ground = True
 
 
     # столкновения c плохими кубами
@@ -180,7 +208,14 @@ class Player(Sprite):
                 self.rect.centerx = self.screen_rect.centerx - coor_x
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
-                    
+
+                   
+        enemies_scorp_hit_list = pygame.sprite.spritecollide(self, level.enemies_scorp, False)
+        for enemies_scorp in enemies_scorp_hit_list:
+            if self.rect.colliderect(enemies_scorp.rect):
+                self.rect.centerx = self.screen_rect.centerx - coor_x
+                self.rect.centery = self.screen_rect.centery + coor_y
+                self.player_lives -= 1
 
 
     
@@ -225,14 +260,14 @@ class Player(Sprite):
 
 
     #Рывок
-    def jerk(self, level):
-        self.rect.y += 10
-        platform_hit_list = pygame.sprite.spritecollide(self, level.platforms, False)
-        self.rect.y -= 10
+    def jerk(self):
 
-		# Если все в порядке, прыгаем вверх
-        if len(platform_hit_list) > 0 or self.rect.bottom >= coor_screen_dawn:
-            self.rect.centerx += 365
+        if self.jerk_can and self.player_fire_power and self.lookright:
+            self.jerk_change_x = 8
+        elif self.jerk_can and self.player_fire_power and not self.lookright:
+            self.jerk_change_x = -8
+        elif not self.jerk_can:
+            self.jerk_change_x = 0
 
 
     #Поворот изоброжения по вертикали
@@ -245,7 +280,7 @@ class Player(Sprite):
         keys = pygame.key.get_pressed()
 
         #Анимация движения влево
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and not keys[pygame.K_LCTRL]:
             if self.player_animw_count == 5 :
                 self.player_animw_count = 0
                 self.screen.blit(self.walk_left[self.player_animw_count], self.rect)
@@ -253,7 +288,7 @@ class Player(Sprite):
                 self.player_animw_count += 1
                 self.screen.blit(self.walk_left[self.player_animw_count], self.rect)
         #Анимация движения вправо
-        elif keys[pygame.K_d] :
+        elif keys[pygame.K_d] and not keys[pygame.K_LCTRL]:
             if self.player_animw_count == 5 :
                 self.player_animw_count = 0
                 self.screen.blit(self.walk_right[self.player_animw_count], self.rect)
@@ -262,7 +297,7 @@ class Player(Sprite):
                 self.screen.blit(self.walk_right[self.player_animw_count], self.rect)
         #Анимация атаки влево
         elif keys[pygame.K_q] and self.player_get_power:
-            if self.player_animf_count == 11 :
+            if self.player_animf_count == 5 :
                 self.player_animf_count = 0
                 self.screen.blit(self.fight_left[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
             else:
@@ -270,12 +305,16 @@ class Player(Sprite):
                 self.screen.blit(self.fight_left[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
         #Анимация атаки вправо
         elif keys[pygame.K_e] and self.player_get_power:
-            if self.player_animf_count == 11 :
-                self.player_animf_count = 1
+            if self.player_animf_count == 5 :
+                self.player_animf_count = 0
                 self.screen.blit(self.fight_right[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
             else:
                 self.player_animf_count += 1
                 self.screen.blit(self.fight_right[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
+        elif keys[pygame.K_LCTRL] and self.player_fire_power and self.lookright:
+            self.screen.blit(self.jerk_right, self.rect)
+        elif keys[pygame.K_LCTRL] and self.player_fire_power and not self.lookright:
+            self.screen.blit(self.jerk_left, self.rect)
         else:
             self.screen.blit(self.image, self.rect)
 
