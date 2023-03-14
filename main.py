@@ -32,7 +32,7 @@ def main():
     cube = Cube(0, 0)
     bad_cube = BadCube(0, 0)
     cube_power = CubePower(0, 0)
-    level = Level(player, cube)
+    level = Level()
     enemies = Enemies(0, 0)
     enemies_scorp = EnemiesScorp(0, 0)
     clock = pygame.time.Clock()
@@ -41,26 +41,21 @@ def main():
     #level.play_music_bg()
 
     run_game = True
-    #Добавление текста
-    """ font_text = pygame.font.Font('fonts\MoonDance-Regular.ttf', 40)
-    text_surface = font_text.render("Break", False, "Green") """
 
 
-    #TODO Разобраться со звуком
-    #pygame.mixer.music.load('sounds/1-title.mp3')
-    #pygame.mixer.music.play()
+
+
     
     
 
     while run_game:
         
-        controls.events(player, bullet, level, bg, screen)
-        #controls.collision(player, level)
+        controls.events(player, bullet, level, bg, cube_power)
         controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        #print(player.jerk_count)
+        print(clock)
 
         
 if __name__ == "__main__":

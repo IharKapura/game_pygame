@@ -34,8 +34,7 @@ from bg import Bg
 
 
 class Level(object):
-	def __init__(self, player, cube):
-		# Создаем группу спрайтов (поместим платформы различные сюда)
+	def __init__(self):
 
 		self.platforms = []
 		self.bad_platforms = []
@@ -66,7 +65,7 @@ class Level(object):
 				if col == "+":
 					screen.blit(bad_cube.image, (x, y))
 				if col == "*":
-					screen.blit(cube_power.image, (x, y + 40))
+					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 40))
 				if col == "E":
 					for i in self.enemies:
 						screen.blit(i.image[enemies.anim_count], (x , y + 15))
@@ -128,7 +127,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           o    E           ",
+				"           oE               ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		
@@ -198,11 +197,11 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"              *             ",
-				"            oooo            ",
-				"           oooooo           ",
-				"          oooooooo          ",
-				"         oooooooooo      E  ",
+				"           o*   o            ",
+				"          oo    oo          ",
+				"         ooo    ooo         ",
+				"        oooo     S          ",
+				"       oooooooooooooo    E  ",
 				"oooooooooooooooooooooooooooo"
 			]
 
@@ -233,28 +232,51 @@ class Level(object):
 		self.object_rect()
 
 
+	#Уровень 1_6
 	def level1_6(self):
 
+		self.level = [
+				"                            ",
+				"                            ",
+				"                          + ",
+				"    o   oo  + ++       +  o ",
+				"   o        o oo     oooo o ",
+				"o                   o   o o ",
+				"  oo         oo oo      o o ",
+				"       o       +          + ",
+				"    o          o   ++     o ",
+				"oo       + S   oooooo o ooo ",
+				"   oo  o o o   o       +    ",
+				"              o      ooo    ",
+				"             o     oo       ",
+				"       E    ooo             ",
+				"oooo   ooooooooooooooooooooo"
+			]
+		#cube_power.change_fire_power()
+		self.object_rect()
+
+
+	#Уровень 1_7
+	def level1_7(self, cube_power):
 		self.level = [
 				"                            ",
 				"                            ",
 				"                            ",
 				"                            ",
 				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
+				"               E            ",
+				"               oooo         ",
+				"           o                ",
+				"            o         +  S+ ",
+				"             o        o  oo ",
+				"       *      o     +oo  ooo",
+				"               o    ooo  ooo",
+				"                   oooo  ooo",
+				"               oo++oooo     ",
 				"oooooooooooooooooooooooooooo"
 			]
-
+		cube_power.change_fire_power()
 		self.object_rect()
-
 
 	#Музыка для заднего фона
 	def play_music_bg(self):

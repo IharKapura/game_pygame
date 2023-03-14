@@ -52,12 +52,13 @@ class Bg(Sprite):
             self.screen.blit(self.live, (40,10))
         elif player.player_lives == 1:
             self.screen.blit(self.live, (10,10))
-        if not player.player_fire_power:
+        if player.player_get_power and not player.player_fire_power:
             self.screen.blit(self.power, (10, 50))
         if player.player_fire_power:
             self.screen.blit(self.fire_power, (10, 50))
 
 
     #Размещение силы для игрока
-    def power_for_player(self, bullet):
-        self.screen.blit(bullet.bullet_image, (450,450))
+    """ def power_for_player(self,player, bullet):
+        if player.player_get_power:
+            self.screen.blit(bullet.bullet_image, (450,450)) """

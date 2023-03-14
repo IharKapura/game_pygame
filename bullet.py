@@ -54,13 +54,13 @@ class Bullet(Sprite):
 
     #Бросок меда
     def shot_right(self, player):
-        self.change_x = 25
+        self.change_x = 15
         self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
 
 
     #Бросок меда
     def shot_left(self, player):
-        self.change_x = -25
+        self.change_x = -15
         self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
         
     #Смерть врагов

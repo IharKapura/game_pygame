@@ -17,7 +17,7 @@ class Enemies (Sprite):
             pygame.image.load(Path("images","enemies","enemies_5.png")).convert_alpha(),
             pygame.image.load(Path("images","enemies","enemies_6.png")).convert_alpha(),
         ]
-        self.rect = pygame.Rect(x , y, 68, 65)
+        self.rect = pygame.Rect(x - 10, y + 10 , 68, 65)
         self.anim_count = False
         self.tick = 0
 

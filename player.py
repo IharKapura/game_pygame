@@ -42,8 +42,8 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = True
-        self.player_get_fire = True
+        self.player_get_power = False
+        self.player_get_fire = False
         self.player_fire_power = False
 
         #Для прыжка
@@ -199,6 +199,9 @@ class Player(Sprite):
             if self.rect.colliderect(power.rect):
                 self.player_get_power = True
                 cube_power.change_cube_power()
+            if self.rect.colliderect(power.rect) and cube_power.fire:
+                self.player_get_fire = True
+                cube_power.change_cube_power()
 
     
     def collision_enemies(self, level):
@@ -334,4 +337,3 @@ class Player(Sprite):
     def player_win(self):
         if coor_level_finish_x[0] <= self.rect.centerx <= coor_level_finish_x[1] and self.rect.centery == coor_level_finish_y:
             self.player_gamewin = True
-            #print('You WIN!')
