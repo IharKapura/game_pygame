@@ -47,7 +47,7 @@ class Level(object):
 
 		self.music_bg = True
 
-		self.level_number = 8
+		self.level_number = 0
 
 		""" self.bg = bg """
 

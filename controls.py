@@ -110,6 +110,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
     if player.player_gamewin == True:
         bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
         bg.update_bg(player, level)
-    if level.level_number == 8:
-        level.level2_0(bg, cube, bad_cube)
+    if level.level_number == 0:
+        level.level1_1()
         level.level_number += 1
