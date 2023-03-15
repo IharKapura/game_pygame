@@ -9,6 +9,7 @@ from level import Level
 from cube import Cube
 from bad_cube import BadCube
 from cube_power import CubePower
+from finish import Finish
 #from pygame.sprite import Group
 
 
@@ -35,6 +36,7 @@ def main():
     level = Level()
     enemies = Enemies(0, 0)
     enemies_scorp = EnemiesScorp(0, 0)
+    finish = Finish(0, 0)
     clock = pygame.time.Clock()
 
     #Музыка для фона
@@ -51,7 +53,7 @@ def main():
     while run_game:
         
         controls.events(player, bullet, level, bg, cube_power, cube, bad_cube)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()

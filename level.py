@@ -6,6 +6,7 @@ from bad_cube import BadCube
 from cube_power import CubePower
 from enemies import Enemies
 from enemies_scorp import EnemiesScorp
+from finish import Finish
 from bg import Bg
 
 
@@ -42,21 +43,22 @@ class Level(object):
 		self.enemies = []
 		self.enemies_scorp = []
 		self.level = []
+		self.finish = []
 
 		self.music_bg = True
 
-		self.level_number = 0
+		self.level_number = 8
 
 		""" self.bg = bg """
 
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp):
-		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp)
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish):
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -74,6 +76,9 @@ class Level(object):
 				elif col == "S":
 					for i in self.enemies_scorp:
 						screen.blit(i.image[enemies_scorp.anim_count], (x , y + 27))
+				elif col == "F":
+					for i in self.finish:
+						screen.blit(finish.image, (x, y + 21))
 				x += 73
 			y += 73
 			x = 0
@@ -85,10 +90,13 @@ class Level(object):
 	# Е - враг растение
 	# S - враг скорпион
 	# * - сила
+	# ^ - плампя
+	# F - конец уровня
 	def object_rect(self):
 
 		self.enemies.clear()
 		self.enemies_scorp.clear()
+		self.finish.clear()
 
 		x=y=0
 		for row in self.level:
@@ -106,11 +114,14 @@ class Level(object):
 					cb = CubePower(x, y)
 					self.player_power.append(cb)
 				elif col == "E":
-					en = Enemies(x,y)
-					self.enemies.append(en)
+					cb = Enemies(x,y)
+					self.enemies.append(cb)
 				elif col == "S":
 					cb = EnemiesScorp(x, y)
 					self.enemies_scorp.append(cb)
+				elif col == "F":
+					cb = Finish(x, y)
+					self.finish.append(cb)
 				x += 73
 			y += 73
 			x = 0
@@ -132,7 +143,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           oE               ",
+				"           oE            F  ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		
@@ -145,7 +156,7 @@ class Level(object):
 		self.level = [
 				"                            ",
 				"                            ",
-				"               o            ",
+				"               o       F    ",
 				"    o oo       +o   o  o    ",
 				"o      o   o   o   o   o    ",
 				"   o E o ++       o    o    ",
@@ -156,7 +167,7 @@ class Level(object):
 				"   oo   o  oo   ooo   oo    ",
 				"                   o   o    ",
 				"                    o  o    ",
-				"        o   o         oo    ",
+				"        o   o         oo F  ",
 				"ooo   ooo  o oo o  oooooooooo"	
 		]
 
@@ -182,7 +193,7 @@ class Level(object):
 				"o                           ",
 				"ooooo            E          ",
 				"      o   ooooooooo    oo  o",
-				"     o o  S        ++++ o  o",
+				"     o o  S        ++++ oF o",
 				"ooooooooooooo   oooooooooooo"
 			]
 		
@@ -206,7 +217,7 @@ class Level(object):
 				"          oo    oo          ",
 				"         ooo    ooo         ",
 				"        oooo     S          ",
-				"       oooooooooooooo    E  ",
+				"       oooooooooooooo  EF   ",
 				"oooooooooooooooooooooooooooo"
 			]
 
@@ -230,7 +241,7 @@ class Level(object):
 				" oooo   oo   oooooo     o   ",
 				"                     ooo    ",
 				"                ooooo       ",
-				"          E    oooooo       ",
+				"          E    oooooo     F ",
 				"ooooooo   oooooooooooooooooo"
 			] 
 		self.object_rect()
@@ -253,10 +264,9 @@ class Level(object):
 				"   oo  o o o   o       +    ",
 				"              o      ooo    ",
 				"             o     oo       ",
-				"       E    ooo             ",
+				"       E    ooo         F   ",
 				"oooo   ooooooooooooooooooooo"
 			]
-		#cube_power.change_fire_power()
 		self.object_rect()
 
 
@@ -268,15 +278,15 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"               E            ",
-				"               oooo         ",
-				"           o                ",
-				"            o         +  S+ ",
-				"             o        o  oo ",
-				"              o     +oo  ooo",
-				"               o    ooo  ooo",
-				"                   oooo  ooo",
-				"               oo++oooo     ",
+				"              E             ",
+				"              oooo          ",
+				"          o                 ",
+				"           o         +  S+  ",
+				"            o        o  oo  ",
+				"             o     +oo  ooo ",
+				"              o    ooo  oooo",
+				"                  oooo  oooo",
+				"              oo++oooo   F  ",
 				"oooooooooooooooooooooooooooo"
 			]
 
@@ -299,7 +309,7 @@ class Level(object):
 				"o   o    ^    oo^^^^        ",
 				"        ooo         o       ",
 				"   ooo   o      oooo^       ",
-				"o              oooooo       ",
+				"o              oooooo    F  ",
 				"ooo^^^ooo^^^oooooooooooooooo"
 			]
 		
@@ -326,11 +336,35 @@ class Level(object):
 				"                            ",
 				"     ooooo                  ",
 				"    oooooo^^^^^oo           ",
-				"   oooooooooooooo           ",
+				"   oooooooooooooo        F  ",
 				"ooooooooooooooooo^^^^^^^ooooo"
 			]
 		cube_power.change_fire_powerball()
 		self.object_rect()
+
+
+#Уровень 2_2
+	def level2_2(self):
+		self.level = [
+				"                            ",
+				"                         F  ",
+				"                   o     ooo",
+				"^o^    oo o  o              ",
+				" oo               o         ",
+				"oo               o          ",
+				"        o^o^oo              ",
+				"      oooooooo              ",
+				"o                           ",
+				"  o ^                  o    ",
+				"    ooo     oooo         o  ",
+				"    oo                  o   ",
+				"    o           o      o    ",
+				"               oo^^^^^^     ",
+				"ooooooooooooooooo^^^^^^oooooo"
+			]
+		self.object_rect()
+
+
 	#Музыка для заднего фона
 	def play_music_bg(self):
 		if self.music_bg:

@@ -42,8 +42,8 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = False
-        self.player_get_fire = False
+        self.player_get_power = True
+        self.player_get_fire = True
         self.player_fire_power = False
 
         #Для прыжка
@@ -98,7 +98,7 @@ class Player(Sprite):
 
     #обновление позиции игрока
     def update_player(self, level, cube_power):
-        self.player_win()
+        self.player_win(level)
         self.player_dead()
         self.gravitation()
         self.chek_collision(level)
@@ -334,6 +334,8 @@ class Player(Sprite):
             self.player_gameover = True
             print('DEAD')
 
-    def player_win(self):
-        if coor_level_finish_x[0] <= self.rect.centerx <= coor_level_finish_x[1] and self.rect.centery == coor_level_finish_y:
-            self.player_gamewin = True
+    def player_win(self, level):
+        finish_hit = pygame.sprite.spritecollide(self, level.finish, False)
+        for finish in finish_hit:
+            if self.rect.colliderect(finish.rect):
+                self.player_gamewin = True
