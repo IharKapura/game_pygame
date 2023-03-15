@@ -42,8 +42,8 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = True
-        self.player_get_fire = True
+        self.player_get_power = False
+        self.player_get_fire = False
         self.player_fire_power = False
 
         #Для прыжка
@@ -322,6 +322,7 @@ class Player(Sprite):
             self.screen.blit(self.image, self.rect)
 
 
+    #Cмерть игрока
     def player_dead(self):
         if coor_screen_dawn <= self.rect.centery:
             self.rect.centerx = self.screen_rect.centerx - coor_x
@@ -334,6 +335,8 @@ class Player(Sprite):
             self.player_gameover = True
             print('DEAD')
 
+
+    #
     def player_win(self, level):
         finish_hit = pygame.sprite.spritecollide(self, level.finish, False)
         for finish in finish_hit:

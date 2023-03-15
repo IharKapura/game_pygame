@@ -97,6 +97,7 @@ class Level(object):
 		self.enemies.clear()
 		self.enemies_scorp.clear()
 		self.finish.clear()
+		self.player_power.clear()
 
 		x=y=0
 		for row in self.level:
@@ -156,7 +157,7 @@ class Level(object):
 		self.level = [
 				"                            ",
 				"                            ",
-				"               o       F    ",
+				"               o            ",
 				"    o oo       +o   o  o    ",
 				"o      o   o   o   o   o    ",
 				"   o E o ++       o    o    ",
@@ -345,6 +346,28 @@ class Level(object):
 
 #Уровень 2_2
 	def level2_2(self):
+		self.level = [
+				"                            ",
+				"                         F  ",
+				"                   o     ooo",
+				"^o^    oo o  o              ",
+				" oo               o         ",
+				"oo               o          ",
+				"        o^o^oo              ",
+				"      oooooooo              ",
+				"o                           ",
+				"  o ^                  o    ",
+				"    ooo     oooo         o  ",
+				"    oo                  o   ",
+				"    o           o      o    ",
+				"               oo^^^^^^     ",
+				"ooooooooooooooooo^^^^^^oooooo"
+			]
+		self.object_rect()
+
+
+#Уровень 2_3
+	def level2_3(self):
 		self.level = [
 				"                            ",
 				"                         F  ",

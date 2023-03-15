@@ -107,7 +107,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
     if player.player_gameover == True:
         bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
         bg.update_bg(player, level)
-    if player.player_gamewin == True:
+    elif player.player_gamewin == True:
         bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
         bg.update_bg(player, level)
     if level.level_number == 0:

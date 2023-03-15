@@ -88,7 +88,7 @@ class CubePower (Sprite):
 
 
 	def change_fire_power(self):
-		self.fire = True
+		self.fire = False
 		self.image = [
 			pygame.image.load(Path('images','_bg','power_fire_1.png')).convert_alpha(),
 			pygame.image.load(Path('images','_bg','power_fire_2.png')).convert_alpha(),
