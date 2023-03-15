@@ -284,7 +284,34 @@ class Level(object):
 
 
 	#Уровень 2_0
-	def level2_0(self,cube_power, bg, cube, bad_cube):
+	def level2_0(self, bg, cube, bad_cube):
+		self.level = [
+				"                            ",
+				"                            ",
+				"      ^            o        ",
+				"   ooo ooo o  o   o^^^      ",
+				"                 o ooo      ",
+				"                o           ",
+				"     ^    E ^  o        oooo",
+				"    o o   o o o        ^    ",
+				"o                     ^o    ",
+				"oo                    o     ",
+				"o   o    ^    oo^^^^        ",
+				"        ooo         o       ",
+				"   ooo   o      oooo^       ",
+				"o              oooooo       ",
+				"ooo^^^ooo^^^oooooooooooooooo"
+			]
+		
+		
+		bg.change_bg_cave()
+		cube.change_cube_cave()
+		bad_cube.change_bad_cube_cave()
+		self.object_rect()
+
+
+#Уровень 2_1
+	def level2_1(self,cube_power):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -294,21 +321,16 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
+				"      *                     ",
 				"                            ",
 				"                            ",
-				"                            ",
-				"            *               ",
-				"                            ",
-				"                     ^^^    ",
+				"     ooooo                  ",
+				"    o    o^^^^^oo           ",
+				"   o     oooooooo           ",
 				"oooooooooooooooooooooooooooo"
 			]
-		
 		cube_power.change_fire_powerball()
-		bg.change_bg_cave()
-		cube.change_cube_cave()
-		bad_cube.change_bad_cube_cave()
 		self.object_rect()
-
 	#Музыка для заднего фона
 	def play_music_bg(self):
 		if self.music_bg:

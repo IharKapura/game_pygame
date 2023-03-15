@@ -69,7 +69,9 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                 elif level.level_number == 7:
                     level.level1_7()
                 elif level.level_number == 8:
-                    level.level2_0(cube_power, bg, cube, bad_cube)
+                    level.level2_0(bg, cube, bad_cube)
+                elif level.level_number == 9:
+                    level.level2_1(cube_power)
                 player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
