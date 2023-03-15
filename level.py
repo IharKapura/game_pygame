@@ -62,16 +62,16 @@ class Level(object):
 			for col in row:
 				if col == "o":
 					screen.blit(cube.image, (x, y))
-				if col == "+":
+				elif col == "+":
 					screen.blit(bad_cube.image, (x, y))
-				if col == "^":
+				elif col == "^":
 					screen.blit(bad_cube.image[bad_cube.anim_count], (x, y))
-				if col == "*":
+				elif col == "*":
 					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 40))
-				if col == "E":
+				elif col == "E":
 					for i in self.enemies:
 						screen.blit(i.image[enemies.anim_count], (x , y + 15))
-				if col == "S":
+				elif col == "S":
 					for i in self.enemies_scorp:
 						screen.blit(i.image[enemies_scorp.anim_count], (x , y + 27))
 				x += 73
@@ -96,19 +96,19 @@ class Level(object):
 				if col == "o":
 					cb = Cube(x,y)
 					self.platforms.append(cb)
-				if col == "+":
+				elif col == "+":
 					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
-				if col == "^":
+				elif col == "^":
 					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
-				if col == "*":
+				elif col == "*":
 					cb = CubePower(x, y)
 					self.player_power.append(cb)
-				if col == "E":
+				elif col == "E":
 					en = Enemies(x,y)
 					self.enemies.append(en)
-				if col == "S":
+				elif col == "S":
 					cb = EnemiesScorp(x, y)
 					self.enemies_scorp.append(cb)
 				x += 73
@@ -325,9 +325,9 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"     ooooo                  ",
-				"    o    o^^^^^oo           ",
-				"   o     oooooooo           ",
-				"oooooooooooooooooooooooooooo"
+				"    oooooo^^^^^oo           ",
+				"   oooooooooooooo           ",
+				"ooooooooooooooooo^^^^^^^ooooo"
 			]
 		cube_power.change_fire_powerball()
 		self.object_rect()

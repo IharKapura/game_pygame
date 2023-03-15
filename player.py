@@ -38,7 +38,7 @@ class Player(Sprite):
         self.jerk_can = False
         #self.jerk_count = 0
         
-        self.player_lives = 30
+        self.player_lives = 3
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
