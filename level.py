@@ -165,7 +165,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"        B  oE   H        F  ",
+				"           oE   H        F  ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		
@@ -210,7 +210,7 @@ class Level(object):
 				"o       o             o o   ",
 				"  ooo       oo        o o   ",
 				"                oo    o o   ",
-				"                     oo o   ",
+				"   B                 oo o   ",
 				"  oooo  o   o  oooo   o o   ",
 				"o                           ",
 				"ooooo            EH         ",
@@ -253,7 +253,7 @@ class Level(object):
 				"       +++                  ",
 				" ooo   ooo  ooo ooo         ",
 				"                        o   ",
-				"                      o     ",
+				"                    B o     ",
 				"      +    +  +     o       ",
 				"    oooo  ooo o ooo         ",
 				"o                           ",
