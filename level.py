@@ -7,6 +7,7 @@ from cube_power import CubePower
 from enemies import Enemies
 from enemies_scorp import EnemiesScorp
 from finish import Finish
+from lives import Lives
 from bg import Bg
 
 
@@ -37,6 +38,8 @@ from bg import Bg
 class Level(object):
 	def __init__(self):
 
+		self.checkpoint = pygame.image.load(Path('images','_bg','checkpoint.png')).convert_alpha()
+
 		self.platforms = []
 		self.bad_platforms = []
 		self.player_power = []
@@ -44,6 +47,7 @@ class Level(object):
 		self.enemies_scorp = []
 		self.level = []
 		self.finish = []
+		self.lives = []
 
 		self.music_bg = True
 
@@ -53,23 +57,28 @@ class Level(object):
 
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish):
-		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish)
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives):
 		x=y=0
 		for row in self.level:
 			for col in row:
 				if col == "o":
 					screen.blit(cube.image, (x, y))
+				elif col == "C":
+					screen.blit(self.checkpoint, (x, y + 21))
 				elif col == "+":
 					screen.blit(bad_cube.image, (x, y))
 				elif col == "^":
 					screen.blit(bad_cube.image[bad_cube.anim_count], (x, y))
 				elif col == "*":
 					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 40))
+				elif col == "H":
+					for i in self.lives:
+						screen.blit(i.image, (x + 26, y + 26))
 				elif col == "E":
 					for i in self.enemies:
 						screen.blit(i.image[enemies.anim_count], (x , y + 15))
@@ -114,6 +123,9 @@ class Level(object):
 				elif col == "*":
 					cb = CubePower(x, y)
 					self.player_power.append(cb)
+				elif col == "H":
+					cb = Lives(x, y)
+					self.lives.append(cb)
 				elif col == "E":
 					cb = Enemies(x,y)
 					self.enemies.append(cb)
@@ -128,7 +140,7 @@ class Level(object):
 			x = 0
 
 
-	# Уровень 1_1
+	# Уровень 1_1(1)
 	def level1_1(self):
 		self.level = [
 				"                            ",
@@ -144,19 +156,19 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           oE            F  ",
+				"           oE   H        F  ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		
 		self.object_rect()
 
 
-	#Уровень 1_2
+	#Уровень 1_2(2)
 	def level1_2(self):
 
 		self.level = [
 				"                            ",
-				"                            ",
+				"               H            ",
 				"               o            ",
 				"    o oo       +o   o  o    ",
 				"o      o   o   o   o   o    ",
@@ -168,7 +180,7 @@ class Level(object):
 				"   oo   o  oo   ooo   oo    ",
 				"                   o   o    ",
 				"                    o  o    ",
-				"        o   o         oo F  ",
+				" C      o   o         oo F  ",
 				"ooo   ooo  o oo o  oooooooooo"	
 		]
 
@@ -177,7 +189,7 @@ class Level(object):
 
 
 
-	#Уровень 1_3
+	#Уровень 1_3(3)
 	def level1_3(self):
 
 		self.level = [
@@ -192,7 +204,7 @@ class Level(object):
 				"                     oo o   ",
 				"  oooo  o   o  oooo   o o   ",
 				"o                           ",
-				"ooooo            E          ",
+				"ooooo            EH         ",
 				"      o   ooooooooo    oo  o",
 				"     o o  S        ++++ oF o",
 				"ooooooooooooo   oooooooooooo"
@@ -201,7 +213,7 @@ class Level(object):
 		self.object_rect()
 
 
-	#Уровень 1_4
+	#Уровень 1_4(4)
 	def level1_4(self):
 
 		self.level = [
@@ -225,7 +237,7 @@ class Level(object):
 		self.object_rect()
 
 
-	#Уровень 1_5
+	#Уровень 1_5(5)
 	def level1_5(self):
 
 		self.level = [
@@ -237,18 +249,18 @@ class Level(object):
 				"    oooo  ooo o ooo         ",
 				"o                           ",
 				"   o                        ",
-				"  oo                        ",
+				"  oo                    H   ",
 				"o             S         o   ",
 				" oooo   oo   oooooo     o   ",
 				"                     ooo    ",
 				"                ooooo       ",
-				"          E    oooooo     F ",
+				" C        E    oooooo    F  ",
 				"ooooooo   oooooooooooooooooo"
 			] 
 		self.object_rect()
 
 
-	#Уровень 1_6
+	#Уровень 1_6(6)
 	def level1_6(self):
 
 		self.level = [
@@ -260,7 +272,7 @@ class Level(object):
 				"o                   o   o o ",
 				"  oo         oo oo      o o ",
 				"       o       +          + ",
-				"    o          o   ++     o ",
+				"    o          o H ++     o ",
 				"oo       + S   oooooo o ooo ",
 				"   oo  o o o   o       +    ",
 				"              o      ooo    ",
@@ -271,7 +283,7 @@ class Level(object):
 		self.object_rect()
 
 
-	#Уровень 1_7
+	#Уровень 1_7(7)
 	def level1_7(self):
 		self.level = [
 				"                            ",
@@ -294,7 +306,7 @@ class Level(object):
 		self.object_rect()
 
 
-	#Уровень 2_0
+	#Уровень 2_0(8)
 	def level2_0(self, bg, cube, bad_cube):
 		self.level = [
 				"                            ",
@@ -306,11 +318,11 @@ class Level(object):
 				"     ^    E ^  o        oooo",
 				"    o o   o o o        ^    ",
 				"o                     ^o    ",
-				"oo                    o     ",
+				"oo             H      o     ",
 				"o   o    ^    oo^^^^        ",
 				"        ooo         o       ",
 				"   ooo   o      oooo^       ",
-				"o              oooooo    F  ",
+				"oC             oooooo    F  ",
 				"ooo^^^ooo^^^oooooooooooooooo"
 			]
 		
@@ -321,7 +333,7 @@ class Level(object):
 		self.object_rect()
 
 
-#Уровень 2_1
+#Уровень 2_1(9)
 	def level2_1(self,cube_power):
 		self.level = [
 				"                            ",
@@ -344,12 +356,12 @@ class Level(object):
 		self.object_rect()
 
 
-#Уровень 2_2
+#Уровень 2_2(10)
 	def level2_2(self):
 		self.level = [
 				"                            ",
 				"                         F  ",
-				"                   o     ooo",
+				" H                 o     ooo",
 				"^o^    oo o  o              ",
 				" oo               o         ",
 				"oo               o          ",
@@ -360,30 +372,30 @@ class Level(object):
 				"    ooo     oooo         o  ",
 				"    oo                  o   ",
 				"    o           o      o    ",
-				"               oo^^^^^^     ",
+				" C             oo^^^^^^     ",
 				"ooooooooooooooooo^^^^^^oooooo"
 			]
 		self.object_rect()
 
 
-#Уровень 2_3
+#Уровень 2_3(11)
 	def level2_3(self):
 		self.level = [
 				"                            ",
-				"                         F  ",
-				"                   o     ooo",
-				"^o^    oo o  o              ",
-				" oo               o         ",
-				"oo               o          ",
-				"        o^o^oo              ",
-				"      oooooooo              ",
-				"o                           ",
-				"  o ^                  o    ",
-				"    ooo     oooo         o  ",
-				"    oo                  o   ",
-				"    o           o      o    ",
-				"               oo^^^^^^     ",
-				"ooooooooooooooooo^^^^^^oooooo"
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"         o                  ",
+				"        oo                  ",
+				"ooo^^^oooooooooooooooooooooo"
 			]
 		self.object_rect()
 

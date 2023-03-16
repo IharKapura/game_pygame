@@ -42,8 +42,8 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = False
-        self.player_get_fire = False
+        self.player_get_power = True
+        self.player_get_fire = True
         self.player_fire_power = False
 
         #Для прыжка
@@ -105,6 +105,7 @@ class Player(Sprite):
         self.collision_bad_cube(level)
         self.colission_power(level, cube_power)
         self.collision_enemies(level)
+        self.collision_lives(level)
         self.jerk()
         #левая и правая граница экрана
         if self.rect.left < 0:
@@ -220,6 +221,14 @@ class Player(Sprite):
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
 
+
+    def collision_lives(self, level):
+        lives_hit_list = pygame.sprite.spritecollide(self, level.lives, False)
+        for live in lives_hit_list:
+            if self.rect.colliderect(live.rect):
+                level.lives.clear()
+                if self.player_lives <= 4:
+                    self.player_lives += 1
 
     
     # Гравитация

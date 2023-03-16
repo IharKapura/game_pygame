@@ -46,7 +46,18 @@ class Bg(Sprite):
 
     #Счетчик жизней
     def lives(self, player):
-        if player.player_lives == 3:
+        if player.player_lives == 5:
+            self.screen.blit(self.live, (10,10))
+            self.screen.blit(self.live, (40,10))
+            self.screen.blit(self.live, (70,10))
+            self.screen.blit(self.live, (100,10))
+            self.screen.blit(self.live, (130,10))
+        elif player.player_lives == 4:
+            self.screen.blit(self.live, (10,10))
+            self.screen.blit(self.live, (40,10))
+            self.screen.blit(self.live, (70,10))
+            self.screen.blit(self.live, (100,10))
+        elif player.player_lives == 3:
             self.screen.blit(self.live, (10,10))
             self.screen.blit(self.live, (40,10))
             self.screen.blit(self.live, (70,10))

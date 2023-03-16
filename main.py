@@ -10,6 +10,7 @@ from cube import Cube
 from bad_cube import BadCube
 from cube_power import CubePower
 from finish import Finish
+from lives import Lives
 #from pygame.sprite import Group
 
 
@@ -25,7 +26,7 @@ def main():
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("BEAR TRAVELER")
+    pygame.display.set_caption("Bear can be a hero")
     #all_sprites = pygame.sprite.Group()
     player = Player(screen)
     bullet = Bullet(screen, player)
@@ -37,6 +38,7 @@ def main():
     enemies = Enemies(0, 0)
     enemies_scorp = EnemiesScorp(0, 0)
     finish = Finish(0, 0)
+    lives = Lives(0, 0)
     clock = pygame.time.Clock()
 
     #Музыка для фона
@@ -44,16 +46,10 @@ def main():
 
     run_game = True
 
-
-
-
-    
-    
-
     while run_game:
         
         controls.events(player, bullet, level, bg, cube_power, cube, bad_cube)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish, lives)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()

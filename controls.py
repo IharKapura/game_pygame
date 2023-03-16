@@ -43,15 +43,35 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                 if not player.lookright:
                     player.flip()
                     player.lookright = True
-            #Рестарт и переключение уровня
+            #Рестарт c последнего чекпоинта
             if event.key == pygame.K_r and player.player_gameover == True:
                 player.player_gameover = False
                 player.player_lives = 3
-                level.object_rect()
-                if level.level_number < 8:
+                if level.level_number < 5:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 2
+                    level.level1_2()
                     bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
-                elif level.level_number >= 8:
+                elif 5 <= level.level_number < 8:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 5
+                    level.level1_5()
+                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                elif 8 <= level.level_number < 10:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 8
+                    level.level2_0(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+                elif 10 <= level.level_number:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 10
+                    level.level2_2()
+                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+            #Переход на следующий уровень
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
                 level.level_number += 1
@@ -75,7 +95,6 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                     level.level2_1(cube_power)
                 elif level.level_number == 10:
                     level.level2_2()
-                player.player_lives = 3
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
@@ -93,7 +112,7 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                 player.jerk_can = False
 
 
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish, lives):
     if player.player_gameover == False or player.player_gamewin == False:
         bg.update_bg(player, level)
         bullet.update(player, level)
@@ -101,7 +120,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
         enemies_scorp.update()
         cube_power.update()
         bad_cube.update()
-        level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish)
+        level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives)
         player.draw_player()
         player.update_player(level, cube_power)
     if player.player_gameover == True:
