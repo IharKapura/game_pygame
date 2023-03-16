@@ -6,6 +6,7 @@ from bad_cube import BadCube
 from cube_power import CubePower
 from enemies import Enemies
 from enemies_scorp import EnemiesScorp
+from enemies_bug import EnemiesBug
 from finish import Finish
 from lives import Lives
 from bg import Bg
@@ -45,6 +46,7 @@ class Level(object):
 		self.player_power = []
 		self.enemies = []
 		self.enemies_scorp = []
+		self.enemies_bug = []
 		self.level = []
 		self.finish = []
 		self.lives = []
@@ -57,12 +59,12 @@ class Level(object):
 
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives):
-		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives)
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
 
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -85,9 +87,12 @@ class Level(object):
 				elif col == "S":
 					for i in self.enemies_scorp:
 						screen.blit(i.image[enemies_scorp.anim_count], (x , y + 27))
+				elif col == "B":
+					for i in self.enemies_bug:
+						screen.blit(i.image[enemies_bug.anim_count], (x , y + 45))
 				elif col == "F":
 					for i in self.finish:
-						screen.blit(finish.image, (x, y + 21))
+						screen.blit(i.image, (x, y + 21))
 				x += 73
 			y += 73
 			x = 0
@@ -105,6 +110,7 @@ class Level(object):
 
 		self.enemies.clear()
 		self.enemies_scorp.clear()
+		self.enemies_bug.clear()
 		self.finish.clear()
 		self.player_power.clear()
 
@@ -132,6 +138,9 @@ class Level(object):
 				elif col == "S":
 					cb = EnemiesScorp(x, y)
 					self.enemies_scorp.append(cb)
+				elif col == "B":
+					cb = EnemiesBug(x, y)
+					self.enemies_bug.append(cb)
 				elif col == "F":
 					cb = Finish(x, y)
 					self.finish.append(cb)
@@ -156,7 +165,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           oE   H        F  ",
+				"        B  oE   H        F  ",
 				"ooooooooooooooooooo  ooooooo"
 			]
 		

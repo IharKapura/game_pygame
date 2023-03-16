@@ -42,8 +42,8 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = True
-        self.player_get_fire = True
+        self.player_get_power = False
+        self.player_get_fire = False
         self.player_fire_power = False
 
         #Для прыжка

@@ -77,4 +77,10 @@ class Bullet(Sprite):
                 if self.rect.colliderect(enem.rect):
                     level.enemies_scorp.remove(el)
 
+        enemies_bug_hit_list = pygame.sprite.spritecollide(self, level.enemies_bug, False)
+        for enem in enemies_bug_hit_list:
+            for el in level.enemies_bug:
+                if self.rect.colliderect(enem.rect):
+                    level.enemies_bug.remove(el)
+
 

@@ -5,6 +5,7 @@ from bullet import Bullet
 from bg import Bg
 from enemies import Enemies
 from enemies_scorp import EnemiesScorp
+from enemies_bug import EnemiesBug
 from level import Level
 from cube import Cube
 from bad_cube import BadCube
@@ -37,6 +38,7 @@ def main():
     level = Level()
     enemies = Enemies(0, 0)
     enemies_scorp = EnemiesScorp(0, 0)
+    enemies_bug = EnemiesBug(0, 0)
     finish = Finish(0, 0)
     lives = Lives(0, 0)
     clock = pygame.time.Clock()
@@ -49,7 +51,7 @@ def main():
     while run_game:
         
         controls.events(player, bullet, level, bg, cube_power, cube, bad_cube)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish, lives)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()

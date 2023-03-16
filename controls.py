@@ -112,15 +112,16 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                 player.jerk_can = False
 
 
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, finish, lives):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives):
     if player.player_gameover == False or player.player_gamewin == False:
         bg.update_bg(player, level)
         bullet.update(player, level)
         enemies.update()
         enemies_scorp.update()
+        enemies_bug.update()
         cube_power.update()
         bad_cube.update()
-        level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, finish, lives)
+        level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
         player.draw_player()
         player.update_player(level, cube_power)
     if player.player_gameover == True:
