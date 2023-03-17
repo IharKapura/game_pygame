@@ -25,6 +25,10 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu):
                     menu.menu_count -= 1
                 elif event.key == pygame.K_RETURN and menu.menu_count == 1:
                     menu.menu_ON = False
+                elif event.key == pygame.K_RETURN and menu.menu_count == 2:
+                    menu.menu_count = 4
+                elif event.key == pygame.K_ESCAPE and menu.menu_count == 4:
+                    menu.menu_count = 2
                 elif event.key == pygame.K_RETURN and menu.menu_count == 3 or event.key == pygame.K_ESCAPE and menu.menu_count == 3:
                     sys.exit()
             if event.key == pygame.K_ESCAPE:

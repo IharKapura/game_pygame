@@ -21,19 +21,18 @@ from menu import Menu
 WIDTH = 1920
 HEIGHT = 1080
 FPS = 60
-FULLWINDOW = False
 
 
 def main():
     
     pygame.init()
     pygame.mixer.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLWINDOW)
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Bear can be a hero")
     #all_sprites = pygame.sprite.Group()
     player = Player(screen)
-    bullet = Bullet(screen, player)
     bg = Bg(screen, player)
+    bullet = Bullet(screen, player)
     menu = Menu(screen)
     cube = Cube(0, 0)
     bad_cube = BadCube(0, 0)

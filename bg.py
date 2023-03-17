@@ -41,7 +41,7 @@ class Bg(Sprite):
             self.screen.blit(self.text_fight, (450, 300))
         elif player.player_get_fire and level.level_number == 9 and player.player_gameover == False and player.player_gamewin == False:
             self.screen.blit(self.text_fire_power, (1000, 300))
-    
+
 
     #Счетчик жизней
     def lives(self, player):
