@@ -221,6 +221,13 @@ class Player(Sprite):
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
 
+        enemies_bug_hit_list = pygame.sprite.spritecollide(self, level.enemies_bug, False)
+        for enemies_bug in enemies_bug_hit_list:
+            if self.rect.colliderect(enemies_bug.rect):
+                self.rect.centerx = self.screen_rect.centerx - coor_x
+                self.rect.centery = self.screen_rect.centery + coor_y
+                self.player_lives -= 1
+
 
     def collision_lives(self, level):
         lives_hit_list = pygame.sprite.spritecollide(self, level.lives, False)
@@ -292,7 +299,7 @@ class Player(Sprite):
         keys = pygame.key.get_pressed()
 
         #Анимация движения влево
-        if keys[pygame.K_a] and not keys[pygame.K_LCTRL]:
+        if keys[pygame.K_a] and not keys[pygame.K_LCTRL] or keys[pygame.K_LEFT] and not keys[pygame.K_LCTRL]:
             if self.player_animw_count == 5 :
                 self.player_animw_count = 0
                 self.screen.blit(self.walk_left[self.player_animw_count], self.rect)
@@ -300,7 +307,7 @@ class Player(Sprite):
                 self.player_animw_count += 1
                 self.screen.blit(self.walk_left[self.player_animw_count], self.rect)
         #Анимация движения вправо
-        elif keys[pygame.K_d] and not keys[pygame.K_LCTRL]:
+        elif keys[pygame.K_d] and not keys[pygame.K_LCTRL] or keys[pygame.K_RIGHT] and not keys[pygame.K_LCTRL]:
             if self.player_animw_count == 5 :
                 self.player_animw_count = 0
                 self.screen.blit(self.walk_right[self.player_animw_count], self.rect)

@@ -62,7 +62,6 @@ class Level(object):
 	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
 		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
 
-
 	# Отрисовка уровня
 	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
 		x=y=0
@@ -111,6 +110,7 @@ class Level(object):
 		self.enemies.clear()
 		self.enemies_scorp.clear()
 		self.enemies_bug.clear()
+		self.lives.clear()
 		self.finish.clear()
 		self.player_power.clear()
 
@@ -203,14 +203,14 @@ class Level(object):
 
 		self.level = [
 				"                        o   ",
-				"                    S   o   ",
+				"                        o   ",
 				"      oo  o  ooo   oooo o   ",
 				"    o                 o o   ",
 				"   o                  o o   ",
 				"o       o             o o   ",
 				"  ooo       oo        o o   ",
 				"                oo    o o   ",
-				"   B                 oo o   ",
+				"                     oo o   ",
 				"  oooo  o   o  oooo   o o   ",
 				"o                           ",
 				"ooooo            EH         ",
@@ -238,7 +238,7 @@ class Level(object):
 				"           o*   o            ",
 				"          oo    oo          ",
 				"         ooo    ooo         ",
-				"        oooo     S          ",
+				"        oooo     B          ",
 				"       oooooooooooooo  EF   ",
 				"oooooooooooooooooooooooooooo"
 			]
@@ -276,7 +276,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                          + ",
-				"    o   oo  + ++       +  o ",
+				"    o   oo  + ++     B +  o ",
 				"   o        o oo     oooo o ",
 				"o                   o   o o ",
 				"  oo         oo oo      o o ",
@@ -320,16 +320,16 @@ class Level(object):
 		self.level = [
 				"                            ",
 				"                            ",
-				"      ^            o        ",
+				"    H ^            o        ",
 				"   ooo ooo o  o   o^^^      ",
 				"                 o ooo      ",
-				"                o           ",
+				"                o        B  ",
 				"     ^    E ^  o        oooo",
 				"    o o   o o o        ^    ",
 				"o                     ^o    ",
-				"oo             H      o     ",
+				"oo                    o     ",
 				"o   o    ^    oo^^^^        ",
-				"        ooo         o       ",
+				"        ooo     ^^^^o       ",
 				"   ooo   o      oooo^       ",
 				"oC             oooooo    F  ",
 				"ooo^^^ooo^^^oooooooooooooooo"
@@ -390,24 +390,67 @@ class Level(object):
 #Уровень 2_3(11)
 	def level2_3(self):
 		self.level = [
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"         o                  ",
-				"        oo                  ",
-				"ooo^^^oooooooooooooooooooooo"
+				"                           ",
+				"                           ",
+				"                           ",
+				"      o^          o^^^^^ oo",
+				"    o^oo         o ooooo   ",
+				"   ooooo      o    ooooo   ",
+				"o         o             o  ",
+				"oo                       F ",
+				"oo   o^             o    oo",
+				"     ooo  oo               ",
+				"      o       ^o           ",
+				"H             ooo          ",
+				"o        o    o    oo    o ",
+				"        oo              o  ",
+				"ooo^^^oooooooooo^^oooooooooo"
 			]
 		self.object_rect()
 
+
+#Уровень 2_4(12)
+	def level2_4(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"    o^^^^^o  E       o      ",
+				"     ooooo oooooo         o ",
+				"                ^        o  ",
+				"oo              ^  o    o   ",
+				"  o             oo          ",
+				"^^^^            ooo  o      ",
+				"ooooH ^ ^ ^        o     oo ",
+				"ooooooooooooo    ooo    ooo ",
+				" F                 oo       ",
+				"oooooooooooooooooooooo   oo ",
+				"                        ooo ",
+				"oooooooooooooooooooooooooooo"
+			]
+		self.object_rect()
+
+
+#Уровень 2_5(13)
+	def level2_5(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"oooooooooooooooooooooooooooo"
+			]
+		self.object_rect()
 
 	#Музыка для заднего фона
 	def play_music_bg(self):

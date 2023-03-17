@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg, cube_power, cube, bad_cube):
+def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -18,12 +18,21 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
 
         
         if event.type == pygame.KEYDOWN:
+            if menu.menu_ON:
+                if event.key == pygame.K_s and menu.menu_count <= 2 or event.key == pygame.K_DOWN and menu.menu_count <= 2:
+                    menu.menu_count += 1
+                elif event.key == pygame.K_w and menu.menu_count >= 2 or event.key == pygame.K_UP and menu.menu_count >= 2:
+                    menu.menu_count -= 1
+                elif event.key == pygame.K_RETURN and menu.menu_count == 1:
+                    menu.menu_ON = False
+                elif event.key == pygame.K_RETURN and menu.menu_count == 3 or event.key == pygame.K_ESCAPE and menu.menu_count == 3:
+                    sys.exit()
             if event.key == pygame.K_ESCAPE:
-                sys.exit()
+                menu.menu_ON = True
             #Бег
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 player.left()
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 player.right()
             #Рывок
             if event.key == pygame.K_LCTRL:
@@ -95,6 +104,10 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                     level.level2_1(cube_power)
                 elif level.level_number == 10:
                     level.level2_2()
+                elif level.level_number == 11:
+                    level.level2_3()
+                elif level.level_number == 12:
+                    level.level2_4()
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
@@ -103,33 +116,36 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube):
                     bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
         if event.type == pygame.KEYUP:
             #Бег
-            if event.key == pygame.K_a and player.change_x < 0:
+            if event.key == pygame.K_a and player.change_x < 0 or event.key == pygame.K_LEFT and player.change_x < 0:
                 player.stop()
-            if event.key == pygame.K_d and player.change_x > 0:
+            if event.key == pygame.K_d and player.change_x > 0 or event.key == pygame.K_RIGHT and player.change_x > 0:
                 player.stop()
             #Рывок
             if event.key == pygame.K_LCTRL:
                 player.jerk_can = False
 
 
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu):
     if player.player_gameover == False or player.player_gamewin == False:
-        bg.update_bg(player, level)
-        bullet.update(player, level)
-        enemies.update()
-        enemies_scorp.update()
-        enemies_bug.update()
-        cube_power.update()
-        bad_cube.update()
-        level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
-        player.draw_player()
-        player.update_player(level, cube_power)
-    if player.player_gameover == True:
-        bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
-        bg.update_bg(player, level)
-    elif player.player_gamewin == True:
-        bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
-        bg.update_bg(player, level)
-    if level.level_number == 0:
-        level.level1_1()
-        level.level_number += 1
+        if menu.menu_ON:
+            menu.update()
+        else:
+            bg.update_bg(player, level)
+            bullet.update(player, level)
+            enemies.update()
+            enemies_scorp.update()
+            enemies_bug.update()
+            cube_power.update()
+            bad_cube.update()
+            level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
+            player.draw_player()
+            player.update_player(level, cube_power)
+            if player.player_gameover == True:
+                bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
+                bg.update_bg(player, level)
+            elif player.player_gamewin == True:
+                bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
+                bg.update_bg(player, level)
+            if level.level_number == 0:
+                level.level1_1()
+                level.level_number += 1

@@ -12,6 +12,7 @@ from bad_cube import BadCube
 from cube_power import CubePower
 from finish import Finish
 from lives import Lives
+from menu import Menu
 #from pygame.sprite import Group
 
 
@@ -20,18 +21,20 @@ from lives import Lives
 WIDTH = 1920
 HEIGHT = 1080
 FPS = 60
+FULLWINDOW = False
 
 
 def main():
     
     pygame.init()
     pygame.mixer.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLWINDOW)
     pygame.display.set_caption("Bear can be a hero")
     #all_sprites = pygame.sprite.Group()
     player = Player(screen)
     bullet = Bullet(screen, player)
     bg = Bg(screen, player)
+    menu = Menu(screen)
     cube = Cube(0, 0)
     bad_cube = BadCube(0, 0)
     cube_power = CubePower(0, 0)
@@ -50,8 +53,8 @@ def main():
 
     while run_game:
         
-        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives)
+        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube, menu)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()

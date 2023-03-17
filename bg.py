@@ -19,7 +19,6 @@ class Bg(Sprite):
         self.fire_power = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
 
         #Текст
-        font_text = pygame.font.SysFont('arial', 20)
         self.text_run = pygame.image.load(Path('images','_bg','text_run.png')).convert_alpha()
         self.text_jump = pygame.image.load(Path('images','_bg','text_jump.png')).convert_alpha()
         self.text_fight = pygame.image.load(Path('images','_bg','text_fight.png')).convert_alpha()
