@@ -51,8 +51,6 @@ class Level(object):
 		self.finish = []
 		self.lives = []
 
-		self.music_bg = True
-
 		self.level_number = 0
 
 		""" self.bg = bg """
@@ -451,9 +449,3 @@ class Level(object):
 				"oooooooooooooooooooooooooooo"
 			]
 		self.object_rect()
-
-	#Музыка для заднего фона
-	def play_music_bg(self):
-		if self.music_bg:
-			pygame.mixer.music.load('sounds/1-title.mp3')
-			pygame.mixer.music.play(-1)

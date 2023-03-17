@@ -97,15 +97,15 @@ class Player(Sprite):
 
 
     #обновление позиции игрока
-    def update_player(self, level, cube_power):
+    def update_player(self, level, cube_power, sounds):
         self.player_win(level)
-        self.player_dead()
+        self.player_dead(sounds)
         self.gravitation()
         self.chek_collision(level)
         self.collision_bad_cube(level)
-        self.colission_power(level, cube_power)
-        self.collision_enemies(level)
-        self.collision_lives(level)
+        self.colission_power(level, cube_power, sounds)
+        self.collision_enemies(level, sounds)
+        self.collision_lives(level, sounds)
         self.jerk()
         #левая и правая граница экрана
         if self.rect.left < 0:
@@ -194,18 +194,19 @@ class Player(Sprite):
                 print(self.player_lives)
 
 
-    def colission_power(self, level, cube_power):
+    def colission_power(self, level, cube_power, sounds):
         power_hit_list = pygame.sprite.spritecollide(self, level.player_power, False)
         for power in power_hit_list:
             if self.rect.colliderect(power.rect) and level.level_number == 4:
                 self.player_get_power = True
                 cube_power.change_cube_power()
             elif self.rect.colliderect(power.rect) and cube_power.fire:
+                sounds.get_fire()
                 self.player_get_fire = True
                 cube_power.change_fire_power()
 
     
-    def collision_enemies(self, level):
+    def collision_enemies(self, level, sounds):
         enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enemies in enemies_hit_list:
             if self.rect.colliderect(enemies.rect):
@@ -229,12 +230,13 @@ class Player(Sprite):
                 self.player_lives -= 1
 
 
-    def collision_lives(self, level):
+    def collision_lives(self, level, sounds):
         lives_hit_list = pygame.sprite.spritecollide(self, level.lives, False)
         for live in lives_hit_list:
             if self.rect.colliderect(live.rect):
                 level.lives.clear()
                 if self.player_lives <= 4:
+                    sounds.get_lives()
                     self.player_lives += 1
 
     
@@ -339,17 +341,17 @@ class Player(Sprite):
 
 
     #Cмерть игрока
-    def player_dead(self):
+    def player_dead(self, sounds):
         if coor_screen_dawn <= self.rect.centery:
             self.rect.centerx = self.screen_rect.centerx - coor_x
             self.rect.centery = self.screen_rect.centery + coor_y
             self.player_lives -= 1
-            print(self.player_lives)
         if self.player_lives <= 0:
+            sounds.gameover()
             self.rect.centerx = self.screen_rect.centerx - coor_x
             self.rect.centery = self.screen_rect.centery + coor_y
             self.player_gameover = True
-            print('DEAD')
+
 
 
     #

@@ -19,9 +19,9 @@ class Bullet(Sprite):
 
 
     #Обновление меда
-    def update(self, player, level):
+    def update(self, player, level, sounds):
         self.draw_bullet(player)
-        self.kill_enemies(level)
+        self.kill_enemies(level, sounds)
 
         if self.bullets:
             for (i, el) in enumerate(self.bullets):
@@ -64,23 +64,26 @@ class Bullet(Sprite):
         self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
         
     #Смерть врагов
-    def kill_enemies(self, level):
+    def kill_enemies(self, level, sounds):
         enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enem in enemies_hit_list:
             for el in level.enemies:
                 if self.rect.colliderect(enem.rect):
+                    sounds.hitenemies()
                     level.enemies.remove(el)
 
         enemies_scorp_hit_list = pygame.sprite.spritecollide(self, level.enemies_scorp, False)
         for enem in enemies_scorp_hit_list:
             for el in level.enemies_scorp:
                 if self.rect.colliderect(enem.rect):
+                    sounds.hitenemies()
                     level.enemies_scorp.remove(el)
 
         enemies_bug_hit_list = pygame.sprite.spritecollide(self, level.enemies_bug, False)
         for enem in enemies_bug_hit_list:
             for el in level.enemies_bug:
                 if self.rect.colliderect(enem.rect):
+                    sounds.hitenemies()
                     level.enemies_bug.remove(el)
 
 

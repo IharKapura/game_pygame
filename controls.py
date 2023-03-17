@@ -9,7 +9,7 @@ from pathlib import Path
 """ from level import Level """
 """ from cube import Cube """
 
-def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu):
+def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -43,14 +43,18 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu):
                 player.jerk_can = True
             #Прыжок
             if event.key == pygame.K_SPACE:
+                sounds.sound_jump()
                 player.jump(level)
             #Атака
             if event.key == pygame.K_e and player.player_get_power:
+                sounds.sound_shot()
                 bullet.shot_right(player)
             if event.key == pygame.K_q and player.player_get_power:
+                sounds.sound_shot()
                 bullet.shot_left(player)
             #Переключение силы
             if event.key == pygame.K_1 and player.player_get_fire:
+                sounds.set_fire_power()
                 player.player_fire_power = True
                 player.player_fire(bullet)
                 if not player.lookright:
@@ -129,13 +133,16 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu):
                 player.jerk_can = False
 
 
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds):
+
     if player.player_gameover == False or player.player_gamewin == False:
         if menu.menu_ON:
             menu.update()
+            sounds.play_music_bg()
         else:
+            sounds.menu.stop()
             bg.update_bg(player, level)
-            bullet.update(player, level)
+            bullet.update(player, level, sounds)
             enemies.update()
             enemies_scorp.update()
             enemies_bug.update()
@@ -143,7 +150,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             bad_cube.update()
             level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
             player.draw_player()
-            player.update_player(level, cube_power)
+            player.update_player(level, cube_power, sounds)
             if player.player_gameover == True:
                 bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
                 bg.update_bg(player, level)

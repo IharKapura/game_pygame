@@ -13,6 +13,7 @@ from cube_power import CubePower
 from finish import Finish
 from lives import Lives
 from menu import Menu
+from sounds import Sounds
 #from pygame.sprite import Group
 
 
@@ -25,9 +26,9 @@ FPS = 60
 
 def main():
     
+    pygame.mixer.pre_init(44100, -16, 1, 512)
     pygame.init()
-    pygame.mixer.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption("Bear can be a hero")
     #all_sprites = pygame.sprite.Group()
     player = Player(screen)
@@ -43,17 +44,18 @@ def main():
     enemies_bug = EnemiesBug(0, 0)
     finish = Finish(0, 0)
     lives = Lives(0, 0)
+    sounds = Sounds()
     clock = pygame.time.Clock()
 
-    #Музыка для фона
-    #level.play_music_bg()
+    if sounds.play_menu and menu.menu_ON:
+        sounds.menu.play()
 
     run_game = True
 
     while run_game:
         
-        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube, menu)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu)
+        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
