@@ -210,6 +210,7 @@ class Player(Sprite):
         enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enemies in enemies_hit_list:
             if self.rect.colliderect(enemies.rect):
+                sounds.dead()
                 self.rect.centerx = self.screen_rect.centerx - coor_x
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
@@ -218,6 +219,7 @@ class Player(Sprite):
         enemies_scorp_hit_list = pygame.sprite.spritecollide(self, level.enemies_scorp, False)
         for enemies_scorp in enemies_scorp_hit_list:
             if self.rect.colliderect(enemies_scorp.rect):
+                sounds.dead()
                 self.rect.centerx = self.screen_rect.centerx - coor_x
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
@@ -225,6 +227,7 @@ class Player(Sprite):
         enemies_bug_hit_list = pygame.sprite.spritecollide(self, level.enemies_bug, False)
         for enemies_bug in enemies_bug_hit_list:
             if self.rect.colliderect(enemies_bug.rect):
+                sounds.dead()
                 self.rect.centerx = self.screen_rect.centerx - coor_x
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
@@ -343,11 +346,11 @@ class Player(Sprite):
     #Cмерть игрока
     def player_dead(self, sounds):
         if coor_screen_dawn <= self.rect.centery:
+            sounds.dead()
             self.rect.centerx = self.screen_rect.centerx - coor_x
             self.rect.centery = self.screen_rect.centery + coor_y
             self.player_lives -= 1
         if self.player_lives <= 0:
-            sounds.gameover()
             self.rect.centerx = self.screen_rect.centerx - coor_x
             self.rect.centery = self.screen_rect.centery + coor_y
             self.player_gameover = True

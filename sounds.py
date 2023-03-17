@@ -23,9 +23,8 @@ class Sounds():
         self.get_fire_power.set_volume(0.1)
         self.act_fire_power = pygame.mixer.Sound(Path('sounds', 'activate_fire_power.mp3'))
         self.act_fire_power.set_volume(0.1)
-        
-        self.game_over = pygame.mixer.Sound(Path('sounds', 'gameover.mp3'))
-        self.game_over.set_volume(0.1)
+        self.hit_player = pygame.mixer.Sound(Path('sounds', 'dead.wav'))
+        self.hit_player.set_volume(0.1)
 
 
     def play_music_bg(self):
@@ -44,10 +43,6 @@ class Sounds():
         self.lives.play()
 
 
-    def gameover(self):
-        self.game_over.play()
-
-
     def hitenemies(self):
         self.hit_enemies.play()
 
@@ -58,5 +53,9 @@ class Sounds():
     
     def set_fire_power(self):
         self.act_fire_power.play()
+
+    
+    def dead(self):
+        self.hit_player.play()
 
 
