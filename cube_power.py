@@ -20,14 +20,26 @@ class CubePower (Sprite):
 			pygame.image.load(Path('images','bg','power_ball_9.png')).convert_alpha(),
 			pygame.image.load(Path('images','bg','power_ball_10.png')).convert_alpha(),
 		]
+		self.frozen_jump = pygame.image.load(Path("images", "player", "Frozen_bear", "jump_frozen.png")).convert_alpha()
 		self.rect = pygame.Rect(x, y, 284, 286)
+		self.jump = False
 		self.fire = False
+		self.frozen = False
 		self.anim_count = False
 		self.tick = 0
 
+
 	#Обновление куба силы
-	def update(self):
+	def update(self, screen, player):
 		self.anim_cube()
+		self.draw_jump(screen, player)
+
+	def draw_jump(self,screen, player):
+		if self.jump and player.lookright:
+			screen.blit(self.frozen_jump, (player.rect.centerx - 45, player.rect.centery + 5))
+		if self.jump and not player.lookright:
+			screen.blit(self.frozen_jump, (player.rect.centerx - 25, player.rect.centery + 5))
+
 
 	#Анимация силы
 	def anim_cube(self):
@@ -101,4 +113,36 @@ class CubePower (Sprite):
 			pygame.image.load(Path('images','bg','power_fire_8.png')).convert_alpha(),
 			pygame.image.load(Path('images','bg','power_fire_9.png')).convert_alpha(),
 			pygame.image.load(Path('images','bg','power_fire_10.png')).convert_alpha(),
+		]
+
+		#Изменение куба силы на куб с силой льда
+	def change_frozen_powerball(self):
+		self.frozen = True
+		self.image = [
+			pygame.image.load(Path('images','bg','power_frozen_ball_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_6.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_7.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_8.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_9.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_ball_10.png')).convert_alpha(),
+		]
+
+	#Изменение куба силы на куб с силой без огня
+	def change_frozen_power(self):
+		self.frozen = False
+		self.image = [
+			pygame.image.load(Path('images','bg','power_frozen_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_6.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_7.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_8.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_9.png')).convert_alpha(),
+			pygame.image.load(Path('images','bg','power_frozen_10.png')).convert_alpha(),
 		]

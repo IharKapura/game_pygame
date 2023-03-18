@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 #Отслеживание событий
-def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
+def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -31,13 +31,15 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 player.right()
             #Рывок
-            if event.key == pygame.K_LCTRL:
+            if event.key == pygame.K_LCTRL and player.player_fire_power:
                 sounds.jerk_fire()
                 player.jerk_can = True
             #Прыжок
             if event.key == pygame.K_SPACE:
                 sounds.sound_jump()
                 player.jump(level)
+                if player.player_frozen_power:
+                    cube_power.jump = True
             #Атака
             if event.key == pygame.K_e and player.player_get_power:
                 sounds.sound_shot()
@@ -49,10 +51,13 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
             if event.key == pygame.K_1 and player.player_get_fire:
                 sounds.set_fire_power()
                 player.player_fire_power = True
+                player.player_frozen_power = False
                 player.player_fire(bullet)
-                if not player.lookright:
-                    player.flip()
-                    player.lookright = True
+            if event.key == pygame.K_2 and player.player_get_frozen:
+                sounds.set_fire_power()
+                player.player_fire_power = False
+                player.player_frozen_power = True
+                player.player_frozen(bullet)
             #Рестарт c последнего чекпоинта
             if event.key == pygame.K_r and player.player_gameover == True:
                 player.player_gameover = False
@@ -75,12 +80,18 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                     level.level_number = 8
                     level.level2_0(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
-                elif 10 <= level.level_number:
+                elif 10 <= level.level_number < 14:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 10
                     level.level2_2()
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
+                elif 14 <= level.level_number:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 14
+                    level.level2_6(bg, cube)
+                    bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.jpg')).convert_alpha()
             #Переход на следующий уровень
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
@@ -112,18 +123,27 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                     level.level2_4()
                 elif level.level_number == 13:
                     level.level2_5()
+                elif level.level_number == 14:
+                    level.level2_6(bg, cube, bad_cube)
+                elif level.level_number == 15:
+                    level.level2_7(cube_power)
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
                     bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
-                elif level.level_number >= 8:
+                elif 14 > level.level_number >= 8:
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
+                elif level.level_number >= 14:
+                    bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg')).convert_alpha()
         if event.type == pygame.KEYUP:
             #Бег
             if event.key == pygame.K_a and player.change_x < 0 or event.key == pygame.K_LEFT and player.change_x < 0:
                 player.stop()
             if event.key == pygame.K_d and player.change_x > 0 or event.key == pygame.K_RIGHT and player.change_x > 0:
                 player.stop()
+            if event.key == pygame.K_SPACE:
+                if player.player_frozen_power:
+                    cube_power.jump = False
             #Рывок
             if event.key == pygame.K_LCTRL:
                 player.jerk_can = False
@@ -141,7 +161,7 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             enemies.update()
             enemies_scorp.update()
             enemies_bug.update()
-            cube_power.update()
+            cube_power.update(screen, player)
             bad_cube.update()
             level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet)
             player.draw_player()
@@ -152,6 +172,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             elif player.player_gamewin:
                 bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
                 bg.update_bg(player, level)
-            if level.level_number == 0:
-                level.level1_1()
+            if level.level_number == 8:
+                level.level2_0(bg, cube, bad_cube)
                 level.level_number += 1

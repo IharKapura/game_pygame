@@ -48,7 +48,7 @@ def main():
 
 
     while True:       
-        controls.events(player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds)
+        controls.events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds)
         controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet)
         clock.tick(FPS)
         pygame.display.update()

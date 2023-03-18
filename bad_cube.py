@@ -14,6 +14,10 @@ class BadCube (Sprite):
 		self.anim_count = False
 		self.tick = 0
 
+	#обновление кубов
+	def update(self):
+		self.anim_cube()
+
 	#Изменение картинки плохих кубов для уровня пещера
 	def change_bad_cube_cave(self):
 		self.image = []
@@ -26,9 +30,17 @@ class BadCube (Sprite):
 			pygame.image.load(Path('images','level2','cube_fire_6.png')).convert_alpha(),
 		]
 
-	#обновление кубов
-	def update(self):
-		self.anim_cube()
+	#Изменение картинки плохих кубов для уровня пещера
+	def change_bad_cube_frozen(self):
+		self.image = []
+		self.image = [
+			pygame.image.load(Path('images','level3','frozen_spike_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','level3','frozen_spike_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','level3','frozen_spike_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','level3','frozen_spike_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','level3','frozen_spike_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','level3','frozen_spike_6.png')).convert_alpha(),
+		]
 
 	#Анимация для плохих кубов
 	def anim_cube(self):

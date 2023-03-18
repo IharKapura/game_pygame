@@ -41,6 +41,8 @@ class Player(Sprite):
         self.player_get_power = True
         self.player_get_fire = True
         self.player_fire_power = False
+        self.player_get_frozen = True
+        self.player_frozen_power = False
         #Переменные для прыжка
         self.is_jump = False
         self.jump_count = 7
@@ -109,6 +111,9 @@ class Player(Sprite):
 
     #Картинки для силы огня
     def player_fire(self, bullet):
+        if not self.lookright:
+            self.flip()
+            self.lookright = True
         self.image = pygame.image.load(Path("images","player", "Fire_bear", "fire_player.png")).convert_alpha()
         bullet.image = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
         self.walk_left = [
@@ -143,6 +148,47 @@ class Player(Sprite):
             pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_5.png")).convert_alpha(),
             pygame.image.load(Path("images","player", "Fire_bear", "fire_fight_r_6.png")).convert_alpha(),
         ]
+    
+    #Картинки для силы льда
+    def player_frozen(self, bullet):
+        if not self.lookright:
+            self.flip()
+            self.lookright = True
+        self.image = pygame.image.load(Path("images","player", "frozen_bear", "frozen_player.png")).convert_alpha()
+        bullet.image = pygame.image.load(Path("images","player_fight","frozen_bear_ball.png")).convert_alpha()
+        self.walk_left = [
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_l_6.png")).convert_alpha(),
+        ]
+        self.walk_right = [
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_br_m_r_6.png")).convert_alpha(),
+        ]
+        self.fight_left = [
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_l_6.png")).convert_alpha(),
+        ]
+        self.fight_right = [
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_1.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_2.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_3.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_4.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_5.png")).convert_alpha(),
+            pygame.image.load(Path("images","player", "frozen_bear", "frozen_fight_r_6.png")).convert_alpha(),
+        ]
+
     #Получение урона
     def taking_damage(self):
         self.player_lives -= 1
@@ -192,6 +238,10 @@ class Player(Sprite):
                 sounds.get_fire()
                 self.player_get_fire = True
                 cube_power.change_fire_power()
+            elif self.rect.colliderect(power.rect) and cube_power.frozen:
+                sounds.get_fire()
+                self.player_get_frozen = True
+                cube_power.change_frozen_power()
 
     #Столкновение с врагами
     def collision_enemies(self, level, sounds):
@@ -266,7 +316,10 @@ class Player(Sprite):
         self.rect.y -= 10
 		# Если все в порядке, прыгаем вверх
         if len(platform_hit_list) > 0 or self.rect.bottom >= coor_screen_dawn:
-            self.change_y = -15
+            if not self.player_frozen_power:
+                self.change_y = -13
+            elif self.player_frozen_power:
+                self.change_y = -20
     
     #Движение влево
     def left(self):

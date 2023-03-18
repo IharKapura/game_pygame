@@ -15,6 +15,7 @@ class Bg(Sprite):
         self.live = pygame.image.load(Path('images','player','lives.png')).convert_alpha()
         self.power = pygame.image.load(Path("images","player_fight","bear_a_ball.png")).convert_alpha()
         self.fire_power = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
+        self.frozen_power = pygame.image.load(Path("images","player_fight","frozen_bear_ball.png")).convert_alpha()
         #Текст
         self.text_run = pygame.image.load(Path('images','bg','text_run.png')).convert_alpha()
         self.text_jump = pygame.image.load(Path('images','bg','text_jump.png')).convert_alpha()
@@ -61,11 +62,17 @@ class Bg(Sprite):
             self.screen.blit(self.live, (40,10))
         elif player.player_lives == 1:
             self.screen.blit(self.live, (10,10))
-        if player.player_get_power and not player.player_fire_power:
+        if player.player_get_power and not player.player_fire_power and not player.player_frozen_power:
             self.screen.blit(self.power, (10, 50))
-        if player.player_fire_power:
+        if player.player_fire_power and not player.player_frozen_power:
             self.screen.blit(self.fire_power, (10, 50))
+        if player.player_frozen_power and not player.player_fire_power:
+            self.screen.blit(self.frozen_power, (10, 50))
 
     #Изменение фона на уровень пещера
     def change_bg_cave(self):
         self.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
+
+    #Изменение фона на уровень ледяной
+    def change_bg_frozen(self):
+        self.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg')).convert_alpha()

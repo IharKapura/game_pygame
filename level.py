@@ -47,7 +47,7 @@ class Level(object):
 		self.lives = []
 		self.tablets = []
 		#Номер уровня
-		self.level_number = 0
+		self.level_number = 8
 
 	# Обновление уровня
 	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
@@ -401,7 +401,6 @@ class Level(object):
 			]
 		self.object_rect()
 
-
 #Уровень 2_5(13)
 	def level2_5(self):
 		self.level = [
@@ -421,4 +420,50 @@ class Level(object):
 				"       ^^     oo       ooooo",
 				"oooooooooooooooo^^o^^^^ooooo"
 			]
+		self.object_rect()
+
+#Уровень 2_6(14)
+	def level2_6(self, bg, cube, bad_cube):
+		self.level = [
+				"              oooooooo      ",
+				"                  ooo    F  ",
+				"                   o     ooo",
+				"                        oooo",
+				"                     ooooooo",
+				"        T           oooooooo",
+				"     ooooooooo     ooooooooo",
+				"o                           ",
+				"   oo                       ",
+				"       oo ^^^^ oooooo       ",
+				"         oooooo          ooo",
+				"          oooo        oH    ",
+				"                  o    oo^^^",
+				"       ^^     oo       ooooo",
+				"oooooooooooooooo^^o^^^^ooooo"
+			]
+		bg.change_bg_frozen()
+		cube.change_cube_frozen()
+		bad_cube.change_bad_cube_frozen()
+		self.object_rect()
+
+	#Уровень 2_7(15)
+	def level2_7(self, cube_power):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"                            ",
+				"        *                   ",
+				"                            ",
+				"     T                      ",
+				"     ooooo                  ",
+				"    oooooo^^^^^oo           ",
+				"   oooooooooooooo        F  ",
+				"ooooooooooooooooo^^^^^^^ooooo"
+			]
+		cube_power.change_frozen_powerball()
 		self.object_rect()
