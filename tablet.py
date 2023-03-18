@@ -12,5 +12,9 @@ class Tablet(Sprite):
 		self.rect = pygame.Rect(x, y, 174, 84)
 		self.player_say = [
 			pygame.image.load(Path('images', 'read_tablet_first.png')),
+			pygame.image.load(Path('images', 'read_tablet_second.png')),
+			pygame.image.load(Path('images', 'read_tablet_third.png')),
+			pygame.image.load(Path('images', 'read_tablet_fourth.png')),
+			pygame.image.load(Path('images', 'read_tablet_fifth.png')),
 		]
 

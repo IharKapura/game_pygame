@@ -240,8 +240,17 @@ class Player(Sprite):
     def colission_tablet(self, level, tablet):
         tablet_hit = pygame.sprite.spritecollide(self, level.tablets, False)
         for tabl in tablet_hit:
-            if self.rect.colliderect(tabl.rect) and level.level_number == 1:
-                self.screen.blit(tablet.player_say[0], (self.rect.centerx - 532, self.rect.centery - 371))
+            if self.rect.colliderect(tabl.rect):
+                if level.level_number == 1:
+                    self.screen.blit(tablet.player_say[0], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 4:
+                    self.screen.blit(tablet.player_say[1], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 7:
+                    self.screen.blit(tablet.player_say[2], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 9:
+                    self.screen.blit(tablet.player_say[3], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 13:
+                    self.screen.blit(tablet.player_say[4], (self.rect.centerx - 532, self.rect.centery - 371))
     # Гравитация
     def gravitation(self):
         if self.change_y == 0:

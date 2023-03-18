@@ -103,6 +103,7 @@ class Level(object):
 		self.enemies_bug.clear()
 		self.lives.clear()
 		self.finish.clear()
+		self.tablets.clear()
 		self.player_power.clear()
 
 		x=y=0
@@ -217,12 +218,12 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"                            ",
-				"           o*   o            ",
-				"          oo    oo          ",
-				"         ooo    ooo         ",
-				"        oooo     B          ",
-				"       oooooooooooooo  EF   ",
+				"        T                    ",
+				"       ooooo*   o            ",
+				"      oooooo    oo          ",
+				"     ooooooo    ooo         ",
+				"    oooooooo     B          ",
+				"   oooooooooooooooooo  EF   ",
 				"oooooooooooooooooooooooooooo"
 			]
 		self.object_rect()
@@ -285,7 +286,7 @@ class Level(object):
 				"             o     +oo  ooo ",
 				"              o    ooo  oooo",
 				"                  oooo  oooo",
-				"              oo++oooo   F  ",
+				"          T   oo++oooo   F  ",
 				"oooooooooooooooooooooooooooo"
 			]
 		self.object_rect()
@@ -326,9 +327,9 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"      *                     ",
+				"        *                   ",
 				"                            ",
-				"                            ",
+				"     T                      ",
 				"     ooooo                  ",
 				"    oooooo^^^^^oo           ",
 				"   oooooooooooooo        F  ",
@@ -409,7 +410,7 @@ class Level(object):
 				"                   o     ooo",
 				"                        oooo",
 				"                     ooooooo",
-				"                    oooooooo",
+				"        T           oooooooo",
 				"     ooooooooo     ooooooooo",
 				"o                           ",
 				"   oo                       ",
