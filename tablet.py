@@ -1,0 +1,16 @@
+import pygame
+from pathlib import Path
+from pygame.sprite import Sprite
+
+
+class Tablet(Sprite):
+		
+	#Инициализация табличек
+	def __init__(self, x, y):
+		Sprite.__init__(self)		
+		self.image = pygame.image.load(Path('images', 'tablet.png'))
+		self.rect = pygame.Rect(x, y, 174, 84)
+		self.player_say = [
+			pygame.image.load(Path('images', 'read_tablet_first.png')),
+		]
+

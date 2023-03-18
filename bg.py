@@ -1,35 +1,32 @@
-import pygame, pathlib
+import pygame
 from pathlib import Path
-""" from player import Player """
 from pygame.sprite import Sprite
-from pygame.sprite import Group
 
 
 class Bg(Sprite):
 
 
+    #инициализация фона
     def __init__(self, screen, player):
-        #инициализация фона
         super(Bg, self).__init__()
         self.screen = screen
         self.player = player
-        self.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+        self.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
         self.live = pygame.image.load(Path('images','player','lives.png')).convert_alpha()
-        self.power = pygame.image.load(Path("images","player_fight","_bear_a_ball.png")).convert_alpha()
+        self.power = pygame.image.load(Path("images","player_fight","bear_a_ball.png")).convert_alpha()
         self.fire_power = pygame.image.load(Path("images","player_fight","fire_bear_ball.png")).convert_alpha()
-
         #Текст
-        self.text_run = pygame.image.load(Path('images','_bg','text_run.png')).convert_alpha()
-        self.text_jump = pygame.image.load(Path('images','_bg','text_jump.png')).convert_alpha()
-        self.text_fight = pygame.image.load(Path('images','_bg','text_fight.png')).convert_alpha()
-        self.text_fire_power = pygame.image.load(Path('images','_bg','text_fire_power.png')).convert_alpha()
+        self.text_run = pygame.image.load(Path('images','bg','text_run.png')).convert_alpha()
+        self.text_jump = pygame.image.load(Path('images','bg','text_jump.png')).convert_alpha()
+        self.text_fight = pygame.image.load(Path('images','bg','text_fight.png')).convert_alpha()
+        self.text_fire_power = pygame.image.load(Path('images','bg','text_fire_power.png')).convert_alpha()
 
+    #обновление заднего фона, текстаб жизней
     def update_bg(self, player, level):
-        #обновление заднего фона, текстаб жизней
         self.draw(player, level)
         self.lives(player)
-    
 
+    #отрисовка заднего фона и текста
     def draw(self, player, level):
         self.screen.blit(self.bg1, (0, 0))
         #Отрисовка текста
@@ -41,7 +38,6 @@ class Bg(Sprite):
             self.screen.blit(self.text_fight, (450, 300))
         elif player.player_get_fire and level.level_number == 9 and player.player_gameover == False and player.player_gamewin == False:
             self.screen.blit(self.text_fire_power, (1000, 300))
-
 
     #Счетчик жизней
     def lives(self, player):
@@ -70,7 +66,6 @@ class Bg(Sprite):
         if player.player_fire_power:
             self.screen.blit(self.fire_power, (10, 50))
 
-
-    #Размещение силы для игрока
+    #Изменение фона на уровень пещера
     def change_bg_cave(self):
-        self.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+        self.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()

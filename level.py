@@ -1,6 +1,5 @@
-import pygame, pathlib
+import pygame
 from pathlib import Path
-from pygame.sprite import Sprite
 from cube import Cube
 from bad_cube import BadCube
 from cube_power import CubePower
@@ -9,11 +8,7 @@ from enemies_scorp import EnemiesScorp
 from enemies_bug import EnemiesBug
 from finish import Finish
 from lives import Lives
-from bg import Bg
-
-
-
-
+from tablet import Tablet
 
 
 #Заготовка для пустого уровня
@@ -38,9 +33,9 @@ from bg import Bg
 
 class Level(object):
 	def __init__(self):
-
-		self.checkpoint = pygame.image.load(Path('images','_bg','checkpoint.png')).convert_alpha()
-
+		#Изображение для чекпоинта
+		self.checkpoint = pygame.image.load(Path('images','bg','checkpoint.png')).convert_alpha()
+		#Списки объектов
 		self.platforms = []
 		self.bad_platforms = []
 		self.player_power = []
@@ -50,18 +45,16 @@ class Level(object):
 		self.level = []
 		self.finish = []
 		self.lives = []
-
+		self.tablets = []
+		#Номер уровня
 		self.level_number = 0
 
-		""" self.bg = bg """
-
-
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
-		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet)
 
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
 		x=y=0
 		for row in self.level:
 			for col in row:
@@ -71,10 +64,12 @@ class Level(object):
 					screen.blit(self.checkpoint, (x, y + 21))
 				elif col == "+":
 					screen.blit(bad_cube.image, (x, y))
+				elif col == "T":
+					screen.blit(tablet.image, (x, y))
 				elif col == "^":
 					screen.blit(bad_cube.image[bad_cube.anim_count], (x, y))
 				elif col == "*":
-					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 40))
+					screen.blit(cube_power.image[cube_power.anim_count], (x, y + 7))
 				elif col == "H":
 					for i in self.lives:
 						screen.blit(i.image, (x + 26, y + 26))
@@ -94,7 +89,6 @@ class Level(object):
 			y += 73
 			x = 0
 
-
 	#Размещение объектов по уровню
 	# o - обычный куб
 	# + - шип
@@ -104,7 +98,6 @@ class Level(object):
 	# ^ - плампя
 	# F - конец уровня
 	def object_rect(self):
-
 		self.enemies.clear()
 		self.enemies_scorp.clear()
 		self.enemies_bug.clear()
@@ -127,6 +120,9 @@ class Level(object):
 				elif col == "*":
 					cb = CubePower(x, y)
 					self.player_power.append(cb)
+				elif col == "T":
+					cb = Tablet(x, y)
+					self.tablets.append(cb)
 				elif col == "H":
 					cb = Lives(x, y)
 					self.lives.append(cb)
@@ -146,7 +142,6 @@ class Level(object):
 			y += 73
 			x = 0
 
-
 	# Уровень 1_1(1)
 	def level1_1(self):
 		self.level = [
@@ -162,13 +157,11 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"                            ",
-				"           oE   H        F  ",
+				"           T      H         ",
+				"           oooooooo      F  ",
 				"ooooooooooooooooooo  ooooooo"
-			]
-		
+			]		
 		self.object_rect()
-
 
 	#Уровень 1_2(2)
 	def level1_2(self):
@@ -190,15 +183,10 @@ class Level(object):
 				" C      o   o         oo F  ",
 				"ooo   ooo  o oo o  oooooooooo"	
 		]
-
-
 		self.object_rect()
-
-
 
 	#Уровень 1_3(3)
 	def level1_3(self):
-
 		self.level = [
 				"                        o   ",
 				"                        o   ",
@@ -215,14 +203,11 @@ class Level(object):
 				"      o   ooooooooo    oo  o",
 				"     o o  S        ++++ oF o",
 				"ooooooooooooo   oooooooooooo"
-			]
-		
+			]		
 		self.object_rect()
-
 
 	#Уровень 1_4(4)
 	def level1_4(self):
-
 		self.level = [
 				"                            ",
 				"                            ",
@@ -240,13 +225,10 @@ class Level(object):
 				"       oooooooooooooo  EF   ",
 				"oooooooooooooooooooooooooooo"
 			]
-
 		self.object_rect()
-
 
 	#Уровень 1_5(5)
 	def level1_5(self):
-
 		self.level = [
 				"       +++                  ",
 				" ooo   ooo  ooo ooo         ",
@@ -266,10 +248,8 @@ class Level(object):
 			] 
 		self.object_rect()
 
-
 	#Уровень 1_6(6)
 	def level1_6(self):
-
 		self.level = [
 				"                            ",
 				"                            ",
@@ -288,7 +268,6 @@ class Level(object):
 				"oooo   ooooooooooooooooooooo"
 			]
 		self.object_rect()
-
 
 	#Уровень 1_7(7)
 	def level1_7(self):
@@ -309,9 +288,7 @@ class Level(object):
 				"              oo++oooo   F  ",
 				"oooooooooooooooooooooooooooo"
 			]
-
 		self.object_rect()
-
 
 	#Уровень 2_0(8)
 	def level2_0(self, bg, cube, bad_cube):
@@ -332,8 +309,6 @@ class Level(object):
 				"oC             oooooo    F  ",
 				"ooo^^^ooo^^^oooooooooooooooo"
 			]
-		
-		
 		bg.change_bg_cave()
 		cube.change_cube_cave()
 		bad_cube.change_bad_cube_cave()
@@ -362,7 +337,6 @@ class Level(object):
 		cube_power.change_fire_powerball()
 		self.object_rect()
 
-
 #Уровень 2_2(10)
 	def level2_2(self):
 		self.level = [
@@ -384,7 +358,6 @@ class Level(object):
 			]
 		self.object_rect()
 
-
 #Уровень 2_3(11)
 	def level2_3(self):
 		self.level = [
@@ -405,7 +378,6 @@ class Level(object):
 				"ooo^^^oooooooooo^^oooooooooo"
 			]
 		self.object_rect()
-
 
 #Уровень 2_4(12)
 	def level2_4(self):
@@ -432,20 +404,20 @@ class Level(object):
 #Уровень 2_5(13)
 	def level2_5(self):
 		self.level = [
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"oooooooooooooooooooooooooooo"
+				"              oooooooo      ",
+				"                  ooo    F  ",
+				"                   o     ooo",
+				"                        oooo",
+				"                     ooooooo",
+				"                    oooooooo",
+				"     ooooooooo     ooooooooo",
+				"o                           ",
+				"   oo                       ",
+				"       oo ^^^^ oooooo       ",
+				"         oooooo          ooo",
+				"          oooo        oH    ",
+				"                  o    oo^^^",
+				"       ^^     oo       ooooo",
+				"oooooooooooooooo^^o^^^^ooooo"
 			]
 		self.object_rect()

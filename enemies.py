@@ -1,13 +1,12 @@
-import pygame, random, pathlib
+import pygame
 from pathlib import Path
 from pygame.sprite import Sprite
 
 
 class Enemies (Sprite):
 
-
+    #инициализация врагов
     def __init__(self, x, y):
-        #инициализация врагов
         Sprite.__init__(self)
         self.image = [
             pygame.image.load(Path("images","enemies","enemies_1.png")).convert_alpha(),
@@ -21,11 +20,9 @@ class Enemies (Sprite):
         self.anim_count = False
         self.tick = 0
 
-
     #Обновление врагов
     def update(self):
         self.anim_enem()
-
 
     #Анимация врагов
     def anim_enem(self):

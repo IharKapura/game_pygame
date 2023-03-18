@@ -1,13 +1,12 @@
-import pygame, random, pathlib
+import pygame
 from pathlib import Path
 from pygame.sprite import Sprite
 
 
 class EnemiesBug (Sprite):
 
-
+    #инициализация врагов
     def __init__(self, x, y):
-        #инициализация врагов
         Sprite.__init__(self)
         self.image = [
             pygame.image.load(Path("images","enemies","bug_1.png")).convert_alpha(),
@@ -22,7 +21,6 @@ class EnemiesBug (Sprite):
         self.anim_count = False
         self.tick = 0
         self.tick_move = 0
-
 
     #Обновление врагов
     def update(self):
@@ -48,7 +46,7 @@ class EnemiesBug (Sprite):
         elif self.tick == 166:
             self.anim_count = 5
 
-
+    #Движение врагов
     def move(self):
         
         if self.tick_move == 100: 

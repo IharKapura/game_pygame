@@ -1,22 +1,14 @@
-import pygame, pathlib
+import pygame
 import sys
-
 from pathlib import Path
-""" from player import Player """
-""" from enemies import Enemies """
-""" from bullet import Bullet """
-""" from bg import Bg """
-""" from level import Level """
-""" from cube import Cube """
 
+#Отслеживание событий
 def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
 
     #Оброботка событий
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            sys.exit()
-
-        
+            sys.exit()        
         if event.type == pygame.KEYDOWN:
             if menu.menu_ON:
                 if event.key == pygame.K_s and menu.menu_count <= 2 or event.key == pygame.K_DOWN and menu.menu_count <= 2:
@@ -40,6 +32,7 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                 player.right()
             #Рывок
             if event.key == pygame.K_LCTRL:
+                sounds.jerk_fire()
                 player.jerk_can = True
             #Прыжок
             if event.key == pygame.K_SPACE:
@@ -69,25 +62,25 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                     level.bad_platforms = []
                     level.level_number = 2
                     level.level1_2()
-                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
                 elif 5 <= level.level_number < 8:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 5
                     level.level1_5()
-                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
                 elif 8 <= level.level_number < 10:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 8
                     level.level2_0(bg, cube, bad_cube)
-                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
                 elif 10 <= level.level_number:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 10
                     level.level2_2()
-                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
             #Переход на следующий уровень
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
@@ -107,6 +100,7 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                 elif level.level_number == 7:
                     level.level1_7()
                 elif level.level_number == 8:
+                    sounds.music_count = 1
                     level.level2_0(bg, cube, bad_cube)
                 elif level.level_number == 9:
                     level.level2_1(cube_power)
@@ -116,12 +110,14 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
                     level.level2_3()
                 elif level.level_number == 12:
                     level.level2_4()
+                elif level.level_number == 13:
+                    level.level2_5()
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
-                    bg.bg1 = pygame.image.load(Path('images','_bg','forest_bg.png')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
                 elif level.level_number >= 8:
-                    bg.bg1 = pygame.image.load(Path('images','_bg','cave_level.jpg')).convert_alpha()
+                    bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
         if event.type == pygame.KEYUP:
             #Бег
             if event.key == pygame.K_a and player.change_x < 0 or event.key == pygame.K_LEFT and player.change_x < 0:
@@ -132,10 +128,9 @@ def events(player,bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
             if event.key == pygame.K_LCTRL:
                 player.jerk_can = False
 
-
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds):
-
-    if player.player_gameover == False or player.player_gamewin == False:
+#Обновление всех объектов
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet):
+    if not player.player_gameover or not player.player_gamewin:
         if menu.menu_ON:
             menu.update()
             sounds.play_music_bg()
@@ -148,13 +143,13 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             enemies_bug.update()
             cube_power.update()
             bad_cube.update()
-            level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives)
+            level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet)
             player.draw_player()
-            player.update_player(level, cube_power, sounds)
-            if player.player_gameover == True:
+            player.update_player(level, cube_power, sounds, tablet)
+            if player.player_gameover:
                 bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
                 bg.update_bg(player, level)
-            elif player.player_gamewin == True:
+            elif player.player_gamewin:
                 bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
                 bg.update_bg(player, level)
             if level.level_number == 0:

@@ -1,24 +1,21 @@
-import pygame, pathlib
+import pygame
 from pathlib import Path
-#from player import Player
 from pygame.sprite import Sprite
 
 
 class Bullet(Sprite):
 
-
+    #инициализация меда
     def __init__(self, screen, player):
-        #инициализация меда
         super(Bullet, self).__init__()
         self.screen = screen
         self.bullets = []
-        self.image = pygame.image.load(Path("images","player_fight","_bear_a_ball.png")).convert_alpha()
+        self.image = pygame.image.load(Path("images","player_fight","bear_a_ball.png")).convert_alpha()
         self.rect = pygame.Rect(0, 0, 30, 32)
-        #Скорость пули
+        #Для скорости пули
         self.change_x = False
 
-
-    #Обновление меда
+    #Обновление броска меда
     def update(self, player, level, sounds):
         self.draw_bullet(player)
         self.kill_enemies(level, sounds)
@@ -34,8 +31,6 @@ class Bullet(Sprite):
                 self.bullets.pop(i)
             elif el.x < (player.rect.centerx - 300):
                 self.bullets.pop(i)
-            
-
 
     # Отрисовка меда
     def draw_bullet(self, player):
@@ -51,19 +46,17 @@ class Bullet(Sprite):
             elif el.x < (player.rect.centerx - 300):
                 self.bullets.pop(i)
      
-
     #Бросок меда
     def shot_right(self, player):
         self.change_x = 15
         self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
-
 
     #Бросок меда
     def shot_left(self, player):
         self.change_x = -15
         self.bullets.append(self.image.get_rect(center = (player.rect.centerx , player.rect.centery)))
         
-    #Смерть врагов
+    #Столкновение меда и смерть врагов
     def kill_enemies(self, level, sounds):
         enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enem in enemies_hit_list:

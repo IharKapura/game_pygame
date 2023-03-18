@@ -1,4 +1,4 @@
-import pygame, pathlib
+import pygame
 from pathlib import Path
 from pygame.sprite import Sprite
 
@@ -6,6 +6,7 @@ from pygame.sprite import Sprite
 class BadCube (Sprite):
 
 
+	#Инициализация плохих кубов 
 	def __init__(self, x, y):
 		Sprite.__init__(self)
 		self.image = pygame.image.load(Path('images','level1_image','cube_w_spike.png'))
@@ -23,15 +24,13 @@ class BadCube (Sprite):
 			pygame.image.load(Path('images','level2','cube_fire_4.png')).convert_alpha(),
 			pygame.image.load(Path('images','level2','cube_fire_5.png')).convert_alpha(),
 			pygame.image.load(Path('images','level2','cube_fire_6.png')).convert_alpha(),
-					]
-		
-		
+		]
 
-
+	#обновление кубов
 	def update(self):
 		self.anim_cube()
 
-
+	#Анимация для плохих кубов
 	def anim_cube(self):
 		if self.tick == 30:
 			self.tick = 0

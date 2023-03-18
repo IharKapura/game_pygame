@@ -1,12 +1,11 @@
 import pygame, pathlib
 from pathlib import Path
 from pygame.sprite import Sprite
-from pygame.sprite import Group
 
 
 class Menu(Sprite):
-
-
+    
+    #Инициализация меню
     def __init__(self, screen):
         self.screen = screen
         self.menu_play = pygame.image.load(Path('images','menu_play.png')).convert_alpha()
@@ -16,11 +15,11 @@ class Menu(Sprite):
         self.menu_count = 1
         self.menu_ON = True
 
-    
+    #Обновление меню
     def update(self):
         self.draw()
 
-
+    #Отрисовка меню
     def draw(self):
         if self.menu_count == 1:
             self.screen.blit(self.menu_play, (0, 0))
