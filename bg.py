@@ -81,3 +81,7 @@ class Bg(Sprite):
     #Изменение фона на уровень ледяной
     def change_bg_frozen(self):
         self.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg')).convert_alpha()
+
+    #Изменение фона на уровень поля
+    def change_bg_field(self):
+        self.bg1 = pygame.image.load(Path('images','bg','field.png')).convert_alpha()

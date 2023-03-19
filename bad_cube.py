@@ -9,7 +9,7 @@ class BadCube (Sprite):
 	#Инициализация плохих кубов 
 	def __init__(self, x, y):
 		Sprite.__init__(self)
-		self.image = pygame.image.load(Path('images','level1_image','cube_w_spike.png'))
+		self.image = pygame.image.load(Path('images','level1_image','cube_w_spike.png')).convert_alpha()
 		self.rect = pygame.Rect(x + 20, y + 10, 33, 33)
 		self.anim_count = False
 		self.tick = 0
@@ -40,6 +40,18 @@ class BadCube (Sprite):
 			pygame.image.load(Path('images','level3','frozen_spike_4.png')).convert_alpha(),
 			pygame.image.load(Path('images','level3','frozen_spike_5.png')).convert_alpha(),
 			pygame.image.load(Path('images','level3','frozen_spike_6.png')).convert_alpha(),
+		]
+	
+	#Изменение картинки плохих кубов для уровня пещера
+	def change_bad_cube_field(self):
+		self.image = []
+		self.image = [
+			pygame.image.load(Path('images','level4','obstacle_1.png')).convert_alpha(),
+			pygame.image.load(Path('images','level4','obstacle_2.png')).convert_alpha(),
+			pygame.image.load(Path('images','level4','obstacle_3.png')).convert_alpha(),
+			pygame.image.load(Path('images','level4','obstacle_4.png')).convert_alpha(),
+			pygame.image.load(Path('images','level4','obstacle_5.png')).convert_alpha(),
+			pygame.image.load(Path('images','level4','obstacle_6.png')).convert_alpha(),
 		]
 
 	#Анимация для плохих кубов

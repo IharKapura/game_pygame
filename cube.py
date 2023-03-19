@@ -19,3 +19,7 @@ class Cube(Sprite):
 	# Изменения картинки куба для ледянного уровня
 	def change_cube_frozen(self):
 		self.image = pygame.image.load(Path('images','level3','frozen_cube.png'))
+
+	# Изменения картинки куба для ледянного уровня
+	def change_cube_field(self):
+		self.image = pygame.image.load(Path('images','level4','cube_field.png'))

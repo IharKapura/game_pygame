@@ -303,6 +303,9 @@ class Player(Sprite):
                     self.screen.blit(tablet.player_say[4], (self.rect.centerx - 532, self.rect.centery - 371))
                 elif level.level_number == 15:
                     self.screen.blit(tablet.player_say[5], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 18:
+                    self.screen.blit(tablet.player_say[6], (self.rect.centerx - 532, self.rect.centery - 371))
+
     # Гравитация
     def gravitation(self):
         if self.change_y == 0:

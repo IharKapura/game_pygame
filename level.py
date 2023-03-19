@@ -91,11 +91,13 @@ class Level(object):
 
 	#Размещение объектов по уровню
 	# o - обычный куб
-	# + - шип
 	# Е - враг растение
 	# S - враг скорпион
+	# В - враг жук
+	# Н - жизнь
+	# Т - табличка
 	# * - сила
-	# ^ - плампя
+	# ^ - шип, плампя, ледяной шип, крутящиеся шипы
 	# F - конец уровня
 	def object_rect(self):
 		self.enemies.clear()
@@ -112,9 +114,6 @@ class Level(object):
 				if col == "o":
 					cb = Cube(x,y)
 					self.platforms.append(cb)
-				elif col == "+":
-					cb = BadCube(x,y)
-					self.bad_platforms.append(cb)
 				elif col == "^":
 					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
@@ -158,7 +157,7 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"                            ",
-				"           T      H         ",
+				"            T     H         ",
 				"           oooooooo      F  ",
 				"ooooooooooooooooooo  ooooooo"
 			]		
@@ -244,7 +243,7 @@ class Level(object):
 				" oooo   oo   oooooo     o   ",
 				"                     ooo    ",
 				"                ooooo       ",
-				" C        E    oooooo    F  ",
+				" C         E  o oooooo   F  ",
 				"ooooooo   oooooooooooooooooo"
 			] 
 		self.object_rect()
@@ -307,7 +306,7 @@ class Level(object):
 				"o   o    ^    oo^^^^        ",
 				"        ooo     ^^^^o       ",
 				"   ooo   o      oooo^       ",
-				"oC             oooooo    F  ",
+				"oC             oooooo   F   ",
 				"ooo^^^ooo^^^oooooooooooooooo"
 			]
 		bg.change_bg_cave()
@@ -482,15 +481,123 @@ class Level(object):
 				"      o       ^ o           ",
 				"              ^             ",
 				"         o    ^      o      ",
-				"              ^  ^^^^^^^^^^^",
-				"   ooo o      ^  ooooooooooo",
-				" C o H o      ^          F  ",
+				"    ^ ^       ^  ^^^^^^^^^^^",
+				"   ooooo      ^  ooooooooooo",
+				" C o   o      ^          F  ",
 				"oooooooooooooooooooooooooooo"
 			]
 		self.object_rect()
 
 	#Уровень 2_9(17)
 	def level2_9(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"           ^o       ^o      ",
+				"^E        ^o ^^^^^^o        ",
+				"oo     o^oo           S^^H  ",
+				"        o             oooooo",
+				"  o                         ",
+				"            ^^  oooo    o oo",
+				"o          ^oo^^    ^^^o  oo",
+				"           o  oo    ooooo  o",
+				" ooo      o             o  o",
+				"        ^o              o  o",
+				"        o     o^^^^o    o  o",
+				"       o F    oooooo        ",
+				"oooo^^^^oooooooooooooooooooo"
+			]
+		self.object_rect()
+
+	#Уровень 3_0(18)
+	def level3_0(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"     o                      ",
+				"     oo                     ",
+				"    oooo                    ",
+				"     oooo                   ",
+				"o    ooooo                  ",
+				"     E    o                 ",
+				"    ooo    o                ",
+				"     o      o               ",
+				"o    oo^o    o T            ",
+				"     oooo^    ooooo^        ",
+				"    ooooooo        o^       ",
+				"    ooooooo^^    H  o   F   ",
+				"oooooooooooooooooooooooooooo"
+			]
+		self.object_rect()
+
+	#Уровень 3_1(19)
+	def level3_1(self, bg, cube, bad_cube):
+		self.level = [
+				"                            ",
+				"                            ",
+				"    H ^            o        ",
+				"   ooo ooo o  o   o^^^      ",
+				"                 o ooo      ",
+				"                o        B  ",
+				"     ^    E ^  o        oooo",
+				"    o o   o o o        ^    ",
+				"o                     ^o    ",
+				"oo                    o     ",
+				"o   o    ^    oo^^^^        ",
+				"        ooo     ^^^^o       ",
+				"   ooo   o      oooo^       ",
+				"oC             oooooo    F  ",
+				"ooo^^^ooo^^^oooooooooooooooo"
+			]
+		bg.change_bg_field()
+		cube.change_cube_field()
+		bad_cube.change_bad_cube_field()
+		self.object_rect()
+
+	#Уровень 3_2(20)
+	def level3_2(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"                          ^ ",
+				"    o   oo  ^ ^^     B ^  o ",
+				"   o        o oo     oooo o ",
+				"o                   o   o o ",
+				"  oo         oo oo      o o ",
+				"       o       ^          ^ ",
+				"    o          o H ^^     o ",
+				"oo       ^ S   oooooo o ooo ",
+				"   oo  o o o   o       ^    ",
+				"              o      ooo    ",
+				"             o     oo       ",
+				"       E    ooo         F   ",
+				"oooo   ooooooooooooooooooooo"
+			]
+		self.object_rect()
+
+	#Уровень 3_3(21)
+	def level3_3(self):
+		self.level = [
+				"                           ",
+				"                           ",
+				"                           ",
+				"      o^          o^^^^^ oo",
+				"    o^oo         o ooooo   ",
+				"   ooooo      o    ooooo   ",
+				"o         o             o  ",
+				"oo                       F ",
+				"oo   o^             o    oo",
+				"     ooo  oo               ",
+				"      o       ^o           ",
+				"H             ooo          ",
+				"o        o    o    oo    o ",
+				"        oo              o  ",
+				"ooo^^^oooooooooo^^oooooooooo"
+			]
+		self.object_rect()
+
+	#Уровень 3_4(22)
+	def level3_4(self):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -503,9 +610,9 @@ class Level(object):
 				"      o       ^ o           ",
 				"              ^             ",
 				"         o    ^      o      ",
-				"              ^  ^^^^^^^^^^^",
-				"   ooo o      ^  ooooooooooo",
-				" C o H o      ^          F  ",
+				"    ^ ^       ^  ^^^^^^^^^^^",
+				"   ooooo      ^  ooooooooooo",
+				" C o   o      ^          F  ",
 				"oooooooooooooooooooooooooooo"
 			]
 		self.object_rect()
