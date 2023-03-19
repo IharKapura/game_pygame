@@ -47,7 +47,7 @@ class Level(object):
 		self.lives = []
 		self.tablets = []
 		#Номер уровня
-		self.level_number = 8
+		self.level_number = 0
 
 	# Обновление уровня
 	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
@@ -412,7 +412,7 @@ class Level(object):
 				"        T           oooooooo",
 				"     ooooooooo     ooooooooo",
 				"o                           ",
-				"   oo                       ",
+				"   oo            E          ",
 				"       oo ^^^^ oooooo       ",
 				"         oooooo          ooo",
 				"          oooo        oH    ",
@@ -425,21 +425,21 @@ class Level(object):
 #Уровень 2_6(14)
 	def level2_6(self, bg, cube, bad_cube):
 		self.level = [
-				"              oooooooo      ",
-				"                  ooo    F  ",
-				"                   o     ooo",
-				"                        oooo",
-				"                     ooooooo",
-				"        T           oooooooo",
-				"     ooooooooo     ooooooooo",
-				"o                           ",
-				"   oo                       ",
-				"       oo ^^^^ oooooo       ",
-				"         oooooo          ooo",
-				"          oooo        oH    ",
-				"                  o    oo^^^",
-				"       ^^     oo       ooooo",
-				"oooooooooooooooo^^o^^^^ooooo"
+				"                            ",
+				"                            ",
+				"                   B ^      ",
+				"       E    ^ ^   ^ooo      ",
+				"     oooo   oooo^^o     ^   ",
+				"    o           oo      oo  ",
+				"o             ^             ",
+				" ^^o   ^      o           oo",
+				" oo   ooo     ^ H        ooo",
+				"             oo o      ooooo",
+				"            oo          oooo",
+				"o     o   o  o^^^^^^o    ooo",
+				"oo      o    ooooooooo    oo",
+				" C  o^^^ooo      S ooooo F o",
+				"oooooooooooooooooooooooooooo"
 			]
 		bg.change_bg_frozen()
 		cube.change_cube_frozen()
@@ -450,20 +450,62 @@ class Level(object):
 	def level2_7(self, cube_power):
 		self.level = [
 				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"                            ",
-				"        *                   ",
-				"                            ",
-				"     T                      ",
-				"     ooooo                  ",
-				"    oooooo^^^^^oo           ",
-				"   oooooooooooooo        F  ",
-				"ooooooooooooooooo^^^^^^^ooooo"
+				"  H              *          ",
+				"  o            o      o     ",
+				"               o      oo    ",
+				" o             oooooooo  o  ",
+				"                  o     oo  ",
+				"o            o T     oooo   ",
+				"o           ooooooooo       ",
+				"oo         oo               ",
+				"ooo       o                 ",
+				"ooo  o    o                 ",
+				"o        oo   ooo           ",
+				"    ooo       o             ",
+				"   ooooo    oo           F  ",
+				"oooooooooooo^^^^^^^^^^^ooooo"
 			]
 		cube_power.change_frozen_powerball()
+		self.object_rect()
+
+	#Уровень 2_8(16)
+	def level2_8(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"       Eo                   ",
+				"       o       oo^          ",
+				"      o       ^  o       S  ",
+				"            H ^         ooo ",
+				"  o         oo^      ^ o    ",
+				"              ^o     oo     ",
+				"      o       ^ o           ",
+				"              ^             ",
+				"         o    ^      o      ",
+				"              ^  ^^^^^^^^^^^",
+				"   ooo o      ^  ooooooooooo",
+				" C o H o      ^          F  ",
+				"oooooooooooooooooooooooooooo"
+			]
+		self.object_rect()
+
+	#Уровень 2_9(17)
+	def level2_9(self):
+		self.level = [
+				"                            ",
+				"                            ",
+				"       Eo                   ",
+				"       o       oo^          ",
+				"      o       ^  o       S  ",
+				"            H ^         ooo ",
+				"  o         oo^      ^ o    ",
+				"              ^o     oo     ",
+				"      o       ^ o           ",
+				"              ^             ",
+				"         o    ^      o      ",
+				"              ^  ^^^^^^^^^^^",
+				"   ooo o      ^  ooooooooooo",
+				" C o H o      ^          F  ",
+				"oooooooooooooooooooooooooooo"
+			]
 		self.object_rect()

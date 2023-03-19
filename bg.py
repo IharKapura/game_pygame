@@ -21,6 +21,8 @@ class Bg(Sprite):
         self.text_jump = pygame.image.load(Path('images','bg','text_jump.png')).convert_alpha()
         self.text_fight = pygame.image.load(Path('images','bg','text_fight.png')).convert_alpha()
         self.text_fire_power = pygame.image.load(Path('images','bg','text_fire_power.png')).convert_alpha()
+        self.text_frozen_power = pygame.image.load(Path('images','bg','text_frozen_jump.png')).convert_alpha()
+        self.text_can_switch = pygame.image.load(Path('images','bg','can_switch.png')).convert_alpha()
 
     #обновление заднего фона, текстаб жизней
     def update_bg(self, player, level):
@@ -35,10 +37,13 @@ class Bg(Sprite):
             self.screen.blit(self.text_run, (230 , 440))
         elif 640 <= player.rect.centerx <= 815 and level.level_number == 1:
             self.screen.blit(self.text_jump, (450, 440))
-        elif player.player_get_power and level.level_number == 4 and player.player_gameover == False and player.player_gamewin == False:
-            self.screen.blit(self.text_fight, (450, 300))
-        elif player.player_get_fire and level.level_number == 9 and player.player_gameover == False and player.player_gamewin == False:
+        elif player.player_get_power and level.level_number == 4 and not player.player_gameover and not player.player_gamewin:
+            self.screen.blit(self.text_fight, (450, 100))
+        elif player.player_get_fire and level.level_number == 9 and not player.player_gameover and not player.player_gamewin:
             self.screen.blit(self.text_fire_power, (1000, 300))
+        elif player.player_get_frozen and level.level_number == 15 and not player.player_gameover and not player.player_gamewin:
+            self.screen.blit(self.text_frozen_power, (500, 150))
+            self.screen.blit(self.text_can_switch, (1300, 550))
 
     #Счетчик жизней
     def lives(self, player):
@@ -64,9 +69,9 @@ class Bg(Sprite):
             self.screen.blit(self.live, (10,10))
         if player.player_get_power and not player.player_fire_power and not player.player_frozen_power:
             self.screen.blit(self.power, (10, 50))
-        if player.player_fire_power and not player.player_frozen_power:
+        elif player.player_fire_power and not player.player_frozen_power:
             self.screen.blit(self.fire_power, (10, 50))
-        if player.player_frozen_power and not player.player_fire_power:
+        elif player.player_frozen_power and not player.player_fire_power:
             self.screen.blit(self.frozen_power, (10, 50))
 
     #Изменение фона на уровень пещера

@@ -38,10 +38,10 @@ class Player(Sprite):
         self.player_gameover = False
         self.player_gamewin = False
         self.player_power = False
-        self.player_get_power = True
-        self.player_get_fire = True
+        self.player_get_power = False
+        self.player_get_fire = False
         self.player_fire_power = False
-        self.player_get_frozen = True
+        self.player_get_frozen = False
         self.player_frozen_power = False
         #Переменные для прыжка
         self.is_jump = False
@@ -301,6 +301,8 @@ class Player(Sprite):
                     self.screen.blit(tablet.player_say[3], (self.rect.centerx - 532, self.rect.centery - 371))
                 elif level.level_number == 13:
                     self.screen.blit(tablet.player_say[4], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 15:
+                    self.screen.blit(tablet.player_say[5], (self.rect.centerx - 532, self.rect.centery - 371))
     # Гравитация
     def gravitation(self):
         if self.change_y == 0:
@@ -317,7 +319,7 @@ class Player(Sprite):
 		# Если все в порядке, прыгаем вверх
         if len(platform_hit_list) > 0 or self.rect.bottom >= coor_screen_dawn:
             if not self.player_frozen_power:
-                self.change_y = -13
+                self.change_y = -15
             elif self.player_frozen_power:
                 self.change_y = -20
     

@@ -24,7 +24,7 @@ FPS = 60
 def main():    
     pygame.mixer.pre_init(44100, -16, 1, 512)
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Bear can be a hero")
     player = Player(screen)
     bg = Bg(screen, player)
@@ -53,7 +53,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(clock)
+        print(level.level_number)
 
         
 if __name__ == "__main__":

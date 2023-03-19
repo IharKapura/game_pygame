@@ -86,12 +86,18 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     level.level_number = 10
                     level.level2_2()
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
-                elif 14 <= level.level_number:
+                elif 14 <= level.level_number < 16:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 14
-                    level.level2_6(bg, cube)
-                    bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.jpg')).convert_alpha()
+                    level.level2_6(bg, cube, bad_cube)
+                    bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.')).convert_alpha()
+                elif 16 <= level.level_number:
+                    level.platforms = []
+                    level.bad_platforms = []
+                    level.level_number = 16
+                    level.level2_8()
+                    bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.')).convert_alpha()
             #Переход на следующий уровень
             if event.key == pygame.K_r and player.player_gamewin == True:
                 player.player_gamewin = False
@@ -127,6 +133,8 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     level.level2_6(bg, cube, bad_cube)
                 elif level.level_number == 15:
                     level.level2_7(cube_power)
+                elif level.level_number == 16:
+                    level.level2_8()
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
@@ -172,6 +180,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             elif player.player_gamewin:
                 bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
                 bg.update_bg(player, level)
-            if level.level_number == 8:
-                level.level2_0(bg, cube, bad_cube)
+            if level.level_number == 0:
+                level.level1_1()
                 level.level_number += 1
