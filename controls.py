@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 #Отслеживание событий
-def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds):
+def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds, boss):
 
     #Оброботка событий
     for event in pygame.event.get():
@@ -159,6 +159,9 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     level.level3_3()
                 elif level.level_number == 22:
                     level.level3_4()
+                elif level.level_number == 23:
+                    boss.lives = 300
+                    level.level3_5()
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
@@ -183,7 +186,7 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 player.jerk_can = False
 
 #Обновление всех объектов
-def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet):
+def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet, boss, bees):
     if not player.player_gameover or not player.player_gamewin:
         if menu.menu_ON:
             menu.update()
@@ -191,15 +194,16 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
         else:
             sounds.menu.stop()
             bg.update_bg(player, level)
-            bullet.update(player, level, sounds)
+            bullet.update(player, level, sounds, boss)
             enemies.update()
             enemies_scorp.update()
             enemies_bug.update()
             cube_power.update(screen, player)
             bad_cube.update()
-            level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet)
+            level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet, boss, bees)
             player.draw_player()
-            player.update_player(level, cube_power, sounds, tablet)
+            player.update_player(level, cube_power, sounds, tablet, bees)
+            boss.update()
             if player.player_gameover:
                 bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
                 bg.update_bg(player, level)
@@ -209,3 +213,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             if level.level_number == 0:
                 level.level1_1()
                 level.level_number += 1
+            if level.level_number == 23 and boss.lives > 0:
+                bees.update(player, sounds, boss)
+

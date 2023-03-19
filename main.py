@@ -14,6 +14,8 @@ from lives import Lives
 from menu import Menu
 from sounds import Sounds
 from tablet import Tablet
+from boss import Boss
+from bees import Bees
 
 
 WIDTH = 1920
@@ -41,6 +43,8 @@ def main():
     lives = Lives(0, 0)
     sounds = Sounds()
     tablet = Tablet(0, 0)
+    boss = Boss(0, 0)
+    bees = Bees(0, 0)
     clock = pygame.time.Clock()
     #Проигрывание музыки в меню на старте игры
     if sounds.play_menu and menu.menu_ON:
@@ -48,12 +52,12 @@ def main():
 
 
     while True:       
-        controls.events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds)
-        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet)
+        controls.events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds, boss)
+        controls.update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_power, enemies_scorp, enemies_bug, finish, lives, menu, sounds, tablet, boss, bees)
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(level.level_number)
+        #print(bees.lives)
 
         
 if __name__ == "__main__":

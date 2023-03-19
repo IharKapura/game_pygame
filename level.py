@@ -9,6 +9,8 @@ from enemies_bug import EnemiesBug
 from finish import Finish
 from lives import Lives
 from tablet import Tablet
+from boss import Boss
+from bees import Bees
 
 
 #Заготовка для пустого уровня
@@ -28,7 +30,8 @@ from tablet import Tablet
 				"                            ",
 				"                            ",
 				"oooooooooooooooooooooooooooo"
-			] """
+			]
+			 """
 
 
 class Level(object):
@@ -46,20 +49,25 @@ class Level(object):
 		self.finish = []
 		self.lives = []
 		self.tablets = []
+		self.boss_hive = []
+		self.bees = []
 		#Номер уровня
 		self.level_number = 0
 
 	# Обновление уровня
-	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
-		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet)
-
+	def update(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet, boss, bees):
+		self.draw(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet, boss, bees)
 	# Отрисовка уровня
-	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet):
+	def draw(self, screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet, boss, bees):
 		x=y=0
 		for row in self.level:
 			for col in row:
 				if col == "o":
 					screen.blit(cube.image, (x, y))
+				elif col == "O" and not boss.dead:
+					screen.blit(cube.image, (x, y))
+				elif col == "Q":
+					screen.blit(bees.image[bees.image_count], bees.rect)
 				elif col == "C":
 					screen.blit(self.checkpoint, (x, y + 21))
 				elif col == "+":
@@ -85,6 +93,11 @@ class Level(object):
 				elif col == "F":
 					for i in self.finish:
 						screen.blit(i.image, (x, y + 21))
+				elif col == "J":
+					if boss.lives >= 0 and not boss.dead:
+						screen.blit(boss.image[0], (x, y))
+					else:
+						screen.blit(boss.image[1], (x, y))
 				x += 73
 			y += 73
 			x = 0
@@ -99,6 +112,7 @@ class Level(object):
 	# * - сила
 	# ^ - шип, плампя, ледяной шип, крутящиеся шипы
 	# F - конец уровня
+	# J - бос улей
 	def object_rect(self):
 		self.enemies.clear()
 		self.enemies_scorp.clear()
@@ -138,6 +152,9 @@ class Level(object):
 				elif col == "F":
 					cb = Finish(x, y)
 					self.finish.append(cb)
+				elif col == "J":
+					cb = Boss(x, y)
+					self.boss_hive.append(cb)
 				x += 73
 			y += 73
 			x = 0
@@ -160,7 +177,7 @@ class Level(object):
 				"            T     H         ",
 				"           oooooooo      F  ",
 				"ooooooooooooooooooo  ooooooo"
-			]		
+			] 		
 		self.object_rect()
 
 	#Уровень 1_2(2)
@@ -494,10 +511,10 @@ class Level(object):
 				"                            ",
 				"                            ",
 				"           ^o       ^o      ",
-				"^E        ^o ^^^^^^o        ",
+				"^         ^o ^^^^^^o        ",
 				"oo     o^oo           S^^H  ",
 				"        o             oooooo",
-				"  o                         ",
+				"  o                E        ",
 				"            ^^  oooo    o oo",
 				"o          ^oo^^    ^^^o  oo",
 				"           o  oo    ooooo  o",
@@ -615,4 +632,25 @@ class Level(object):
 				" C o   o      ^          F  ",
 				"oooooooooooooooooooooooooooo"
 			]
+		self.object_rect()
+	
+	# Уровень 3_5(23)
+	def level3_5(self):
+		self.level = [
+				"             Q            ",
+				"                          ",
+				"                          ",
+				"    o       J             ",
+				"                      o   ",
+				"        oo             o  ",
+				"   o          o    o      ",
+				"  o      ^^oooo^^        o",
+				"     o         oo         ",
+				" o        o          ooo  ",
+				"        o                 ",
+				"  o    o                o ",
+				"                    oooooo",
+				"    o           o    OOOF ",
+				"ooooooooooooooooooooooooooo"
+			]		
 		self.object_rect()

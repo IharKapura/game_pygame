@@ -92,14 +92,14 @@ class Player(Sprite):
         self.player_animf_count = 0
 
     #обновление игрока
-    def update_player(self, level, cube_power, sounds, tablet):
+    def update_player(self, level, cube_power, sounds, tablet, bees):
         self.player_win(level)
         self.player_dead(sounds)
         self.gravitation()
         self.chek_collision(level)
         self.collision_bad_cube(level, sounds)
         self.colission_power(level, cube_power, sounds)
-        self.collision_enemies(level, sounds)
+        self.collision_enemies(level, sounds, bees)
         self.collision_lives(level, sounds)
         self.colission_tablet(level, tablet)
         self.jerk()
@@ -244,7 +244,7 @@ class Player(Sprite):
                 cube_power.change_frozen_power()
 
     #Столкновение с врагами
-    def collision_enemies(self, level, sounds):
+    def collision_enemies(self, level, sounds, bees):
         enemies_hit_list = pygame.sprite.spritecollide(self, level.enemies, False)
         for enemies in enemies_hit_list:
             if self.rect.colliderect(enemies.rect):
@@ -268,6 +268,16 @@ class Player(Sprite):
                 self.rect.centerx = self.screen_rect.centerx - coor_x
                 self.rect.centery = self.screen_rect.centery + coor_y
                 self.player_lives -= 1
+
+        if self.rect.colliderect(bees.rect):
+                sounds.dead()
+                self.rect.centery -= 10
+                self.player_lives -= 1
+                if self.lookright:
+                    self.rect.centerx -= 30
+                if not self.lookright:
+                    self.rect.centerx += 30
+        
 
     #Столкновение с жизнями
     def collision_lives(self, level, sounds):
