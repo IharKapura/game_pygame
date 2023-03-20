@@ -133,6 +133,9 @@ class Level(object):
 				if col == "o":
 					cb = Cube(x,y)
 					self.platforms.append(cb)
+				elif col == "+":
+					cb = BadCube(x,y)
+					self.bad_platforms.append(cb)
 				elif col == "^":
 					cb = BadCube(x,y)
 					self.bad_platforms.append(cb)
@@ -328,7 +331,7 @@ class Level(object):
 				"o   o    ^    oo^^^^        ",
 				"        ooo     ^^^^o       ",
 				"   ooo   o      oooo^       ",
-				" C             oooooo   F   ",
+				"oC             oooooo   F   ",
 				"ooo^^^ooo^^^oooooooooooooooo"
 			]
 		bg.change_bg_cave()
