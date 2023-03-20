@@ -37,6 +37,7 @@ class Player(Sprite):
         self.player_lives = 3
         self.player_gameover = False
         self.player_gamewin = False
+        self.the_end = False
         self.player_power = False
         self.player_get_power = False
         self.player_get_fire = False
@@ -239,7 +240,7 @@ class Player(Sprite):
                 self.player_get_fire = True
                 cube_power.change_fire_power()
             elif self.rect.colliderect(power.rect) and cube_power.frozen:
-                sounds.get_fire()
+                sounds.frozen()
                 self.player_get_frozen = True
                 cube_power.change_frozen_power()
 
@@ -271,12 +272,12 @@ class Player(Sprite):
 
         if self.rect.colliderect(bees.rect):
                 sounds.dead()
-                self.rect.centery -= 10
+                self.rect.centery -= 100
                 self.player_lives -= 1
                 if self.lookright:
-                    self.rect.centerx -= 30
+                    self.rect.centerx += 150
                 if not self.lookright:
-                    self.rect.centerx += 30
+                    self.rect.centerx -= 150
         
 
     #Столкновение с жизнями
@@ -294,8 +295,12 @@ class Player(Sprite):
         finish_hit = pygame.sprite.spritecollide(self, level.finish, False)
         for finish in finish_hit:
             if self.rect.colliderect(finish.rect):
-                self.player_gamewin = True
-    
+                if level.level_number == 24:
+                    self.the_end = True
+                else:
+                    self.player_gamewin = True
+            
+
     #Столкновение с табличками для отрисовки текста
     def colission_tablet(self, level, tablet):
         tablet_hit = pygame.sprite.spritecollide(self, level.tablets, False)
@@ -315,7 +320,11 @@ class Player(Sprite):
                     self.screen.blit(tablet.player_say[5], (self.rect.centerx - 532, self.rect.centery - 371))
                 elif level.level_number == 18:
                     self.screen.blit(tablet.player_say[6], (self.rect.centerx - 532, self.rect.centery - 371))
-
+                elif level.level_number == 22:
+                    self.screen.blit(tablet.player_say[7], (self.rect.centerx - 532, self.rect.centery - 371))
+                elif level.level_number == 24:
+                    self.screen.blit(tablet.player_say[8], (self.rect.centerx - 532, self.rect.centery - 371))
+                
     # Гравитация
     def gravitation(self):
         if self.change_y == 0:
@@ -402,6 +411,7 @@ class Player(Sprite):
             else:
                 self.player_animf_count += 1
                 self.screen.blit(self.fight_right[self.player_animf_count], (self.rect.centerx - 30, self.rect.centery - 45))
+        #Анимация рывка в зависимсоти куда смотрит персонаж        
         elif keys[pygame.K_LCTRL] and self.player_fire_power and self.lookright:
             self.screen.blit(self.jerk_right, self.rect)
         elif keys[pygame.K_LCTRL] and self.player_fire_power and not self.lookright:

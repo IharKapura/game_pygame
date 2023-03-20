@@ -5,7 +5,6 @@ from pygame.sprite import Sprite
 
 
 class Bees(Sprite):
-
     #инициализация врагов
     def __init__(self, x, y):
         Sprite.__init__(self)
@@ -30,7 +29,7 @@ class Bees(Sprite):
         self.change_y += self.speed_y
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
-        if (-100 > self.rect.x or self.rect.x > 2000 or self.rect.y > 1100) and boss.lives > 100:
+        if (-100 > self.rect.x or self.rect.x > 2000 or self.rect.y > 1100) and boss.lives > 50:
             self.speed_x = randint(-5, 5)
             self.speed_y = randint(15, 25)
             self.change_x = randint(400, 1200)
@@ -38,9 +37,9 @@ class Bees(Sprite):
             self.rect.x = self.change_x
             self.rect.y = 0
             self.image_count = randint(0, 5)
-        elif (-100 > self.rect.x or self.rect.x > 2000 or self.rect.y > 1100) and boss.lives < 100:
+        elif (-100 > self.rect.x or self.rect.x > 2000 or self.rect.y > 1100) and boss.lives < 50:
             self.speed_x = randint(-5, 5)
-            self.speed_y = randint(15, 25)
+            self.speed_y = randint(25, 35)
             self.change_x = randint(400, 1200)
             self.change_y = 0
             self.rect.x = self.change_x

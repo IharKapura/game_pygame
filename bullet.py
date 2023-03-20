@@ -17,7 +17,7 @@ class Bullet(Sprite):
 
     #Обновление броска меда
     def update(self, player, level, sounds, boss):
-        self.draw_bullet(player)
+        self.draw_bullet(player, boss)
         self.kill_enemies(level, sounds, boss)
 
         if self.bullets:
@@ -34,7 +34,7 @@ class Bullet(Sprite):
         else:
             self.rect = pygame.Rect(0, 0, 30, 32)
     # Отрисовка меда
-    def draw_bullet(self, player):
+    def draw_bullet(self, player, boss):
         if self.bullets:
             for (i, el) in enumerate(self.bullets):
                     self.screen.blit(self.image, (el.x, el.y))
@@ -84,6 +84,9 @@ class Bullet(Sprite):
         for enem in boss_hit_list:
             for el in level.boss_hive:
                 if self.rect.colliderect(enem.rect):
+                    sounds.hive_hit()
+                    sounds.bees_hive()
                     boss.lives -= 1
+                    self.bullets.clear()
 
 

@@ -18,5 +18,7 @@ class Tablet(Sprite):
 			pygame.image.load(Path('images', 'read_tablet_fifth.png')),
 			pygame.image.load(Path('images', 'read_tablet_sixth.png')),
 			pygame.image.load(Path('images', 'read_tablet_seventh.png')),
+			pygame.image.load(Path('images', 'read_tablet_eighth.png')),
+			pygame.image.load(Path('images', 'read_tablet_ninth.png')),
 		]
 

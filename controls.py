@@ -39,6 +39,7 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 sounds.sound_jump()
                 player.jump(level)
                 if player.player_frozen_power:
+                    sounds.frozen()
                     cube_power.jump = True
             #Атака
             if event.key == pygame.K_e and player.player_get_power:
@@ -54,7 +55,7 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 player.player_frozen_power = False
                 player.player_fire(bullet)
             if event.key == pygame.K_2 and player.player_get_frozen:
-                sounds.set_fire_power()
+                sounds.frozen()
                 player.player_fire_power = False
                 player.player_frozen_power = True
                 player.player_frozen(bullet)
@@ -66,49 +67,49 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 2
-                    level.level1_2()
+                    level.level_2()
                     bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
                 elif 5 <= level.level_number < 8:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 5
-                    level.level1_5()
+                    level.level_5()
                     bg.bg1 = pygame.image.load(Path('images','bg','forest_bg.png')).convert_alpha()
                 elif 8 <= level.level_number < 10:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 8
-                    level.level2_0(bg, cube, bad_cube)
+                    level.level_8(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
                 elif 10 <= level.level_number < 14:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 10
-                    level.level2_2()
+                    level.level_10()
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
                 elif 14 <= level.level_number < 16:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 14
-                    level.level2_6(bg, cube, bad_cube)
+                    level.level_14(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.')).convert_alpha()
                 elif 16 <= level.level_number < 19:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 16
-                    level.level2_8()
+                    level.level_16()
                     bg.bg1 = pygame.image.load(Path('images','bg','frozen_level.jpg.')).convert_alpha()
                 elif 19 <= level.level_number < 22:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 19
-                    level.level3_1(bg, cube, bad_cube)
+                    level.level_19(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','bg','field.png.')).convert_alpha()
                 elif 22 <= level.level_number:
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 22
-                    level.level3_4()
+                    level.level_22()
                     bg.bg1 = pygame.image.load(Path('images','bg','field.png.')).convert_alpha()
             #Переход на следующий уровень
             if event.key == pygame.K_r and player.player_gamewin:
@@ -117,51 +118,77 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 level.platforms = []
                 level.bad_platforms = []
                 if level.level_number == 2:
-                    level.level1_2()
+                    level.level_2()
                 elif  level.level_number == 3:
-                    level.level1_3()
+                    level.level_3()
                 elif  level.level_number == 4:
-                    level.level1_4()
+                    level.level_4()
                 elif level.level_number == 5:
-                    level.level1_5()
+                    level.level_5()
                 elif level.level_number == 6:
-                    level.level1_6()
+                    level.level_6()
                 elif level.level_number == 7:
-                    level.level1_7()
+                    level.level_7()
                 elif level.level_number == 8:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[1]))
+                    pygame.mixer.music.set_volume(0.1)
+                    sounds.play_music_bg()
                     sounds.music_count = 1
-                    level.level2_0(bg, cube, bad_cube)
+                    level.level_8(bg, cube, bad_cube)
                 elif level.level_number == 9:
-                    level.level2_1(cube_power)
+                    level.level_9(cube_power)
                 elif level.level_number == 10:
-                    level.level2_2()
+                    level.level_10()
                 elif level.level_number == 11:
-                    level.level2_3()
+                    level.level_11()
                 elif level.level_number == 12:
-                    level.level2_4()
+                    level.level_12()
                 elif level.level_number == 13:
-                    level.level2_5()
+                    level.level_13()
                 elif level.level_number == 14:
-                    level.level2_6(bg, cube, bad_cube)
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.set_volume(0.04)
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[2]))
+                    sounds.play_music_bg()
+                    level.level_14(bg, cube, bad_cube)
                 elif level.level_number == 15:
-                    level.level2_7(cube_power)
+                    level.level_15(cube_power)
                 elif level.level_number == 16:
-                    level.level2_8()
+                    level.level_16()
                 elif level.level_number == 17:
-                    level.level2_9()
+                    level.level_17()
                 elif level.level_number == 18:
-                    level.level3_0()
+                    level.level_18()
                 elif level.level_number == 19:
-                    level.level3_1(bg, cube, bad_cube)
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
+                    pygame.mixer.music.set_volume(0.1)
+                    sounds.play_music_bg()
+                    level.level_19(bg, cube, bad_cube)
                 elif level.level_number == 20:
-                    level.level3_2()
+                    level.level_20()
                 elif level.level_number == 21:
-                    level.level3_3()
+                    level.level_21()
                 elif level.level_number == 22:
-                    level.level3_4()
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
+                    pygame.mixer.music.set_volume(0.1)
+                    sounds.play_music_bg()
+                    level.level_22()
                 elif level.level_number == 23:
-                    boss.lives = 300
-                    level.level3_5()
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[4]))
+                    pygame.mixer.music.set_volume(0.06)
+                    sounds.play_music_bg()
+                    boss.lives = 100
+                    level.level_23()
+                elif level.level_number == 24:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load(Path('sounds', sounds.list_music[5]))
+                    pygame.mixer.music.set_volume(0.1)
+                    sounds.play_music_bg()
+                    level.level_24()
                 player.rect.centerx = player.screen_rect.centerx - 900
                 player.rect.centery = player.screen_rect.centery + 450
                 if level.level_number < 8:
@@ -190,7 +217,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
     if not player.player_gameover or not player.player_gamewin:
         if menu.menu_ON:
             menu.update()
-            sounds.play_music_bg()
         else:
             sounds.menu.stop()
             bg.update_bg(player, level)
@@ -203,16 +229,25 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             level.update(screen, cube, bad_cube, cube_power, enemies, enemies_scorp, enemies_bug, finish, lives, tablet, boss, bees)
             player.draw_player()
             player.update_player(level, cube_power, sounds, tablet, bees)
-            boss.update()
             if player.player_gameover:
                 bg.bg1 = pygame.image.load(Path('images','gameover.png')).convert_alpha()
                 bg.update_bg(player, level)
             elif player.player_gamewin:
                 bg.bg1 = pygame.image.load(Path('images','gamewin.png')).convert_alpha()
                 bg.update_bg(player, level)
+            elif player.the_end:
+                bg.bg1 = pygame.image.load(Path('images','the_end.png')).convert_alpha()
+                bg.update_bg(player, level)
             if level.level_number == 0:
-                level.level1_1()
+                sounds.play_music_bg()
+                level.level_1()
                 level.level_number += 1
-            if level.level_number == 23 and boss.lives > 0:
-                bees.update(player, sounds, boss)
+            if level.level_number == 23:
+                boss.update()
+                if not boss.dead:
+                    bees.update(player, sounds, boss)
+                else:
+                    bees.rect.centery = -100
+            else:
+                bees.rect.centery = -100
 
