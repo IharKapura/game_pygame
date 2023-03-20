@@ -14,8 +14,7 @@ coor_level_finish_y = 997
 
 
 class Player(Sprite):
-
-
+    
     lookright = True
 
     #инициализация игрока

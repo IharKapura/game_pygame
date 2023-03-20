@@ -10,7 +10,7 @@ class BadCube (Sprite):
 	def __init__(self, x, y):
 		Sprite.__init__(self)
 		self.image = pygame.image.load(Path('images','level1_image','cube_w_spike.png')).convert_alpha()
-		self.rect = pygame.Rect(x + 20, y + 10, 33, 33)
+		self.rect = pygame.Rect(x + 10, y + 10, 23, 33)
 		self.anim_count = False
 		self.tick = 0
 
