@@ -2,6 +2,7 @@ import pygame
 import sys
 from pathlib import Path
 
+
 #Отслеживание событий
 def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, sounds, boss):
 
@@ -13,14 +14,104 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
             if menu.menu_ON:
                 if event.key == pygame.K_s and menu.menu_count <= 2 or event.key == pygame.K_DOWN and menu.menu_count <= 2:
                     menu.menu_count += 1
-                elif event.key == pygame.K_w and menu.menu_count >= 2 or event.key == pygame.K_UP and menu.menu_count >= 2:
+                elif event.key == pygame.K_w and 5 > menu.menu_count >= 2 or event.key == pygame.K_UP and 5 > menu.menu_count >= 2:
                     menu.menu_count -= 1
-                elif event.key == pygame.K_RETURN and menu.menu_count == 1:
+                elif event.key == pygame.K_RETURN and menu.menu_count == 1 and not menu.game_run:
+                    menu.menu_count = 5
+                elif event.key == pygame.K_RETURN and menu.menu_count == 1 and menu.game_run:
                     menu.menu_ON = False
                 elif event.key == pygame.K_RETURN and menu.menu_count == 2:
                     menu.menu_count = 4
+                elif event.key == pygame.K_a and menu.menu_count == 5:
+                    menu.change_count = 2
+                elif event.key == pygame.K_d and menu.menu_count == 5:
+                    menu.change_count = 1
+                elif event.key == pygame.K_RETURN and menu.menu_count == 5 and menu.change_count == 2:
+                    menu.game_run = True
+                    menu.menu_count = 1
+                    menu.menu_ON = False
+                    if level.level_number == 0:
+                        sounds.play_music_bg()
+                        level.level_1()
+                        level.level_number += 1
+                        menu.saves(level)
+                elif event.key == pygame.K_RETURN and menu.menu_count == 5 and menu.change_count == 1:
+                    menu.game_run = True
+                    menu.menu_count = 1
+                    menu.menu_ON = False
+                    level.platforms = []
+                    level.bad_platforms = []
+                    if menu.progress == 2:
+                        level.level_number = 2
+                        sounds.play_music_bg()
+                        level.level_2()
+                    elif menu.progress == 5:
+                        level.level_number = 5
+                        sounds.play_music_bg()
+                        level.level_5()
+                        player.player_get_power = True
+                    elif menu.progress == 8:
+                        level.level_number = 8
+                        level.level_8(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[1]))
+                        pygame.mixer.music.set_volume(0.1)
+                        sounds.play_music_bg()
+                        player.player_get_power = True
+                    elif menu.progress == 10:
+                        level.level_number = 10
+                        level.level_10(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[1]))
+                        pygame.mixer.music.set_volume(0.1)
+                        sounds.play_music_bg()
+                        player.player_get_fire = True
+                        player.player_get_power = True
+                    elif menu.progress == 14:
+                        level.level_number = 14
+                        level.level_14(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[2]))
+                        pygame.mixer.music.set_volume(0.04)
+                        sounds.play_music_bg()
+                        player.player_get_fire = True
+                        player.player_get_power = True
+                    elif menu.progress == 16:
+                        level.level_number = 16
+                        level.level_16(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[2]))
+                        pygame.mixer.music.set_volume(0.04)
+                        sounds.play_music_bg()
+                        player.player_get_fire = True
+                        player.player_get_frozen = True
+                        player.player_get_power = True
+                    elif menu.progress == 19:
+                        level.level_number = 19
+                        level.level_19(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
+                        pygame.mixer.music.set_volume(0.1)
+                        sounds.play_music_bg()
+                        player.player_get_fire = True
+                        player.player_get_frozen = True
+                        player.player_get_power = True
+                    elif menu.progress == 22:
+                        level.level_number = 22
+                        level.level_22(bg, cube, bad_cube)
+                        pygame.mixer.music.stop()
+                        pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
+                        pygame.mixer.music.set_volume(0.1)
+                        sounds.play_music_bg()
+                        player.player_get_fire = True
+                        player.player_get_frozen = True
+                        player.player_get_power = True
+
                 elif event.key == pygame.K_ESCAPE and menu.menu_count == 4:
                     menu.menu_count = 2
+                elif event.key == pygame.K_ESCAPE and menu.menu_count == 5:
+                    menu.menu_count = 1
+
                 elif event.key == pygame.K_RETURN and menu.menu_count == 3 or event.key == pygame.K_ESCAPE and menu.menu_count == 3:
                     sys.exit()
             if event.key == pygame.K_ESCAPE:
@@ -85,7 +176,7 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     level.platforms = []
                     level.bad_platforms = []
                     level.level_number = 10
-                    level.level_10()
+                    level.level_10(bg, cube, bad_cube)
                     bg.bg1 = pygame.image.load(Path('images','bg','cave_level.jpg')).convert_alpha()
                 elif 14 <= level.level_number < 16:
                     level.platforms = []
@@ -118,12 +209,14 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 level.platforms = []
                 level.bad_platforms = []
                 if level.level_number == 2:
+                    menu.saves(level)
                     level.level_2()
                 elif  level.level_number == 3:
                     level.level_3()
                 elif  level.level_number == 4:
                     level.level_4()
                 elif level.level_number == 5:
+                    menu.saves(level)
                     level.level_5()
                 elif level.level_number == 6:
                     level.level_6()
@@ -133,13 +226,15 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(Path('sounds', sounds.list_music[1]))
                     pygame.mixer.music.set_volume(0.1)
+                    menu.saves(level)
                     sounds.play_music_bg()
                     sounds.music_count = 1
                     level.level_8(bg, cube, bad_cube)
                 elif level.level_number == 9:
                     level.level_9(cube_power)
                 elif level.level_number == 10:
-                    level.level_10()
+                    menu.saves(level)
+                    level.level_10(bg, cube, bad_cube)
                 elif level.level_number == 11:
                     level.level_11()
                 elif level.level_number == 12:
@@ -150,12 +245,14 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                     pygame.mixer.music.stop()
                     pygame.mixer.music.set_volume(0.04)
                     pygame.mixer.music.load(Path('sounds', sounds.list_music[2]))
+                    menu.saves(level)
                     sounds.play_music_bg()
                     level.level_14(bg, cube, bad_cube)
                 elif level.level_number == 15:
                     level.level_15(cube_power)
                 elif level.level_number == 16:
-                    level.level_16()
+                    menu.saves(level)
+                    level.level_16(bg, cube, bad_cube)
                 elif level.level_number == 17:
                     level.level_17()
                 elif level.level_number == 18:
@@ -163,7 +260,8 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 elif level.level_number == 19:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
-                    pygame.mixer.music.set_volume(0.1)
+                    pygame.mixer.music.set_volume(0.8)
+                    menu.saves(level)
                     sounds.play_music_bg()
                     level.level_19(bg, cube, bad_cube)
                 elif level.level_number == 20:
@@ -173,9 +271,10 @@ def events(screen, player, bullet, level, bg, cube_power, cube, bad_cube, menu, 
                 elif level.level_number == 22:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(Path('sounds', sounds.list_music[3]))
-                    pygame.mixer.music.set_volume(0.1)
+                    pygame.mixer.music.set_volume(0.8)
+                    menu.saves(level)
                     sounds.play_music_bg()
-                    level.level_22()
+                    level.level_22(bg, cube, bad_cube)
                 elif level.level_number == 23:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load(Path('sounds', sounds.list_music[4]))
@@ -238,10 +337,6 @@ def update(screen, bg, player, enemies, bullet, level, cube, bad_cube, cube_powe
             elif player.the_end:
                 bg.bg1 = pygame.image.load(Path('images','the_end.png')).convert_alpha()
                 bg.update_bg(player, level)
-            if level.level_number == 0:
-                sounds.play_music_bg()
-                level.level_1()
-                level.level_number += 1
             if level.level_number == 23:
                 boss.update()
                 if not boss.dead:

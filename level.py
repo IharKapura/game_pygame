@@ -363,7 +363,7 @@ class Level(object):
 		self.object_rect()
 
 #Уровень (10)
-	def level_10(self):
+	def level_10(self, bg, cube, bad_cube):
 		self.level = [
 				"                            ",
 				"                         F  ",
@@ -381,6 +381,9 @@ class Level(object):
 				" C             oo^^^^^^     ",
 				"ooooooooooooooooo^^^^^^oooooo"
 			]
+		bg.change_bg_cave()
+		cube.change_cube_cave()
+		bad_cube.change_bad_cube_cave()
 		self.object_rect()
 
 #Уровень (11)
@@ -493,7 +496,7 @@ class Level(object):
 		self.object_rect()
 
 	#Уровень (16)
-	def level_16(self):
+	def level_16(self, bg, cube, bad_cube):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -511,6 +514,9 @@ class Level(object):
 				" C o   o      ^          F  ",
 				"oooooooooooooooooooooooooooo"
 			]
+		bg.change_bg_frozen()
+		cube.change_cube_frozen()
+		bad_cube.change_bad_cube_frozen()
 		self.object_rect()
 
 	#Уровень (17)
@@ -622,7 +628,7 @@ class Level(object):
 		self.object_rect()
 
 	#Уровень (22)
-	def level_22(self):
+	def level_22(self, bg, cube, bad_cube):
 		self.level = [
 				"                            ",
 				"                            ",
@@ -640,6 +646,9 @@ class Level(object):
 				" C  o^^^ooo      S ooooo F o",
 				"oooooooooooooooooooooooooooo"
 			]
+		bg.change_bg_field()
+		cube.change_cube_field()
+		bad_cube.change_bad_cube_field()
 		self.object_rect()
 	
 	# Уровень (23)

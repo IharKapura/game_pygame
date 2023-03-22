@@ -1,4 +1,5 @@
 import pygame, controls
+from pathlib import Path
 from player import Player
 from bullet import Bullet
 from bg import Bg
@@ -28,6 +29,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Bear can be a hero")
+    pygame.display.set_icon(pygame.image.load(Path('images', 'icon_bear.png')))
     player = Player(screen)
     bg = Bg(screen, player)
     bullet = Bullet(screen, player)
@@ -61,7 +63,7 @@ def main():
         clock.tick(FPS)
         pygame.display.update()
         pygame.display.flip()
-        print(clock)
-        
+        print(menu.progress)
+
 if __name__ == "__main__":
     main()
